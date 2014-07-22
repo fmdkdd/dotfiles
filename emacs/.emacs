@@ -73,6 +73,14 @@ FEATURE may be a named feature or a file name, see
      ;; Register FORMS to be eval'ed after FEATURE
      (eval-after-load ',feature '(progn ,@forms))))
 
+;; Path to extensions
+(defconst fmdkdd/elisp (locate-user-emacs-file "elisp")
+  "Where to load extra lisp files.")
+
+(add-to-list 'load-path fmdkdd/elisp)
+
+;;;; UI
+
 ;; Customization in its own file
 (defconst fmdkdd/custom-file (locate-user-emacs-file "custom.el")
   "File used to store settings of Customization UI")
@@ -80,9 +88,6 @@ FEATURE may be a named feature or a file name, see
 (lunaryorn-after cus-edit
   (setq custom-file fmdkdd/custom-file))
 (load fmdkdd/custom-file :no-error)
-
-
-;;;; UI
 
 ;; Useless bars
 (tool-bar-mode 0)
