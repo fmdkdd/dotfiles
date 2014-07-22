@@ -290,8 +290,24 @@ FEATURE may be a named feature or a file name, see
   "Keymap for symbol operations.")
 
 ;; Curly quotes
-(lunaryorn-after smart-quotes
-  (add-hook 'text-mode-hook 'turn-on-smart-quotes))
+(require 'smart-quotes)
+(add-hook 'text-mode-hook 'turn-on-smart-quotes)
+
+;;; Org mode
+(lunaryorn-after org
+  ;; Nice LaTeX entities
+  (setq-default org-pretty-entities t)
+
+  ;; Fallback to DejaVu Sans Mono for mathematical symbols not present
+  ;; in the default font (Ubuntu Mono)
+  (set-fontset-font "fontset-default" '(#x2200 . #x22ff) (font-spec :family "DejaVu Sans Mono"))
+  ;; Arrows are too narrow in a mono font
+  (set-fontset-font "fontset-default" '(#x2190 . #x21ff) (font-spec :family "DejaVu Sans"))
+
+  (setq face-font-rescale-alist
+        '((".*DejaVu Sans Mono.*" . 0.9)
+          (".*DejaVu Sans.*" . 0.9))))
+
 
 ;;;; Programming
 
