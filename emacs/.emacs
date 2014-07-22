@@ -18,6 +18,8 @@
     ;; Editing
     flycheck                            ; On the fly syntax checking
 
+    markdown-mode
+
     ;; Programming
     highlight-symbol                    ; Navigate between occurences
                                         ; of a symbol
@@ -178,9 +180,6 @@ FEATURE may be a named feature or a file name, see
 ;; Read-only files are in view mode
 (setq view-read-only t)
 
-;; Automatically revert files changed externally
-(global-auto-revert-mode t)
-
 
 ;;;; Editing
 
@@ -297,7 +296,7 @@ FEATURE may be a named feature or a file name, see
 ;; Font lock for numeric literals
 (add-hook 'prog-mode-hook #'highlight-numbers-mode)
 
-;; Haskell
+;;; Haskell
 
 (dolist (fun '(interactive-haskell-mode
                subword-mode
