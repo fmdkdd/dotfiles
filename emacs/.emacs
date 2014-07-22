@@ -1,0 +1,374 @@
+;; Install missing packages from MELPA
+
+(defconst fmdkdd/packages
+  '(
+    ;; UI
+    diminish                            ; Clean mode line
+    smart-mode-line                     ; Color mode line
+    smex                                ; Smart M-x
+
+    ;; Navigation
+    ido-ubiquitous                      ; Ido everywhere ...
+    flx-ido                             ; with flex matching
+    imenu-anywhere                      ; Imenu for all buffers
+
+    ;; Color theme
+    zenburn-theme
+
+    ;; Editing
+    flycheck                            ; On the fly syntax checking
+
+    ;; Programming
+    highlight-symbol                    ; Navigate between occurences
+                                        ; of a symbol
+    rainbow-delimiters                  ; Colorize nested parens
+    highlight-numbers                   ; Colorize numeric literals
+
+    magit                               ; Git management
+
+    ;; Haskell
+    haskell-mode
+    flycheck-haskell
+    hi2
+    )
+  "Packages required by this configuration")
+
+(require 'package)
+(setq package-enable-at-startup nil)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/"))
+
+(package-initialize)
+
+(defun fmdkdd/ensure-packages ()
+  "Install packages"
+  (interactive)
+  (unless package-archive-contents
+    (package-refresh-contents))
+  (dolist (package fmdkdd/packages)
+    (unless (package-installed-p package)
+      (package-install package))))
+
+(fmdkdd/ensure-packages)
+
+(defmacro lunaryorn-after (feature &rest forms)
+  "After FEATURE is loaded, evaluate FORMS.
+
+FORMS is byte compiled.
+
+FEATURE may be a named feature or a file name, see
+`eval-after-load' for details."
+  (declare (indent 1) (debug t))
+  `(progn
+     (eval-when-compile
+       ;; Require the feature during compilation to avoid compiler
+       ;; errors/warnings. Since `eval-when-compile' also evaluated during macro
+       ;; expansion we check whether the current file is really being compiled
+       (when (bound-and-true-p byte-compile-current-file)
+         ,(if (stringp feature)
+              `(load ,feature :no-message :no-error)
+            `(require ',feature nil :no-error))))
+     ;; Register FORMS to be eval'ed after FEATURE
+     (eval-after-load ',feature '(progn ,@forms))))
+
+;; Customization in its own file
+(defconst fmdkdd/custom-file (locate-user-emacs-file "custom.el")
+  "File used to store settings of Customization UI")
+
+(lunaryorn-after cus-edit
+  (setq custom-file fmdkdd/custom-file))
+(load fmdkdd/custom-file :no-error)
+
+
+;;;; UI
+
+;; Useless bars
+(tool-bar-mode 0)
+(scroll-bar-mode 0)
+(menu-bar-mode 0)
+
+;; Don't display the 'Welcome to GNU Emacs' buffer on startup.
+(setq inhibit-startup-message t)
+
+;; Skip the GNU message in minibuffer
+(fset 'display-startup-echo-area-message 'ignore)
+
+;; Replace 'yes or no' prompts by 'y or n'.
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;; Font and color theme
+(set-face-attribute 'default nil :family "Ubuntu Mono" :height 120)
+
+(load-theme 'zenburn 'no-confirm)
+
+
+;;; Mode line
+
+(column-number-mode t)
+(size-indication-mode t)
+
+;; Clean mode line, with colors
+(lunaryorn-after smart-mode-line
+  (setq sml/no-confirm-load-theme t
+        sml/theme 'respectful))
+(sml/setup)
+
+
+;;; Minibuffer
+
+(setq history-length 1000)
+
+;; Ido
+(lunaryorn-after ido
+  (setq ido-enable-flex-matching t
+        ido-create-new-buffer 'always
+        ido-use-filename-at-point 'guess
+        ido-default-file-method 'selected-window
+        ido-use-faces nil))
+(ido-mode t)
+(ido-everywhere)
+(ido-ubiquitous-mode)
+(flx-ido-mode)
+
+;; Smex
+(lunaryorn-after smex
+  (setq smex-save-file (locate-user-emacs-file ".smex-items")))
+
+
+;;;; Buffer, Windows and Frames
+
+;; Improve the uniquification of buffer names.
+;; Makefile and Makefile<2> become Makefile|project Makefile|test
+(lunaryorn-after uniquify
+  (setq-default uniquify-buffer-name-style 'forward))
+
+;; Save window configurations
+(winner-mode)
+
+;; Save buffers, windows and frames on exit
+(desktop-save-mode)
+
+
+;;;; File handling
+
+;; Backup files in their own directory
+(setq backup-directory-alist `(("." . ,(locate-user-emacs-file "backups"))))
+
+(setq delete-by-moving-to-trash t)
+
+;; Track recent files
+(lunaryorn-after recentf
+  (setq recentf-max-saved-items 200
+        recentf-max-menu-items 15
+        recentf-auto-cleanup 300))
+(recentf-mode t)
+
+(lunaryorn-after recentf
+  (defun ido-find-recentf ()
+    "Find a recent file with IDO."
+    (interactive)
+    (let ((file (ido-completing-read "Find recent file: " recentf-list nil t)))
+      (when file
+        (find-file file)))))
+
+;; Save position in files
+(require 'saveplace)
+(setq-default save-place t)
+
+;; Read-only files are in view mode
+(setq view-read-only t)
+
+;; Automatically revert files changed externally
+(global-auto-revert-mode t)
+
+
+;;;; Editing
+
+;; Prefer utf-8
+(set-language-environment "utf-8")
+(prefer-coding-system 'utf-8)
+
+;; Spaces over tabs
+(setq-default indent-tabs-mode nil)
+
+;; Delete trailing whitespace on file save
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Tab complete if the line is already indented
+(setq tab-always-indent 'complete)
+
+(electric-pair-mode)
+(electric-layout-mode)
+
+;; Indicate empty lines in the fringe
+(setq indicate-empty-lines t)
+
+(setq require-final-newline t)
+
+;; Typing with an active selection replaces the selection
+(delete-selection-mode)
+
+;; Limit text modes to 70 columns
+(setq-default fill-column 70)
+(add-hook 'text-mode-hook 'turn-on-auto-fill)
+
+;; Auto fill comments in prog modes
+(defun auto-fill-comments ()
+  (setq-local comment-auto-fill-only-comments t)
+  (auto-fill-mode t))
+
+(add-hook 'prog-mode-hook 'auto-fill-comments)
+
+(diminish 'auto-fill-function)
+
+;; Scrolling
+(setq scroll-margin 2             ; Begin scrolling with the point 2
+                                        ; lines from the edge
+      scroll-conservatively 1000) ; Don't recenter point while scrolling
+
+;; Enable narrowing
+(put 'narrow-to-region 'disabled nil)
+(put 'narrow-to-defun 'disabled nil)
+
+;; Faster mark popping
+(setq set-mark-command-repeat-pop t)
+
+;; Highligh current line
+(global-hl-line-mode t)
+
+;; Syntax checking on the fly
+(lunaryorn-after flycheck
+  (setq flycheck-completion-system 'ido
+        flycheck-highlighting-mode 'sexps))
+(global-flycheck-mode)
+
+(setq show-paren-delay 0.0)
+(show-paren-mode t)
+
+;; Completion
+(lunaryorn-after hippie-exp
+  (setq hippie-expand-try-functions-list
+        '(try-expand-dabbrev
+          try-expand-dabbrev-all-buffers
+          try-expand-dabbrev-from-kill
+          try-complete-file-name-partially
+          try-complete-file-name
+          try-expand-all-abbrevs
+          try-expand-list
+          try-complete-lisp-symbol-partially
+          try-complete-lisp-symbol)))
+
+;; Flyspell
+(lunaryorn-after flyspell
+  ;; Free M-Tab and C-M-i
+  (define-key flyspell-mode-map "\M-\t" nil)
+  (setq flyspell-use-meta-tab nil))
+
+(add-hook 'text-mode-hook 'turn-on-flyspell)
+(add-hook 'prog-mode-hook 'flyspell-prog-mode)
+
+
+;; Highlight and navigate symbols
+(lunaryorn-after highlight-symbol
+  (setq highlight-symbol-idle-delay 0.4
+        highlight-symbol-on-navigation-p t)
+  (diminish 'highlight-symbol-mode))
+
+(add-hook 'prog-mode-hook #'highlight-symbol-nav-mode)
+
+(defvar fmdkdd/symbols-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "o") #'highlight-symbol-occur)
+    (define-key map (kbd "%") #'highlight-symbol-query-replace)
+    (define-key map (kbd "n") #'highlight-symbol-next-in-defun)
+    (define-key map (kbd "p") #'highlight-symbol-prev-in-defun)
+    map)
+  "Keymap for symbol operations.")
+
+;; Curly quotes
+(lunaryorn-after smart-quotes
+  (add-hook 'text-mode-hook 'turn-on-smart-quotes))
+
+;;;; Programming
+
+;; Nested parens
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
+;; Font lock for numeric literals
+(add-hook 'prog-mode-hook #'highlight-numbers-mode)
+
+;; Haskell
+
+(dolist (fun '(interactive-haskell-mode
+               subword-mode
+               turn-on-haskell-decl-scan
+               hi2-mode))
+  (add-hook 'haskell-mode-hook fun))
+
+(lunaryorn-after haskell-interactive-mode
+  (dolist (fun '(haskell-doc-mode
+                 subword-mode))
+    (add-hook 'haskell-interactive-mode fun)))
+
+(lunaryorn-after haskell-process
+  (setq haskell-process-type 'cabal-repl))
+
+(lunaryorn-after flycheck
+  (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
+
+;;; Miscellaneous
+
+;; View image files as images
+(auto-image-file-mode)
+
+;; Calendar
+(lunaryorn-after calendar
+  (setq calendar-week-start-day 1))
+
+
+;;; Mouse
+
+;; Text pasted from the mouse middle click is inserted at point rather
+;; than at the mouse cursor position.
+(setq-default mouse-yank-at-point t)
+
+;;; Key bindings
+
+;; Ergonomics
+(global-set-key (kbd "C-x C-o") 'other-window)
+(global-set-key (kbd "C-x o") 'delete-blank-lines)
+(global-set-key (kbd "M-0") 'delete-window)
+(global-set-key (kbd "M-1") 'delete-other-windows)
+(global-set-key (kbd "M-2") 'split-window-vertically)
+(global-set-key (kbd "M-3") 'split-window-horizontally)
+
+;; Best of both worlds
+(defun kill-region-or-backward-word ()
+  (interactive)
+  (if (region-active-p)
+      (kill-region (region-beginning) (region-end))
+    (backward-kill-word 1)))
+
+;; Bye bye Delete key!
+(global-unset-key (kbd "<M-DEL>"))
+(global-set-key (kbd "C-w") 'kill-region-or-backward-word)
+
+;; Disable iconify shortcuts .. useless in Xmonad
+(global-unset-key (kbd "C-z"))
+(global-unset-key (kbd "C-x C-z"))
+
+(global-set-key [remap execute-extended-command] #'smex)
+(global-set-key [remap list-buffers] #'ibuffer)
+(global-set-key [remap dabbrev-expand] #'hippie-expand)
+
+(global-set-key (kbd "M-X") #'smex-major-mode-commands)
+
+(find-function-setup-keys)
+
+(global-set-key (kbd "C-c i") #'imenu-anywhere)
+(global-set-key (kbd "C-c s") fmdkdd/symbols-map)
+(global-set-key (kbd "C-c g") #'magit-status)
+
+
+
+;;; .emacs ends here
