@@ -185,6 +185,9 @@ FEATURE may be a named feature or a file name, see
 ;; Read-only files are in view mode
 (setq view-read-only t)
 
+;; Follow symlinks under version control
+(lunaryorn-after vc-hooks
+  (setq vc-follow-symlinks t))
 
 ;;;; Editing
 
