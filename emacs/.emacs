@@ -325,16 +325,18 @@ FEATURE may be a named feature or a file name, see
 (dolist (fun '(interactive-haskell-mode
                subword-mode
                turn-on-haskell-decl-scan
+               haskell-doc-mode
                hi2-mode))
   (add-hook 'haskell-mode-hook fun))
 
 (lunaryorn-after haskell-interactive-mode
   (dolist (fun '(haskell-doc-mode
-                 subword-mode))
+                 subword-mode
+                 haskell-doc-mode))
     (add-hook 'haskell-interactive-mode fun)))
 
 (lunaryorn-after haskell-process
-  (setq haskell-process-type 'cabal-repl))
+  (setq haskell-process-type 'ghci))
 
 (lunaryorn-after flycheck
   (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
