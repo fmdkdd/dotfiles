@@ -322,6 +322,10 @@ FEATURE may be a named feature or a file name, see
 
 ;;; Haskell
 
+;; Disable squiggles in hi2
+(lunaryorn-after hi2
+  (setq hi2-show-indentations nil))
+
 (dolist (fun '(interactive-haskell-mode
                subword-mode
                turn-on-haskell-decl-scan
@@ -336,7 +340,8 @@ FEATURE may be a named feature or a file name, see
     (add-hook 'haskell-interactive-mode fun)))
 
 (lunaryorn-after haskell-process
-  (setq haskell-process-type 'ghci))
+  (setq haskell-process-type 'ghci
+        haskell-interactive-popup-errors nil))
 
 (lunaryorn-after flycheck
   (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
