@@ -222,7 +222,7 @@ FEATURE may be a named feature or a file name, see
 ;; Auto fill comments in prog modes
 (defun auto-fill-comments ()
   (setq-local comment-auto-fill-only-comments t)
-  (auto-fill-mode t))
+  (turn-on-auto-fill-mode))
 
 (add-hook 'prog-mode-hook 'auto-fill-comments)
 
