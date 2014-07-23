@@ -346,6 +346,17 @@ FEATURE may be a named feature or a file name, see
 (lunaryorn-after flycheck
   (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
 
+;;; Java
+
+(c-add-style "user-java"
+             '("java"
+               (c-basic-offset . 2)))
+
+(defun fmdkdd/customize-java-mode ()
+  (c-set-style "user-java"))
+
+(add-hook 'java-mode-hook #'fmdkdd/customize-java-mode)
+
 ;;; Miscellaneous
 
 ;; View image files as images
