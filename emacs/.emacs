@@ -174,7 +174,7 @@ FEATURE may be a named feature or a file name, see
   (defun ido-find-recentf ()
     "Find a recent file with IDO."
     (interactive)
-    (let ((file (ido-completing-read "Find recent file: " recentf-list nil t)))
+    (let ((file (ido-completing-read "Find recent file: " recentf-list)))
       (when file
         (find-file file)))))
 
@@ -392,6 +392,7 @@ FEATURE may be a named feature or a file name, see
 (global-set-key [remap dabbrev-expand] #'hippie-expand)
 
 (global-set-key (kbd "M-X") #'smex-major-mode-commands)
+(global-set-key (kbd "C-x f") #'ido-find-recentf)
 
 (find-function-setup-keys)
 
