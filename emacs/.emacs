@@ -357,6 +357,10 @@ FEATURE may be a named feature or a file name, see
 
 (add-hook 'java-mode-hook #'fmdkdd/customize-java-mode)
 
+;;; JavaScript
+
+(setq js-indent-level 2)
+
 ;;; Miscellaneous
 
 ;; View image files as images
