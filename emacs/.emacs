@@ -229,7 +229,7 @@ FEATURE may be a named feature or a file name, see
 (diminish 'auto-fill-function)
 
 ;; Scrolling
-(setq scroll-margin 2             ; Begin scrolling with the point 2
+(setq scroll-margin 10             ; Begin scrolling with the point 2
                                         ; lines from the edge
       scroll-conservatively 1000) ; Don't recenter point while scrolling
 
