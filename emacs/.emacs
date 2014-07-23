@@ -208,7 +208,7 @@ FEATURE may be a named feature or a file name, see
 (electric-layout-mode)
 
 ;; Indicate empty lines in the fringe
-(setq indicate-empty-lines t)
+(setq-default indicate-empty-lines t)
 
 (setq require-final-newline t)
 
