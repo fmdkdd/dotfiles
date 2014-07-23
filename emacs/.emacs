@@ -334,10 +334,10 @@ FEATURE may be a named feature or a file name, see
   (add-hook 'haskell-mode-hook fun))
 
 (lunaryorn-after haskell-interactive-mode
-  (dolist (fun '(haskell-doc-mode
-                 subword-mode
-                 haskell-doc-mode))
-    (add-hook 'haskell-interactive-mode fun)))
+  (dolist (fun '(subword-mode
+                 haskell-doc-mode
+                 rainbow-delimiters-mode))
+    (add-hook 'haskell-interactive-mode-hook fun)))
 
 (lunaryorn-after haskell-process
   (setq haskell-process-type 'ghci
