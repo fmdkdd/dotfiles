@@ -392,7 +392,9 @@ FEATURE may be a named feature or a file name, see
   (interactive)
   (if (region-active-p)
       (kill-region (region-beginning) (region-end))
-    (backward-kill-word 1)))
+    (if (and (boundp 'subword-mode) subword-mode)
+        (subword-backward-kill 1)
+        (backward-kill-word 1))))
 
 ;; Bye bye Delete key!
 (global-unset-key (kbd "<M-DEL>"))
