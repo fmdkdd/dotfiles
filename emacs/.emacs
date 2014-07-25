@@ -146,8 +146,8 @@ FEATURE may be a named feature or a file name, see
 
 ;; Improve the uniquification of buffer names.
 ;; Makefile and Makefile<2> become Makefile|project Makefile|test
-(lunaryorn-after uniquify
-  (setq-default uniquify-buffer-name-style 'forward))
+(require 'uniquify)
+(setq-default uniquify-buffer-name-style 'forward)
 
 ;; Save window configurations
 (winner-mode)
