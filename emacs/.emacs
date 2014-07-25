@@ -320,6 +320,14 @@ FEATURE may be a named feature or a file name, see
 ;; Font lock for numeric literals
 (add-hook 'prog-mode-hook #'highlight-numbers-mode)
 
+;; Highlight the following words in comments
+(defun add-watchwords ()
+  (font-lock-add-keywords
+   nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\|DELETE\\|XXX\\):"
+          1 font-lock-warning-face t))))
+
+(add-hook 'prog-mode-hook #'add-watchwords)
+
 ;;; Haskell
 
 ;; Disable squiggles in hi2
