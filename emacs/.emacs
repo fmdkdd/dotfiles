@@ -163,6 +163,11 @@ FEATURE may be a named feature or a file name, see
 
 (setq delete-by-moving-to-trash t)
 
+(lunaryorn-after dired
+  (setq dired-auto-revert-buffer t
+        dired-listing-switches "-alh"   ; Human-readable size
+        ))
+
 ;; Track recent files
 (lunaryorn-after recentf
   (setq recentf-max-saved-items 200
