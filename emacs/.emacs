@@ -379,6 +379,9 @@ FEATURE may be a named feature or a file name, see
 
 (setq js-indent-level 2)
 
+;;; CSS
+(setq css-indent-offset 2)
+
 ;;; Miscellaneous
 
 ;; View image files as images
