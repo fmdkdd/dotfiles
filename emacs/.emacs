@@ -270,7 +270,12 @@ FEATURE may be a named feature or a file name, see
           try-complete-lisp-symbol-partially
           try-complete-lisp-symbol)))
 
-;; Flyspell
+;; Spelling
+(lunaryorn-after ispell
+  (setq ispell-silently-savep t ; Don't ask when saving private
+                               ; dictionary
+        ))
+
 (lunaryorn-after flyspell
   ;; Free M-Tab and C-M-i
   (define-key flyspell-mode-map "\M-\t" nil)
