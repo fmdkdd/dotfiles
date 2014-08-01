@@ -308,6 +308,9 @@ FEATURE may be a named feature or a file name, see
 
 ;;; Org mode
 (lunaryorn-after org
+  ;; No indentation in Org files
+  (setq org-adapt-indentation nil)
+
   ;; Nice LaTeX entities
   (setq-default org-pretty-entities t)
 
