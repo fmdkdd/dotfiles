@@ -10,9 +10,10 @@ import qualified DBus as D
 import qualified DBus.Client as D
 import qualified Codec.Binary.UTF8.String as UTF8
 
-myManageHook = composeAll
-    [ className =? "Do"        --> doFloat
-    ]
+myManageHook = composeAll [
+  className =? "Do"        --> doFloat
+  ,className =? "Zenity"   --> doFloat
+  ]
 
 myLayout = tiled ||| Mirror tiled ||| Full
   where
