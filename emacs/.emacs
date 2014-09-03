@@ -17,6 +17,7 @@
 
     ;; Editing
     flycheck                            ; On the fly syntax checking
+    tern                                ; JS static analysis
 
     markdown-mode
 
@@ -381,6 +382,13 @@ FEATURE may be a named feature or a file name, see
 ;;; JavaScript
 
 (setq js-indent-level 2)
+
+;; Tern
+;; Requires `npm install --global tern`
+
+(defun turn-on-tern ()
+  (tern-mode t))
+(add-hook 'js-mode-hook #'turn-on-tern)
 
 ;;; CSS
 (setq css-indent-offset 2)
