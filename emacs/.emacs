@@ -318,7 +318,11 @@ FEATURE may be a named feature or a file name, see
 
   (setq face-font-rescale-alist
         '((".*DejaVu Sans Mono.*" . 0.9)
-          (".*DejaVu Sans.*" . 0.9))))
+          (".*DejaVu Sans.*" . 0.9)))
+
+  ;; Open links to Mozilla Archive Format Files in Firefox
+  (add-to-list 'org-file-apps
+               '("maff" . "firefox %s")))
 
 
 ;;;; Programming
