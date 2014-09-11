@@ -322,8 +322,15 @@ FEATURE may be a named feature or a file name, see
 
   ;; Open links to Mozilla Archive Format Files in Firefox
   (add-to-list 'org-file-apps
-               '("maff" . "firefox %s")))
+               '("maff" . "firefox %s"))
 
+  (setq org-agenda-custom-commands
+        '(("n" "Agenda and all unscheduled TODO's"
+           ((agenda "")
+            (alltodo ""
+                     ((org-agenda-overriding-header "Unscheduled tasks")
+                      (org-agenda-todo-ignore-scheduled t)
+                      (org-agenda-todo-ignore-deadlines t))))))))
 
 ;;;; Programming
 
