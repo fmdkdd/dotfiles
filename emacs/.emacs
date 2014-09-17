@@ -458,6 +458,7 @@ FEATURE may be a named feature or a file name, see
 (global-set-key (kbd "C-c s") fmdkdd/symbols-map)
 (global-set-key (kbd "C-c g") #'magit-status)
 (global-set-key (kbd "C-c a") #'org-agenda)
+(global-set-key (kbd "C-c l") #'org-store-link)
 
 
 
