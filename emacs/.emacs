@@ -307,6 +307,9 @@ FEATURE may be a named feature or a file name, see
   ;; No indentation in Org files
   (setq org-adapt-indentation nil)
 
+  ;; Syntactic coloration of source blocks
+  (setq org-src-fontify-natively t)
+
   ;; Nice LaTeX entities
   (setq-default org-pretty-entities t)
 
