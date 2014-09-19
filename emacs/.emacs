@@ -420,9 +420,15 @@ FEATURE may be a named feature or a file name, see
 
 ;;; Key bindings
 
+;; Disable iconify shortcuts .. useless in Xmonad
+(global-unset-key (kbd "C-z"))
+(global-unset-key (kbd "C-x C-z"))
+
+;; Bye bye Delete key!
+(global-unset-key (kbd "<M-DEL>"))
+
 ;; Ergonomics
-(global-set-key (kbd "C-x C-o") 'other-window)
-(global-set-key (kbd "C-x o") 'delete-blank-lines)
+(global-set-key (kbd "C-z") 'other-window)
 (global-set-key (kbd "M-0") 'delete-window)
 (global-set-key (kbd "M-1") 'delete-other-windows)
 (global-set-key (kbd "M-2") 'split-window-vertically)
@@ -437,13 +443,7 @@ FEATURE may be a named feature or a file name, see
         (subword-backward-kill 1)
         (backward-kill-word 1))))
 
-;; Bye bye Delete key!
-(global-unset-key (kbd "<M-DEL>"))
 (global-set-key (kbd "C-w") 'kill-region-or-backward-word)
-
-;; Disable iconify shortcuts .. useless in Xmonad
-(global-unset-key (kbd "C-z"))
-(global-unset-key (kbd "C-x C-z"))
 
 (global-set-key [remap execute-extended-command] #'smex)
 (global-set-key [remap list-buffers] #'ibuffer)
