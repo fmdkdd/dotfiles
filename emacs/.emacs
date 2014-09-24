@@ -118,7 +118,8 @@ FEATURE may be a named feature or a file name, see
 ;; Clean mode line, with colors
 (lunaryorn-after smart-mode-line
   (setq sml/no-confirm-load-theme t
-        sml/theme 'respectful))
+        sml/theme 'respectful
+        sml/name-width 25))
 (sml/setup)
 
 
