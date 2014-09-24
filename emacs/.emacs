@@ -401,6 +401,7 @@ FEATURE may be a named feature or a file name, see
 
 ;;; CSS
 (setq css-indent-offset 2)
+(add-hook 'css-mode-hook #'rainbow-mode)
 
 ;;; Miscellaneous
 
