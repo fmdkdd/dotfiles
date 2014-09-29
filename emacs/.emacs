@@ -328,6 +328,9 @@ FEATURE may be a named feature or a file name, see
   (add-to-list 'org-file-apps
                '("maff" . "firefox %s"))
 
+  (setq org-log-into-drawer t)
+  (setq org-clock-into-drawer t)
+
   (setq org-agenda-custom-commands
         '(("n" "Agenda and all unscheduled TODO's"
            ((agenda "")
