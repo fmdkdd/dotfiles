@@ -302,6 +302,7 @@ FEATURE may be a named feature or a file name, see
 ;; Curly quotes
 (require 'smart-quotes)
 (add-hook 'text-mode-hook 'turn-on-smart-quotes)
+(diminish 'smart-quotes-mode)
 
 ;;; Org mode
 (lunaryorn-after org
