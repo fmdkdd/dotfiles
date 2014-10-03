@@ -109,7 +109,6 @@ FEATURE may be a named feature or a file name, see
 
 (load-theme 'zenburn 'no-confirm)
 
-
 ;;; Mode line
 
 (column-number-mode t)
@@ -331,6 +330,13 @@ FEATURE may be a named feature or a file name, see
 
   (setq org-log-into-drawer t)
   (setq org-clock-into-drawer t)
+
+  (setq org-todo-keyword-faces
+        '(("TODO" . org-warning)
+          ("NEXT" . (:foreground "#f0dfaf" :weight bold))
+          ("WAIT" . (:foreground "#dfaf8f" :weight bold))
+          ("CANCELED" . (:foreground "#7cb8bb" :weight bold))
+          ("DELEGATED" . (:foreground "#7f9f7f" :weight bold))))
 
   (setq org-agenda-custom-commands
         '(("n" "Agenda and all unscheduled TODO's"
