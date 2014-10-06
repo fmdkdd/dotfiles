@@ -344,7 +344,8 @@ FEATURE may be a named feature or a file name, see
             (alltodo ""
                      ((org-agenda-overriding-header "Unscheduled tasks")
                       (org-agenda-todo-ignore-scheduled t)
-                      (org-agenda-todo-ignore-deadlines t))))))))
+                      (org-agenda-todo-ignore-deadlines t))))))
+        org-agenda-ndays 1))
 
 ;;;; Programming
 
