@@ -157,6 +157,8 @@ FEATURE may be a named feature or a file name, see
 ;; Save buffers, windows and frames on exit
 (desktop-save-mode)
 
+;; Kill stale buffers
+(require 'midnight)
 
 ;;;; File handling
 
