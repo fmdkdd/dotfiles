@@ -348,10 +348,14 @@ FEATURE may be a named feature or a file name, see
   (setq org-agenda-custom-commands
         '(("n" "Agenda and all unscheduled TODO's"
            ((agenda "")
-            (alltodo ""
-                     ((org-agenda-overriding-header "Unscheduled tasks")
-                      (org-agenda-todo-ignore-scheduled t)
-                      (org-agenda-todo-ignore-deadlines t))))))
+            (todo "NEXT" ((org-agenda-overriding-header "Next")))
+            (todo "WAIT" ((org-agenda-overriding-header "Waiting")))
+            (todo "TODO" ((org-agenda-overriding-header "Unscheduled tasks")
+                          (org-agenda-todo-ignore-scheduled 'all)
+                          (org-agenda-todo-ignore-deadlines 'all)))
+            (todo "" ((org-agenda-overriding-header "Upcoming deadlines")
+                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'notdeadline))
+                      (org-agenda-todo-ignore-deadlines 'near))))))
         org-agenda-ndays 1))
 
 ;;;; Programming
