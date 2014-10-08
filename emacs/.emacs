@@ -16,6 +16,7 @@
     zenburn-theme
 
     ;; Editing
+    yasnippet                           ; Code templates
     flycheck                            ; On the fly syntax checking
     tern                                ; JS static analysis
 
@@ -243,6 +244,10 @@ FEATURE may be a named feature or a file name, see
 
 ;; Highligh current line
 (global-hl-line-mode t)
+
+;; Yasnippet everywhere
+(lunaryorn-after yas
+  (yas-global-mode))
 
 ;; Syntax checking on the fly
 (lunaryorn-after flycheck
