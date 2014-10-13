@@ -110,6 +110,13 @@ FEATURE may be a named feature or a file name, see
 
 (load-theme 'zenburn 'no-confirm)
 
+(zenburn-with-color-variables
+  (custom-theme-set-faces
+   'zenburn
+   `(font-lock-comment-face ((t (:foreground ,zenburn-green+2))))
+   `(font-lock-comment-delimiter-face ((t (:foreground ,zenburn-green-1))))
+   `(font-lock-string-face ((t (:foreground ,zenburn-yellow-2))))))
+
 ;;; Mode line
 
 (column-number-mode t)
