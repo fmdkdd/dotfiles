@@ -346,11 +346,12 @@ FEATURE may be a named feature or a file name, see
   (setq org-clock-into-drawer t)
 
   (setq org-todo-keyword-faces
-        '(("TODO" . org-warning)
-          ("NEXT" . (:foreground "#f0dfaf" :weight bold))
-          ("WAIT" . (:foreground "#dfaf8f" :weight bold))
-          ("CANCELED" . (:foreground "#7cb8bb" :weight bold))
-          ("DELEGATED" . (:foreground "#7f9f7f" :weight bold))))
+        (zenburn-with-color-variables
+          `(("TODO" . org-warning)
+            ("NEXT" . (:foreground ,zenburn-yellow :weight bold))
+            ("WAIT" . (:foreground ,zenburn-orange :weight bold))
+            ("CANCELED" . (:foreground ,zenburn-blue-1 :weight bold))
+            ("DELEGATED" . (:foreground ,zenburn-green :weight bold)))))
 
   (setq org-agenda-custom-commands
         '(("n" "Agenda and all unscheduled TODO's"
