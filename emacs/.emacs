@@ -317,6 +317,9 @@ FEATURE may be a named feature or a file name, see
 (add-hook 'text-mode-hook 'turn-on-smart-quotes)
 (diminish 'smart-quotes-mode)
 
+;; But not in HTML
+(add-hook 'html-mode-hook 'turn-off-smart-quotes)
+
 ;;; Org mode
 (lunaryorn-after org
   ;; No indentation in Org files
