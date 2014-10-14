@@ -255,8 +255,7 @@ FEATURE may be a named feature or a file name, see
 (global-hl-line-mode t)
 
 ;; Yasnippet everywhere
-(lunaryorn-after yas
-  (yas-global-mode))
+(yas-global-mode)
 
 ;; Syntax checking on the fly
 (lunaryorn-after flycheck
