@@ -96,6 +96,9 @@ FEATURE may be a named feature or a file name, see
 (scroll-bar-mode 0)
 (menu-bar-mode 0)
 
+;; Fix dead keys bug with ibus
+(require 'iso-transl)
+
 ;; Don't display the 'Welcome to GNU Emacs' buffer on startup.
 (setq inhibit-startup-message t)
 
