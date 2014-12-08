@@ -118,7 +118,9 @@ FEATURE may be a named feature or a file name, see
    'zenburn
    `(font-lock-comment-face ((t (:foreground ,zenburn-green+2))))
    `(font-lock-comment-delimiter-face ((t (:foreground ,zenburn-green-1))))
-   `(font-lock-string-face ((t (:foreground ,zenburn-yellow-2))))))
+   `(font-lock-string-face ((t (:foreground ,zenburn-yellow-2))))
+   `(org-meta-line ((t (:foreground ,zenburn-green))))
+   `(org-special-keyword ((t (:foreground ,zenburn-green))))))
 
 ;;; Mode line
 
