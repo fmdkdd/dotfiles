@@ -430,6 +430,13 @@ FEATURE may be a named feature or a file name, see
 
 (setq js-indent-level 2)
 
+;; Enable Babel evaluation of JavaScript
+(require 'ob-js)
+
+;; SpiderMonkey is the default REPL
+(setq org-babel-js-cmd "js"
+      org-babel-js-function-wrapper "print(JSON.stringify(function(){%s}(), null, 2))")
+
 ;; Tern
 ;; Requires `npm install --global tern`
 
