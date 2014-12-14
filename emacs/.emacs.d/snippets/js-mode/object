@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: object
+# key: o
+# binding: direct-keybinding
+# --
+var $1 = {
+  $0
+};
