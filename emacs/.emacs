@@ -30,6 +30,8 @@
 
     magit                               ; Git management
 
+    moz                                 ; Firefox interaction
+
     ;; Haskell
     haskell-mode
     flycheck-haskell
@@ -448,6 +450,13 @@ FEATURE may be a named feature or a file name, see
 (setq css-indent-offset 2)
 (add-hook 'css-mode-hook #'rainbow-mode)
 
+;;; Firefox interaction
+(defun moz-reload ()
+  (interactive)
+  (comint-send-string
+   (inferior-moz-process)
+   "content.document.location.reload(true);"))
+
 ;;; Miscellaneous
 
 ;; View image files as images
@@ -505,6 +514,7 @@ FEATURE may be a named feature or a file name, see
 (global-set-key (kbd "C-c g") #'magit-status)
 (global-set-key (kbd "C-c a") #'org-agenda)
 (global-set-key (kbd "C-c l") #'org-store-link)
+(global-set-key (kbd "C-c r") #'moz-reload)
 (global-set-key (kbd "<f5>") #'recompile)
 (global-set-key (kbd "<f6>") #'compile)
 
