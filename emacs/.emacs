@@ -36,6 +36,10 @@
     haskell-mode
     flycheck-haskell
     hi2
+
+    ;; Web
+    coffee-mode
+    less-css-mode
     )
   "Packages required by this configuration")
 
@@ -445,6 +449,9 @@ FEATURE may be a named feature or a file name, see
 (defun turn-on-tern ()
   (tern-mode t))
 (add-hook 'js-mode-hook #'turn-on-tern)
+
+;;; Coffeescript
+(setq coffee-tab-width 2)
 
 ;;; CSS
 (setq css-indent-offset 2)
