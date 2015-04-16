@@ -218,6 +218,21 @@ FEATURE may be a named feature or a file name, see
 
 ;;;; Editing
 
+;; Font setup
+;; Fallback to DejaVu Sans Mono for mathematical symbols not present
+;; in the default font (Ubuntu Mono)
+(set-fontset-font "fontset-default" '(#x2200 . #x22ff) (font-spec :family "DejaVu Sans Mono"))
+;; Arrows are too narrow in a mono font
+(set-fontset-font "fontset-default" '(#x2190 . #x21ff) (font-spec :family "DejaVu Sans"))
+;; Emoticons and other cute symbols
+(set-fontset-font "fontset-default" '(#x1f300 . #x1f6ff) (font-spec :family "Symbola"))
+
+;; Scale down DejaVu fonts so they match the size of Ubuntu Mono
+;; characters.
+(setq face-font-rescale-alist
+      '((".*DejaVu Sans Mono.*" . 0.9)
+        (".*DejaVu Sans.*" . 0.9)))
+
 ;; Prefer utf-8
 (set-language-environment "utf-8")
 (prefer-coding-system 'utf-8)
@@ -340,16 +355,6 @@ FEATURE may be a named feature or a file name, see
 
   ;; Nice LaTeX entities
   (setq-default org-pretty-entities t)
-
-  ;; Fallback to DejaVu Sans Mono for mathematical symbols not present
-  ;; in the default font (Ubuntu Mono)
-  (set-fontset-font "fontset-default" '(#x2200 . #x22ff) (font-spec :family "DejaVu Sans Mono"))
-  ;; Arrows are too narrow in a mono font
-  (set-fontset-font "fontset-default" '(#x2190 . #x21ff) (font-spec :family "DejaVu Sans"))
-
-  (setq face-font-rescale-alist
-        '((".*DejaVu Sans Mono.*" . 0.9)
-          (".*DejaVu Sans.*" . 0.9)))
 
   ;; Open links to Mozilla Archive Format Files in Firefox
   (add-to-list 'org-file-apps
