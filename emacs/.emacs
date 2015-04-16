@@ -446,7 +446,8 @@ FEATURE may be a named feature or a file name, see
 
 ;; SpiderMonkey is the default REPL
 (setq org-babel-js-cmd "js"
-      org-babel-js-function-wrapper "print(JSON.stringify(function(){%s}(), null, 2))")
+      org-babel-js-function-wrapper "print(JSON.stringify(function(){%s}(), null, 2))"
+      org-babel-js-procedure-wrapper "try { %s } catch (e) { print(e); }")
 
 ;; Tern
 ;; Requires `npm install --global tern`
