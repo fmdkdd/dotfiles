@@ -1,3 +1,5 @@
+*.ibc
 *.class
 *.pyc
 *~
+.tern-port
