@@ -22,6 +22,7 @@
           git-gutter-use-fringe t)
      javascript
      scala
+     haskell
      ;; markdown
      org
      ;; syntax-checking
