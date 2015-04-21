@@ -262,6 +262,27 @@ layers configuration."
     ("V" split-window-right-and-focus          :doc (spacemacs//window-manipulation-split-doc))
     ("w" other-window                          :doc (fmdkdd//window-manipulation-move-doc)))
 
+  (evil-define-key 'normal evil-org-mode-map
+    "gh" 'org-backward-heading-same-level
+    "gj" 'outline-up-heading
+    "gk" 'org-forward-heading-same-level)
+
+  (evil-define-key 'normal evil-org-mode-map
+    (kbd "M-h") 'org-metaup
+    (kbd "M-k") 'org-metadown
+    (kbd "M-j") 'org-metaleft
+    (kbd "M-H") 'org-shiftmetaup
+    (kbd "M-K") 'org-shiftmetadown
+    (kbd "M-J") 'org-shiftmetaleft)
+
+  (evil-define-key 'insert evil-org-mode-map
+    (kbd "M-h") 'org-metaup
+    (kbd "M-k") 'org-metadown
+    (kbd "M-j") 'org-metaleft
+    (kbd "M-H") 'org-shiftmetaup
+    (kbd "M-K") 'org-shiftmetadown
+    (kbd "M-J") 'org-shiftmetaleft)
+
   ;; Read-only files are in view mode
   (setq view-read-only t)
 
@@ -352,7 +373,12 @@ layers configuration."
                            (org-agenda-todo-ignore-deadlines 'near))))))
              org-agenda-ndays 1)))
 
-  ;;; Miscellaneous
+  (eval-after-load "org-agenda"
+    '(progn
+       (define-key org-agenda-mode-map "j" 'nil)
+       (define-key org-agenda-mode-map "h" 'org-agenda-previous-line)
+       (define-key org-agenda-mode-map "k" 'org-agenda-next-line)
+       ))
 
   ;; View image files as images
   (auto-image-file-mode)
