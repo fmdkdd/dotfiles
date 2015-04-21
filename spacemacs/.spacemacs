@@ -142,37 +142,33 @@ before layers configuration."
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
 
-  (defun fmdkdd/swap-bindings (keymap key1 key2)
-    (let ((f1 (lookup-key keymap key1))
-          (f2 (lookup-key keymap key2)))
-      (define-key keymap key1 f2)
-      (define-key keymap key2 f1)))
-
-  (defun fmdkdd/permute-bindings (keymap key1 key2 &rest keys)
-    (while (and key1 key2)
-      (fmdkdd/swap-bindings keymap key1 key2)
-      (setq key1 key2
-            key2 (pop keys))))
-
   ;; Remap HJKL for Colemak layout.
   ;; (h, left), (j, down), (k, top)
   ;; becomes
   ;; (j, left), (k, down), (h, top)
-  (lookup-key evil-visual-state-map "h")
   (define-key evil-normal-state-map "h" 'evil-previous-visual-line)
   (define-key evil-normal-state-map "k" 'evil-next-visual-line)
   (define-key evil-normal-state-map "j" 'nil)
   (define-key evil-visual-state-map "h" 'evil-previous-visual-line)
   (define-key evil-visual-state-map "k" 'evil-next-visual-line)
   (define-key evil-visual-state-map "j" 'nil)
-  (fmdkdd/swap-bindings evil-normal-state-map "K" "L")
-  (fmdkdd/swap-bindings evil-motion-state-map "K" "L")
-  (fmdkdd/permute-bindings evil-motion-state-map "h" "k" "j")
-  (fmdkdd/permute-bindings evil-motion-state-map "gh" "gk" "gj")
-
-  (fmdkdd/swap-bindings evil-motion-state-map "zh" "zj")
-  (fmdkdd/swap-bindings evil-motion-state-map "zH" "zJ")
-  (fmdkdd/permute-bindings evil-evilified-state-map "h" "k" "j")
+  (define-key evil-normal-state-map "K" 'nil)
+  (define-key evil-normal-state-map "L" 'spacemacs/smart-doc-lookup)
+  (define-key evil-motion-state-map "K" 'evil-window-bottom)
+  (define-key evil-motion-state-map "L" 'evil-lookup)
+  (define-key evil-motion-state-map "h" 'evil-previous-line)
+  (define-key evil-motion-state-map "k" 'evil-next-line)
+  (define-key evil-motion-state-map "j" 'evil-backward-char)
+  (define-key evil-motion-state-map "gh" 'evil-previous-visual-line)
+  (define-key evil-motion-state-map "gk" 'evil-next-visual-line)
+  (define-key evil-motion-state-map "gj" 'nil)
+  (define-key evil-motion-state-map "zh" 'nil)
+  (define-key evil-motion-state-map "zj" 'evil-scroll-column-left)
+  (define-key evil-motion-state-map "zh" 'nil)
+  (define-key evil-motion-state-map "zJ" 'evil-scroll-left)
+  (define-key evil-evilified-state-map "h" 'evil-previous-visual-line)
+  (define-key evil-evilified-state-map "k" 'evil-next-visual-line)
+  (define-key evil-evilified-state-map "j" 'evil-backward-char)
 
   (evil-leader/set-key
     "jh" 'evil-goto-next-line-and-indent
@@ -190,10 +186,18 @@ layers configuration."
     "wL" 'evil-window-move-far-right
     "wl" 'evil-window-right)
 
-  (fmdkdd/permute-bindings evil-window-map "h" "k" "j")
-  (fmdkdd/permute-bindings evil-window-map "H" "K" "J")
-  (fmdkdd/permute-bindings evil-window-map "\C-h" "\C-k" "\C-j")
-  (fmdkdd/permute-bindings evil-window-map (kbd "C-S-h") (kbd "C-S-k") (kbd "C-S-j"))
+  (define-key evil-window-map "h" 'evil-window-up)
+  (define-key evil-window-map "H" 'evil-window-move-very-top)
+  (define-key evil-window-map "k" 'evil-window-down)
+  (define-key evil-window-map "K" 'evil-window-move-very-bottom)
+  (define-key evil-window-map "j" 'evil-window-left)
+  (define-key evil-window-map "J" 'evil-window-move-far-left)
+  (define-key evil-window-map "\C-h" 'evil-window-up)
+  (define-key evil-window-map (kbd "C-S-h") 'evil-window-move-very-top)
+  (define-key evil-window-map "\C-k" 'evil-window-down)
+  (define-key evil-window-map (kbd "C-S-k") 'evil-window-move-very-bottom)
+  (define-key evil-window-map "\C-j" 'evil-window-left)
+  (define-key evil-window-map (kbd "C-S-j") 'evil-window-move-far-left)
 
   (defun fmdkdd//window-manipulation-full-doc ()
     "Full documentation for window manipulation micro-state."
