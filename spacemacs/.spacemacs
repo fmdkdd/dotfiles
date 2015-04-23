@@ -12,12 +12,8 @@
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
-     ;; --------------------------------------------------------
-     ;; Example of useful layers you may want to use right away
-     ;; Uncomment a layer name and press C-c C-c to install it
-     ;; --------------------------------------------------------
      auto-completion
-     ;; better-defaults
+     better-defaults
      (git :variables
           git-gutter-use-fringe t)
      javascript
@@ -65,7 +61,6 @@ before layers configuration."
    dotspacemacs-themes '(solarized-light
                          solarized-dark
                          leuven
-                         monokai
                          zenburn)
    ;; If non nil the cursor color matches the state color.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -75,7 +70,7 @@ before layers configuration."
                                :size 14
                                :weight normal
                                :width normal
-                               :powerline-scale 1.1)
+                               :powerline-scale 1.25)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
    ;; The leader key accessible in `emacs state' and `insert state'
@@ -337,10 +332,6 @@ layers configuration."
   ;;; Org mode
   (eval-after-load 'org
     '(progn
-
-       ;; No org-indent
-       (remove-hook 'org-mode-hook 'org-indent-mode)
-
        ;; No indentation in Org files
        (setq org-adapt-indentation nil)
 
