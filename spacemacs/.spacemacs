@@ -60,9 +60,7 @@ before layers configuration."
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
    dotspacemacs-themes '(solarized-light
-                         solarized-dark
-                         leuven
-                         zenburn)
+                         solarized-dark)
    ;; If non nil the cursor color matches the state color.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -252,8 +250,12 @@ layers configuration."
  '(ahs-idle-interval 0.25)
  '(ahs-idle-timer 0 t)
  '(ahs-inhibit-face-list nil)
+ '(js2-basic-offset 2)
  '(org-agenda-files (quote ("~/Archimède/Thèse/notes/todo.org")))
  '(ring-bell-function (quote ignore) t)
+ '(scala-indent:align-forms t)
+ '(scala-indent:align-parameters t)
+ '(scala-indent:default-run-on-strategy scala-indent:operator-strategy)
  '(writeroom-width 0.5))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
