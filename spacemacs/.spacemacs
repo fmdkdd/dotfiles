@@ -167,6 +167,9 @@ layers configuration."
   ;; Automatic auto-fill
   (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
+  ;; Fuzzy matching is fstr
+  (setq helm-M-x-fuzzy-match t)
+
   ;; Curly quotes
   (add-to-list 'load-path (locate-user-emacs-file "private"))
   (require 'smart-quotes)
