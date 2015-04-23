@@ -24,6 +24,7 @@
      writeroom
      ;; syntax-checking
      colemak-hjkl
+     fmdkdd
      )
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(evil-escape)
@@ -137,105 +138,6 @@ before layers configuration."
   "Configuration function.
  This function is called at the very end of Spacemacs initialization after
 layers configuration."
-
-  ;; Read-only files are in view mode
-  (setq view-read-only t)
-
-  ;; Follow symlinks to versioned files
-  (setq vc-follow-symlinks t)
-
-  ;; Font setup
-  ;; Fallback to DejaVu Sans Mono for mathematical symbols not present
-  ;; in the default font (Ubuntu Mono)
-  (set-fontset-font "fontset-default" '(#x2200 . #x22ff) (font-spec :family "DejaVu Sans Mono"))
-  ;; Arrows are too narrow in a mono font
-  (set-fontset-font "fontset-default" '(#x2190 . #x21ff) (font-spec :family "DejaVu Sans"))
-  ;; Emoticons and other cute symbols
-  (set-fontset-font "fontset-default" '(#x1f300 . #x1f6ff) (font-spec :family "Symbola"))
-
-  ;; Scale down DejaVu fonts so they match the size of Ubuntu Mono
-  ;; characters.
-  (setq face-font-rescale-alist
-        '((".*DejaVu Sans Mono.*" . 0.9)
-          (".*DejaVu Sans.*" . 0.9)))
-
-  ;; Delete trailing whitespace on file save
-  (add-hook 'before-save-hook 'delete-trailing-whitespace)
-
-  ;; Automatic auto-fill
-  (add-hook 'text-mode-hook 'turn-on-auto-fill)
-
-  ;; Fuzzy matching is fstr
-  (setq helm-M-x-fuzzy-match t)
-
-  ;; Curly quotes
-  (add-to-list 'load-path (locate-user-emacs-file "private"))
-  (require 'smart-quotes)
-  (add-hook 'text-mode-hook 'turn-on-smart-quotes)
-  (diminish 'smart-quotes-mode)
-  ;; But not in HTML
-  (add-hook 'html-mode-hook 'turn-off-smart-quotes)
-
-  ;; Highlight the following words in comments
-  (defun add-watchwords ()
-    (font-lock-add-keywords
-     nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\|DELETE\\|XXX\\):"
-            1 font-lock-warning-face t))))
-  (add-hook 'prog-mode-hook #'add-watchwords)
-
-  ;; Don't ask confirmation to save buffers when compiling
-  (setq compilation-ask-about-save nil)
-
-  ;; FIXME: I only use Ensime for its juicy shortcuts to run sbt
-  ;; (remove-hook 'scala-mode-hook 'scala/configure-ensime)
-  ;; (remove-hook 'scala-mode-hook 'scala/maybe-start-ensime)
-
-  ;;; Org mode
-  (eval-after-load 'org
-    '(progn
-       ;; No indentation in Org files
-       (setq org-adapt-indentation nil)
-
-       ;; Syntactic coloration of source blocks
-       (setq org-src-fontify-natively t)
-
-       ;; Nice LaTeX entities
-       (setq-default org-pretty-entities t)
-
-       ;; Open links to Mozilla Archive Format Files in Firefox
-       (add-to-list 'org-file-apps
-                    '("maff" . "firefox %s"))
-
-       (setq org-log-into-drawer t)
-       (setq org-clock-into-drawer t)
-
-       ;; (setq org-todo-keyword-faces
-       ;;       (zenburn-with-color-variables
-       ;;        `(("TODO" . org-warning)
-       ;;          ("NEXT" . (:foreground ,zenburn-yellow :weight bold))
-       ;;          ("WAIT" . (:foreground ,zenburn-orange :weight bold))
-       ;;          ("CANCELED" . (:foreground ,zenburn-blue-1 :weight bold))
-       ;;          ("DELEGATED" . (:foreground ,zenburn-green :weight bold)))))
-
-       (setq org-agenda-custom-commands
-             '(("n" "Agenda and all unscheduled TODO's"
-                ((agenda "")
-                 (todo "NEXT" ((org-agenda-overriding-header "Next")))
-                 (todo "WAIT" ((org-agenda-overriding-header "Waiting")))
-                 (todo "TODO" ((org-agenda-overriding-header "Unscheduled tasks")
-                               (org-agenda-todo-ignore-scheduled 'all)
-                               (org-agenda-todo-ignore-deadlines 'all)))
-                 (todo "" ((org-agenda-overriding-header "Upcoming deadlines")
-                           (org-agenda-skip-function '(org-agenda-skip-entry-if 'notdeadline))
-                           (org-agenda-todo-ignore-deadlines 'near))))))
-             org-agenda-ndays 1)))
-
-  ;; View image files as images
-  (auto-image-file-mode)
-
-  ;; Calendar
-  (eval-after-load 'calendar
-    (setq calendar-week-start-day 1))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
