@@ -74,68 +74,12 @@
 ;; CSS indentation
 (setq css-indent-offset 2)
 
-;; Enable Babel evaluation of JavaScript
-(eval-after-load 'org-babel
-  (require 'ob-js))
-
-;; SpiderMonkey is the default REPL
-(setq org-babel-js-cmd "js"
-      org-babel-js-function-wrapper "print(JSON.stringify(function(){%s}(), null, 2))"
-      org-babel-js-procedure-wrapper "try { %s } catch (e) { print(e); }")
-
-
 ;; Don't ask confirmation to save buffers when compiling
 (setq compilation-ask-about-save nil)
 
 ;; FIXME: I only use Ensime for its juicy shortcuts to run sbt
 ;; (remove-hook 'scala-mode-hook 'scala/configure-ensime)
 ;; (remove-hook 'scala-mode-hook 'scala/maybe-start-ensime)
-
-
-;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; Org mode
-;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-(eval-after-load 'org
-  '(progn
-     ;; No indentation in Org files
-     (setq org-adapt-indentation nil)
-
-     ;; Syntactic coloration of source blocks
-     (setq org-src-fontify-natively t)
-
-     ;; Nice LaTeX entities
-     (setq-default org-pretty-entities t)
-
-     ;; Open links to Mozilla Archive Format Files in Firefox
-     (add-to-list 'org-file-apps
-                  '("maff" . "firefox %s"))
-
-     (setq org-log-into-drawer t)
-     (setq org-clock-into-drawer t)
-
-     ;; FIXME: this only works when zenburn has been loaded
-     ;; (setq org-todo-keyword-faces
-     ;;       (zenburn-with-color-variables
-     ;;        `(("TODO" . org-warning)
-     ;;          ("NEXT" . (:foreground ,zenburn-yellow :weight bold))
-     ;;          ("WAIT" . (:foreground ,zenburn-orange :weight bold))
-     ;;          ("CANCELED" . (:foreground ,zenburn-blue-1 :weight bold))
-     ;;          ("DELEGATED" . (:foreground ,zenburn-green :weight bold)))))
-
-     (setq org-agenda-custom-commands
-           '(("n" "Agenda and all unscheduled TODO's"
-              ((agenda "")
-               (todo "NEXT" ((org-agenda-overriding-header "Next")))
-               (todo "WAIT" ((org-agenda-overriding-header "Waiting")))
-               (todo "TODO" ((org-agenda-overriding-header "Unscheduled tasks")
-                             (org-agenda-todo-ignore-scheduled 'all)
-                             (org-agenda-todo-ignore-deadlines 'all)))
-               (todo "" ((org-agenda-overriding-header "Upcoming deadlines")
-                         (org-agenda-skip-function
-                          '(org-agenda-skip-entry-if 'notdeadline))
-                         (org-agenda-todo-ignore-deadlines 'near))))))
-           org-agenda-ndays 1)))
 
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
