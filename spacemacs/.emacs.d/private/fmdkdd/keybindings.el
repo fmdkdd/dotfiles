@@ -8,5 +8,7 @@
 ;;
 ;;; License: GPLv3
 
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
+(evil-leader/set-key
+  "oa" 'org-agenda
+  "oc" 'org-capture
+  "ol" 'org-store-link)
