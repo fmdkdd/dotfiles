@@ -22,6 +22,9 @@
 ;; Emoticons and other cute symbols
 (set-fontset-font "fontset-default" '(#x1f300 . #x1f6ff)
                   (font-spec :family "Symbola"))
+;; Box drawings arcs for Spacemacs box
+(set-fontset-font "fontset-default" '(#x256d . #x2579)
+                  (font-spec :family "DejaVu Sans Mono"))
 
 ;; Scale down DejaVu fonts so they match the size of Ubuntu Mono characters.
 (setq face-font-rescale-alist
