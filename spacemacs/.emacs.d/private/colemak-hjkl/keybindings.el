@@ -1,10 +1,8 @@
 ;;; funcs.el --- Colemak HJKL Layer key bindings File
 ;;
-;; Copyright (c) 2012-2014 Sylvain Benner
-;; Copyright (c) 2015 fmdkdd & Contributors
+;; Copyright (c) 2015 fmdkdd
 ;;
 ;; Author: fmdkdd
-;; URL: https://github.com/syl20bnr/spacemacs
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
