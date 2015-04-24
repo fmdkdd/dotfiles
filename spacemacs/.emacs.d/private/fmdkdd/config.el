@@ -53,9 +53,6 @@
 ;; Auto fill comments in prog modes
 (add-hook 'prog-mode-hook 'fmdkdd//auto-fill-comments)
 
-;; Fuzzy matching is fstr
-(setq helm-M-x-fuzzy-match t)
-
 ;; Spelling
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
@@ -151,3 +148,6 @@
 ;;
 (eval-after-load 'calendar
   (setq calendar-week-start-day 1))
+
+;; Fuzzy matching is fstr
+(setq helm-M-x-fuzzy-match t)
