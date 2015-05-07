@@ -59,6 +59,9 @@
 ;; Indicate empty lines in fringe using default Emacs bitmap
 (setq-default indicate-empty-lines t)
 
+;; Use continuation lines
+(add-hook 'text-mode-hook 'fmdkdd//turn-off-truncate-lines)
+
 ;; Automatic auto-fill
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 

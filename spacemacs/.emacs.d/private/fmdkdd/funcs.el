@@ -26,3 +26,6 @@
   (comint-send-string
    (inferior-moz-process)
    "content.document.location.reload(true);"))
+
+(defun fmdkdd//turn-off-truncate-lines ()
+  (setq truncate-lines nil))
