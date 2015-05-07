@@ -50,6 +50,15 @@
 ;; Editing
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+;; Restore continuation and truncation lines from standard Emacs
+(setq-default fringe-indicator-alist
+              '((truncation left-arrow right-arrow)
+                (continuation left-curly-arrow right-curly-arrow)
+                (empty-line empty-line)))
+
+;; Indicate empty lines in fringe using default Emacs bitmap
+(setq-default indicate-empty-lines t)
+
 ;; Automatic auto-fill
 (add-hook 'text-mode-hook 'turn-on-auto-fill)
 
