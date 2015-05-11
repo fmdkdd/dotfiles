@@ -39,7 +39,8 @@ main = do
     (xmonad $ gnomeConfig
      { logHook = dynamicLogWithPP (prettyPrinter dbus),
        modMask = mod4Mask,
-       normalBorderColor  = "#eee8d5",
+       normalBorderColor  = "#073642", -- dark
+       -- normalBorderColor  = "#eee8d5", -- light
        focusedBorderColor = "#268bd2",
        manageHook         = myManageHook <+> manageDocks,
        layoutHook         = avoidStruts $ smartBorders $ myLayout
