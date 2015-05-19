@@ -84,6 +84,7 @@ which require an initialization must be listed explicitly in the list.")
     :config
     ;; Prevent package updates to pollute the recent files list
     (add-to-list 'recentf-exclude package-user-dir)
+    (add-to-list 'recentf-exclude spacemacs-cache-directory)
     ))
 
 (defun fmdkdd/init-helm ()
