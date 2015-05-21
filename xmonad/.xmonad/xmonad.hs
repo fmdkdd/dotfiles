@@ -7,6 +7,9 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.NoBorders
 import XMonad.Util.EZConfig (additionalKeys)
+import System.Environment
+import System.Posix.Env
+import Data.Char (toLower)
 
 import qualified DBus as D
 import qualified DBus.Client as D
@@ -32,15 +35,34 @@ myLayout = tiled ||| Mirror tiled ||| Full
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
 
+data Theme = Light | Dark deriving (Show, Read)
+
+borderColor :: Theme -> String
+borderColor Light = "#eee8d5"
+borderColor Dark  = "#073642"
+
+toggleTheme :: Theme -> Theme
+toggleTheme Light = Dark
+toggleTheme Dark  = Light
+
+loadTheme :: IO Theme
+loadTheme = do
+  themeEnv <- lookupEnv "solarized"
+  let themeName = toggleTheme $ maybe Light read themeEnv
+  putEnv $ "solarized=" ++ (show themeName)
+  spawn ("/usr/local/bin/gnome-terminal-solarized " ++ (map toLower (show themeName)))
+  return themeName
+
+
 main :: IO ()
 main = do
     dbus <- D.connectSession
     getWellKnownName dbus
+    theme <- loadTheme
     (xmonad $ gnomeConfig
      { logHook = dynamicLogWithPP (prettyPrinter dbus),
        modMask = mod4Mask,
-       normalBorderColor  = "#073642", -- dark
-       -- normalBorderColor  = "#eee8d5", -- light
+       normalBorderColor  = borderColor theme,
        focusedBorderColor = "#268bd2",
        manageHook         = myManageHook <+> manageDocks,
        layoutHook         = avoidStruts $ smartBorders $ myLayout
