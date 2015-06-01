@@ -71,6 +71,8 @@
 ;; Spelling
 (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
+;; Two spaces end a sentence
+(setq sentence-end-double-space t)
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Programming

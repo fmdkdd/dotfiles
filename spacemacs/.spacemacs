@@ -19,6 +19,7 @@
      javascript
      scala
      haskell
+     emacs-lisp
      ;; markdown
      org
      writeroom
@@ -132,10 +133,6 @@ before layers configuration."
    dotspacemacs-default-package-repository nil
    )
   ;; User initialization goes here
-  ;; Workaround for bug in Haskell indentation
-  ;; See https://github.com/syl20bnr/spacemacs/issues/1136
-  (autoload 'haskell-indentation-enable-show-indentations "haskell-indentation")
-  (autoload 'haskell-indentation-disable-show-indentations "haskell-indentation")
   )
 
 (defun dotspacemacs/config ()

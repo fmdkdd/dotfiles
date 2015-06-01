@@ -11,7 +11,6 @@
 (defvar fmdkdd-packages
   '(org                                 ; Plain text powerhouse
     rainbow-mode                        ; CSS colors preview
-    recentf                             ; Keep track of visited files
     helm                                ; Better ido
     )
   "List of all packages to install and/or initialize. Built-in packages
@@ -76,15 +75,6 @@ which require an initialization must be listed explicitly in the list.")
     (setq org-babel-js-cmd "js"
           org-babel-js-function-wrapper "print(JSON.stringify(function(){%s}(), null, 2))"
           org-babel-js-procedure-wrapper "try { %s } catch (e) { print(e); }")
-    ))
-
-(defun fmdkdd/init-recentf ()
-  (use-package recentf
-    :defer t
-    :config
-    ;; Prevent package updates to pollute the recent files list
-    (add-to-list 'recentf-exclude package-user-dir)
-    (add-to-list 'recentf-exclude spacemacs-cache-directory)
     ))
 
 (defun fmdkdd/init-helm ()
