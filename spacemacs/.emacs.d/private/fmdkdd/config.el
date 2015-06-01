@@ -68,9 +68,6 @@
 ;; Auto fill comments in prog modes
 (add-hook 'prog-mode-hook 'fmdkdd//auto-fill-comments)
 
-;; Spelling
-(add-hook 'prog-mode-hook 'flyspell-prog-mode)
-
 ;; Two spaces end a sentence
 (setq sentence-end-double-space t)
 
