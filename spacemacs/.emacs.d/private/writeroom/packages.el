@@ -8,13 +8,13 @@
 ;;
 ;;; License: GPLv3
 
-(defvar writeroom-packages
-  '(writeroom-mode)
-  "List of all packages to install and/or initialize. Built-in packages
-which require an initialization must be listed explicitly in the list.")
+;; List of all packages to install and/or initialize. Built-in packages
+;; which require an initialization must be listed explicitly in the list.
+(setq writeroom-packages
+  '(writeroom-mode))
 
-(defvar writeroom-excluded-packages '()
-  "List of packages to exclude.")
+;; List of packages to exclude.
+(setq writeroom-excluded-packages '())
 
 (defun writeroom/init-writeroom-mode ()
   (use-package writeroom-mode

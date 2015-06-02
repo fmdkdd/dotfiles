@@ -8,12 +8,12 @@
 ;;
 ;;; License: GPLv3
 
-(defvar fmdkdd-pre-extensions '()
-  "List of all extensions to load before the packages.")
+;; List of all extensions to load before the packages.
+(setq fmdkdd-pre-extensions '())
 
-(defvar fmdkdd-post-extensions
-  '(smart-quotes)
-  "List of all extensions to load after the packages.")
+;; List of all extensions to load after the packages.
+(setq fmdkdd-post-extensions
+  '(smart-quotes))
 
 (defun fmdkdd/init-smart-quotes ()
   (use-package smart-quotes

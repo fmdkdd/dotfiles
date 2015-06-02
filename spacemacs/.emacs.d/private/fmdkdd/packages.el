@@ -8,16 +8,16 @@
 ;;
 ;;; License: GPLv3
 
-(defvar fmdkdd-packages
+;; List of all packages to install and/or initialize. Built-in packages which
+;; require an initialization must be listed explicitly in the list.
+(setq fmdkdd-packages
   '(org                                 ; Plain text powerhouse
     rainbow-mode                        ; CSS colors preview
     helm                                ; Better ido
-    )
-  "List of all packages to install and/or initialize. Built-in packages
-which require an initialization must be listed explicitly in the list.")
+    ))
 
-(defvar fmdkdd-excluded-packages '()
-  "List of packages to exclude.")
+;; List of packages to exclude.
+(setq fmdkdd-excluded-packages '())
 
 (defun fmdkdd/init-rainbow-mode ()
   (use-package rainbow-mode
