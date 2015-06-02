@@ -23,7 +23,7 @@
      ;; markdown
      org
      writeroom
-     ;; syntax-checking
+     syntax-checking
      colemak-hjkl
      fmdkdd
      )
