@@ -28,9 +28,10 @@
   (use-package org
     :mode ("\\.org$" . org-mode)
     :init
-    ;; Enable Babel evaluation of JavaScript
+    ;; Enable Babel evaluation of JavaScript, Dot
     (eval-after-load 'org-babel
-      (require 'ob-js))
+      (require 'ob-js)
+      (require 'ob-dot))
 
     :config
     ;; No indentation in Org files
@@ -70,6 +71,10 @@
                          '(org-agenda-skip-entry-if 'notdeadline))
                         (org-agenda-todo-ignore-deadlines 'near))))))
           org-agenda-ndays 1)
+
+    ;; Automatically redisplay images after executing code.  Great for Dot
+    ;; graphs source blocks.
+    (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 
     ;; SpiderMonkey is the default REPL
     (setq org-babel-js-cmd "js"
