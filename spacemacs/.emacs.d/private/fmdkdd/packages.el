@@ -30,8 +30,9 @@
     :init
     ;; Enable Babel evaluation of JavaScript, Dot
     (eval-after-load 'org-babel
-      (require 'ob-js)
-      (require 'ob-dot))
+      (progn
+        (require 'ob-js)
+        (require 'ob-dot)))
 
     :config
     ;; No indentation in Org files
