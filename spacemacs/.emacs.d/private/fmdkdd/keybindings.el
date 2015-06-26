@@ -12,3 +12,6 @@
   "oa" 'org-agenda
   "oc" 'org-capture
   "ol" 'org-store-link)
+
+(evil-leader/set-key-for-mode 'org-mode
+  "c" nil "mc" 'fmdkdd/org-reftex-citation)

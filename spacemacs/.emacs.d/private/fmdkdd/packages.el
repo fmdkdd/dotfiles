@@ -14,6 +14,7 @@
   '(org                                 ; Plain text powerhouse
     rainbow-mode                        ; CSS colors preview
     helm                                ; Better ido
+    reftex-dcr                          ; Needed to view citations in Org files
     ))
 
 ;; List of packages to exclude.
@@ -81,6 +82,9 @@
     (setq org-babel-js-cmd "js"
           org-babel-js-function-wrapper "print(JSON.stringify(function(){%s}(), null, 2))"
           org-babel-js-procedure-wrapper "try { %s } catch (e) { print(e); }")
+
+    ;; Follow citations links using Reftex.
+    (org-add-link-type "cite" #'fmdkdd/org-reftex-view-citation)
     ))
 
 (defun fmdkdd/init-helm ()
@@ -92,4 +96,10 @@
           helm-recentf-fuzzy-match t
           helm-lisp-fuzzy-completion t
           helm-imenu-fuzzy-match t)
+    ))
+
+;; Autoload `reftex-view-cr-cite' to follow citations in Org files.
+(defun fmdkdd/init-reftex-dcr ()
+  (use-package reftex-dcr
+    :commands reftex-view-cr-cite
     ))
