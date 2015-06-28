@@ -15,6 +15,7 @@
     rainbow-mode                        ; CSS colors preview
     helm                                ; Better ido
     reftex-dcr                          ; Needed to view citations in Org files
+    js2-mode                            ; JavaScript mode
     ))
 
 ;; List of packages to exclude.
@@ -103,3 +104,7 @@
   (use-package reftex-dcr
     :commands reftex-view-cr-cite
     ))
+
+(defun fmdkdd/init-js2-mode ()
+  (use-package js2-mode
+    :mode ("\\.es6$" . js2-mode)))
