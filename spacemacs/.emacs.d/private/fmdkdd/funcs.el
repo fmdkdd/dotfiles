@@ -71,3 +71,17 @@ into the buffer."
                  (org-icompleting-read "Citation: " (obe-citations)))))
     (fmdkdd//org-reftex-setup
      (lambda () (reftex-view-cr-cite nil key nil)))))
+
+(defvar fmdkdd/papers-directory "~/Archimède/Thèse/papers")
+
+(defun fmdkdd/org-view-paper ()
+  (interactive)
+  (save-excursion
+    (when (org-in-regexp org-bracket-link-regexp 1)
+      (setq link (org-extract-attributes
+                  (org-link-unescape (org-match-string-no-properties 1))))
+      (string-match org-link-re-with-space3 link)
+      (setq type (match-string 1 link) path (match-string 2 link))
+      (when (equal type "cite")
+        (org-open-file (expand-file-name (concat path ".pdf")
+                                         fmdkdd/papers-directory))))))
