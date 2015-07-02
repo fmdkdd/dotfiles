@@ -1,4 +1,4 @@
-;; -*- mode: dotspacemacs -*-
+;; -*- mode: emacs-lisp -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
@@ -6,7 +6,7 @@
   "Configuration Layers declaration."
   (setq-default
    ;; List of additional paths where to look for configuration layers.
-   ;; Paths must have a trailing slash (ie. `~/.mycontribs/')
+   ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load. If it is the symbol `all' instead
    ;; of a list then all discovered layers will be installed.
@@ -14,8 +14,8 @@
    '(
      auto-completion
      better-defaults
-     (git :variables
-          git-gutter-use-fringe t)
+     git
+     version-control
      javascript
      scala
      haskell
@@ -27,9 +27,13 @@
      colemak-hjkl
      fmdkdd
      )
+   ;; List of additional packages that will be installed without being
+   ;; wrapped in a layer. If you need some configuration for these
+   ;; packages then consider to create a layer, you can also put the
+   ;; configuration in `dotspacemacs/config'.
+   dotspacemacs-additional-packages '(org-plus-contrib)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '(evil-escape vi-tilde-fringe)
-   dotspacemacs-additional-packages '(org-plus-contrib)
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
    ;; are declared in a layer which is not a member of
    ;; the list `dotspacemacs-configuration-layers'
@@ -45,14 +49,14 @@ before layers configuration."
    ;; Either `vim' or `emacs'. Evil is always enabled but if the variable
    ;; is `emacs' then the `holy-mode' is enabled at startup.
    dotspacemacs-editing-style 'vim
-   ;; If non nil output loading progess in `*Messages*' buffer.
+   ;; If non nil output loading progress in `*Messages*' buffer.
    dotspacemacs-verbose-loading nil
    ;; Specify the startup banner. Default value is `official', it displays
    ;; the official spacemacs logo. An integer value is the index of text
    ;; banner, `random' chooses a random text banner in `core/banners'
-   ;; directory. A string value must be a path to a .PNG file.
+   ;; directory. A string value must be a path to an image format supported
+   ;; by your Emacs build.
    ;; If the value is nil then no banner is displayed.
-   ;; dotspacemacs-startup-banner 'official
    dotspacemacs-startup-banner 'official
    ;; t if you always want to see the changelog at startup
    dotspacemacs-always-show-changelog t
@@ -87,7 +91,15 @@ before layers configuration."
    ;; By default the command key is `:' so ex-commands are executed like in Vim
    ;; with `:' and Emacs commands are executed with `<leader> :'.
    dotspacemacs-command-key ":"
-   ;; If non nil the paste micro-state is enabled. While enabled pressing `p`
+   ;; Location where to auto-save files. Possible values are `original' to
+   ;; auto-save the file in-place, `cache' to auto-save the file to another
+   ;; file stored in the cache directory and `nil' to disable auto-saving.
+   ;; Default value is `cache'.
+   dotspacemacs-auto-save-file-location 'cache
+   ;; If non nil then `ido' replaces `helm' for some commands. For now only
+   ;; `find-files' (SPC f f) is replaced.
+   dotspacemacs-use-ido nil
+   ;; If non nil the paste micro-state is enabled. When enabled pressing `p`
    ;; several times cycle between the kill ring content.
    dotspacemacs-enable-paste-micro-state t
    ;; Guide-key delay in seconds. The Guide-key is the popup buffer listing
@@ -123,6 +135,9 @@ before layers configuration."
    dotspacemacs-smooth-scrolling t
    ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
    dotspacemacs-smartparens-strict-mode nil
+   ;; Select a scope to highlight delimiters. Possible value is `all',
+   ;; `current' or `nil'. Default is `all'
+   dotspacemacs-highlight-delimiters 'all
    ;; If non nil advises quit functions to keep server open when quitting.
    dotspacemacs-persistent-server nil
    ;; List of search tool executable names. Spacemacs uses the first installed
