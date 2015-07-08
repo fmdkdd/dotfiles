@@ -13,7 +13,6 @@
    dotspacemacs-configuration-layers
    '(
      auto-completion
-     better-defaults
      git
      version-control
      javascript
@@ -170,6 +169,8 @@ layers configuration."
  '(ahs-idle-timer 0 t)
  '(ahs-inhibit-face-list nil)
  '(js2-basic-offset 2)
+ '(js2-strict-missing-semi-warning nil)
+ '(js2-strict-trailing-comma-warning nil)
  '(org-agenda-files (quote ("~/Archimède/Thèse/notes/todo.org")))
  '(ring-bell-function (quote ignore) t)
  '(scala-indent:align-forms t)
