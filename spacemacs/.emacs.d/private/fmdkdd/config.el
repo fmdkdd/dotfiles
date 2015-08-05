@@ -71,6 +71,9 @@
 ;; Two spaces end a sentence
 (setq sentence-end-double-space t)
 
+;; Automatically save private directory
+(setq ispell-silently-savep t)
+
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Programming
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
