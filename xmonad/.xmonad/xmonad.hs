@@ -5,6 +5,7 @@ import XMonad.Actions.Warp
 import XMonad.Config.Gnome
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.EwmhDesktops
 import XMonad.Layout.NoBorders
 import XMonad.Util.EZConfig (additionalKeys)
 import System.Environment
@@ -65,7 +66,8 @@ main = do
        normalBorderColor  = borderColor theme,
        focusedBorderColor = "#268bd2",
        manageHook         = myManageHook <+> manageDocks,
-       layoutHook         = avoidStruts $ smartBorders $ myLayout
+       layoutHook         = avoidStruts $ smartBorders $ myLayout,
+       handleEventHook = fullscreenEventHook
      }
      `additionalKeys`
      ([
