@@ -84,6 +84,9 @@
           org-babel-js-function-wrapper "print(JSON.stringify(function(){%s}(), null, 2))"
           org-babel-js-procedure-wrapper "try { %s } catch (e) { print(e); }")
 
+    ;; js2-mode to edit js snippets from org-mode
+    (add-to-list 'org-src-lang-modes '("js" . js2))
+
     ;; Follow citations links using Reftex.
     (org-add-link-type "cite" #'fmdkdd/org-reftex-view-citation)
     ))
