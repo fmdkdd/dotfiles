@@ -37,8 +37,11 @@
         (require 'ob-dot)))
 
     :config
-    ;; No indentation in Org files
-    (setq org-adapt-indentation nil)
+    ;; No indentation in Org files.
+    ;; No visual indentation either, as in deep subtrees, lines will go too far
+    ;; on the right.
+    (setq org-adapt-indentation nil
+          org-startup-indented nil)
 
     ;; Syntactic coloration of source blocks
     (setq org-src-fontify-natively t)
