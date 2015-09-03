@@ -150,9 +150,8 @@
     (kbd "M-K") 'org-shiftmetadown
     (kbd "M-J") 'org-shiftmetaleft)
 
-  (eval-after-load "org-agenda"
-    '(progn
-       (define-key org-agenda-mode-map "j" 'nil)
-       (define-key org-agenda-mode-map "h" 'org-agenda-previous-line)
-       (define-key org-agenda-mode-map "k" 'org-agenda-next-line)
-       )))
+  (with-eval-after-load 'org-agenda
+    (define-key org-agenda-mode-map "j" 'nil)
+    (define-key org-agenda-mode-map "h" 'org-agenda-previous-line)
+    (define-key org-agenda-mode-map "k" 'org-agenda-next-line)
+    ))

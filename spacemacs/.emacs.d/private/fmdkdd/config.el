@@ -71,7 +71,7 @@
 ;; Two spaces end a sentence
 (setq sentence-end-double-space t)
 
-;; Automatically save private directory
+;; Automatically save private dictionary
 (setq ispell-silently-savep t)
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -107,5 +107,5 @@
 (auto-image-file-mode)
 
 ;; Monday is the first day of the week
-(eval-after-load 'calendar
+(with-eval-after-load 'calendar
   (setq calendar-week-start-day 1))

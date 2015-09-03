@@ -31,10 +31,9 @@
     :mode ("\\.org$" . org-mode)
     :init
     ;; Enable Babel evaluation of JavaScript, Dot
-    (eval-after-load 'org-babel
-      (progn
-        (require 'ob-js)
-        (require 'ob-dot)))
+    (with-eval-after-load 'ob
+      (require 'ob-js)
+      (require 'ob-dot))
 
     :config
     ;; No indentation in Org files.

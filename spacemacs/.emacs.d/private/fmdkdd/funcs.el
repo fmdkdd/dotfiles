@@ -72,9 +72,15 @@ into the buffer."
     (fmdkdd//org-reftex-setup
      (lambda () (reftex-view-cr-cite nil key nil)))))
 
-(defvar fmdkdd/papers-directory "~/Archimède/Thèse/papers")
+(defvar fmdkdd/papers-directory "~/Archimède/Thèse/papers"
+  "Path to search for PDF files when following a cite link in Org
+with `fmdkdd/org-view-paper'")
 
 (defun fmdkdd/org-view-paper ()
+  "Find the PDF file corresponding to the cite link under point in an Org file.
+If point is on link [[cite:KEY][...]], then it will look for a
+file named KEY.pdf in the directory specified by
+`fmdkdd/papers-directory' and open it."
   (interactive)
   (save-excursion
     (when (org-in-regexp org-bracket-link-regexp 1)
