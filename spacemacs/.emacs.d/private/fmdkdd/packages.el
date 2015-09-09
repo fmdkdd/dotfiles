@@ -88,6 +88,8 @@
 
     ;; js2-mode to edit js snippets from org-mode
     (add-to-list 'org-src-lang-modes '("js" . js2))
+    ;; ... and for nodejs snippets as well
+    (add-to-list 'org-src-lang-modes '("nodejs" . js2))
 
     ;; Follow citations links using Reftex.
     (org-add-link-type "cite" #'fmdkdd/org-reftex-view-citation)

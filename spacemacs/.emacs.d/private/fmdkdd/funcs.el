@@ -27,6 +27,11 @@
    (inferior-moz-process)
    "content.document.location.reload(true);"))
 
+(defun org-babel-execute:nodejs (body params)
+  "Execute a block of JavaScript (through nodejs) code with org-babel."
+  (let ((org-babel-js-cmd "node"))
+    (org-babel-execute:js body params)))
+
 (defun fmdkdd//turn-off-truncate-lines ()
   (setq truncate-lines nil))
 
