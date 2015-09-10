@@ -37,13 +37,17 @@
 
     :config
     ;; No indentation in Org files.
+    (setq org-adapt-indentation nil)
+
     ;; No visual indentation either, as in deep subtrees, lines will go too far
-    ;; on the right.
-    (setq org-adapt-indentation nil
-          org-startup-indented nil)
+    ;; on the right.  Seems to be reset, so setq-default should do it.
+    (setq-default org-startup-indented nil)
 
     ;; Syntactic coloration of source blocks
     (setq org-src-fontify-natively t)
+
+    ;; No indentation of src blocks.
+    (setq org-src-preserve-indentation t)
 
     ;; Nice LaTeX entities
     (setq-default org-pretty-entities t)
