@@ -85,7 +85,7 @@
     ;; graphs source blocks.
     (add-hook 'org-babel-after-execute-hook 'org-display-inline-images)
 
-    ;; SpiderMonkey is the default REPL
+    ;; SpiderMonkey is the default js engine for Babel
     (setq org-babel-js-cmd "js"
           org-babel-js-function-wrapper "print(JSON.stringify(function(){%s}(), null, 2))"
           org-babel-js-procedure-wrapper "try { %s } catch (e) { print(e); }")
@@ -94,6 +94,9 @@
     (add-to-list 'org-src-lang-modes '("js" . js2))
     ;; ... and for nodejs snippets as well
     (add-to-list 'org-src-lang-modes '("nodejs" . js2))
+
+    ;; Customize `org-babel-eval' to add support for stderr in result output.
+    (advice-add 'org-babel-eval :around #'fmdkdd/org-babel-eval)
 
     ;; Follow citations links using Reftex.
     (org-add-link-type "cite" #'fmdkdd/org-reftex-view-citation)

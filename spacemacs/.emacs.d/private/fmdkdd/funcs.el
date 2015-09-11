@@ -32,6 +32,31 @@
   (let ((org-babel-js-cmd "node"))
     (org-babel-execute:js body params)))
 
+;; Custom `org-babel-eval' to add support for stderr in result output.
+(defun fmdkdd/org-babel-eval (ob-eval cmd body)
+  "Run CMD on BODY.
+If CMD succeeds then return its results, otherwise display
+STDERR with `org-babel-eval-error-notify'."
+  (let (exit-code)
+    ;; "stderr" in results parameter will interleave stderr and stdout in the
+    ;; results.  It will also prevent the Org-Babel Error buffer to sprout.
+    (message "%S" result-params)
+    (if (member "stderr" result-params)
+        (progn
+          (with-temp-buffer
+            (insert body)
+            (setq exit-code
+                  ;; `org-babel-eval' used a baked-in variant of
+                  ;; `shell-command-on-region' for legacy purposes.  It behaved
+                  ;; badly when the err-buff argument was nil, because of an
+                  ;; advice (on delete file).  Might as well use the built-in
+                  ;; function.
+                  (shell-command-on-region
+                   (point-min) (point-max) cmd t t))
+            (buffer-string)))
+      ;; "stderr" absent, use standard `org-babel-eval'.
+      (funcall ob-eval cmd body))))
+
 (defun fmdkdd//turn-off-truncate-lines ()
   (setq truncate-lines nil))
 
