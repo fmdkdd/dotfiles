@@ -40,7 +40,6 @@ STDERR with `org-babel-eval-error-notify'."
   (let (exit-code)
     ;; "stderr" in results parameter will interleave stderr and stdout in the
     ;; results.  It will also prevent the Org-Babel Error buffer to sprout.
-    (message "%S" result-params)
     (if (member "stderr" result-params)
         (progn
           (with-temp-buffer
