@@ -18,17 +18,23 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     spell-checking
+     ;; syntax-checking
      auto-completion
-     git
+     writeroom
+
      version-control
-     javascript
-     scala
-     haskell
+     git
+
      emacs-lisp
+     javascript
+     html
+     ;; scala
+     haskell
+
      ;; markdown
      org
-     writeroom
-     syntax-checking
+
      colemak-hjkl
      fmdkdd
      )
