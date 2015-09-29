@@ -30,7 +30,8 @@
         auto-complete
         org
         evil-org
-        web-mode))
+        web-mode
+        magit))
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Override layers/distribution/spacemacs-base/packages.el
@@ -273,3 +274,13 @@ ARG non nil means that the editing style is `vim'."
       ("r" web-mode-element-rename :exit t)
       ("q" nil :exit t)
       ("w" web-mode-element-wrap))))
+
+;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+;; Override layers/+source-control/git/packages.el
+
+(defun colemak-hjkl/pre-init-magit ()
+  (spacemacs|use-package-add-hook magit
+    :post-config
+    (evil-define-key 'evilified git-rebase-mode-map "H" 'git-rebase-move-line-up)
+    (evil-define-key 'evilified git-rebase-mode-map "K" 'git-rebase-move-line-down)
+    (evil-define-key 'evilified git-rebase-mode-map "J" nil)))
