@@ -84,6 +84,10 @@
       "\C-]" 'Info-follow-nearest-node
       (kbd "DEL") 'Info-scroll-down)
 
+    ;; TAB goes to next link in Help buffers.
+    ;; FIXME: upstream this.
+    (evil-define-key 'motion help-mode-map (kbd "TAB") 'forward-button)
+
     ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     ;; In layers/distribution/spacemacs-base/packages.el
 
