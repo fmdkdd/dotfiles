@@ -36,6 +36,11 @@
 ;; Files
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+;; I use customize file for machine-local settings. This file goes to 'emacs.d',
+;; and is not version controlled.
+(setq custom-file (locate-user-emacs-file "local-preferences.el"))
+(load custom-file)
+
 ;; Read-only files are in view mode
 (setq view-read-only t)
 

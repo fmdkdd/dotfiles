@@ -16,7 +16,8 @@
         helm                                ; Better ido
         reftex-dcr                          ; Needed to view citations in Org files
         js2-mode                            ; JavaScript mode
-        (smart-quotes :location local)
+        (smart-quotes :location local)      ; Auto-insertion of ‘’ instead of '
+        web-mode                            ; HTML mode, supports CSS in <style> tags
         ))
 
 (defun fmdkdd/init-rainbow-mode ()
@@ -33,6 +34,7 @@
     ;; Enable Babel evaluation of JavaScript, Dot.
     (require 'ob-js)
     (require 'ob-dot)
+
     :post-config
     ;; No indentation in Org files.
     (setq org-adapt-indentation nil)
@@ -203,7 +205,12 @@ STDERR with `org-babel-eval-error-notify'."
     :commands reftex-view-cr-cite))
 
 (defun fmdkdd/post-init-js2-mode ()
-  (add-to-list 'auto-mode-alist '("\\.es6$" . js2-mode)))
+  (add-to-list 'auto-mode-alist '("\\.es6$" . js2-mode))
+
+  (setq js2-basic-offset 2
+        js2-strict-missing-semi-warning nil
+        js2-strict-trailing-comma-warning nil))
+
 
 (defun fmdkdd/init-smart-quotes ()
   (use-package smart-quotes
@@ -212,5 +219,10 @@ STDERR with `org-babel-eval-error-notify'."
     :init
     (add-hook 'text-mode-hook 'turn-on-smart-quotes)
     (add-hook 'html-mode-hook 'turn-off-smart-quotes)
+
     :config
     (diminish 'smart-quotes-mode)))
+
+(defun fmdkdd/post-init-web-mode ()
+  (setq web-mode-markup-indent-offset 2
+        web-mode-css-indent-offset 2))
