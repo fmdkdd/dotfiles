@@ -12,11 +12,3 @@
   "oa" 'org-agenda
   "oc" 'org-capture
   "ol" 'org-store-link)
-
-(evil-leader/set-key-for-mode 'org-mode
-  "c" nil "mc" 'fmdkdd/org-reftex-citation
-  "mv" 'fmdkdd/org-view-paper)
-
-(evil-define-key 'normal evil-org-mode-map
-  "g<" 'org-previous-link
-  "g>" 'org-next-link)

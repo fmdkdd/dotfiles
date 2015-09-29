@@ -13,9 +13,6 @@
 (setq writeroom-packages
   '(writeroom-mode))
 
-;; List of packages to exclude.
-(setq writeroom-excluded-packages '())
-
 (defun writeroom/init-writeroom-mode ()
   (use-package writeroom-mode
     :defer t

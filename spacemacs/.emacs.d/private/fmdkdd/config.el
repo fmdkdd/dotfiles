@@ -78,7 +78,7 @@
 ;; Programming
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-;; Highlight the following words in comments
+;; Highlight 'XXX', 'FIXME', etc. in comments
 (add-hook 'prog-mode-hook 'fmdkdd//add-watchwords)
 
 ;; Java indentation
