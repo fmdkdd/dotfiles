@@ -1,4 +1,4 @@
-;;; funcs.el --- Colemak HJKL Layer key bindings File
+;;; keybindings.el --- Colemak HJKL Layer key bindings File
 ;;
 ;; Copyright (c) 2015 fmdkdd
 ;;
@@ -9,61 +9,58 @@
 ;;; License: GPLv3
 
 ;; Remap HJKL for Colemak layout.
-;; (h, left), (j, down), (k, top)
+;; (left . h), (down . j), (top . k)
 ;; becomes
-;; (j, left), (k, down), (h, top)
-(define-key evil-normal-state-map "h" 'evil-previous-visual-line)
-(define-key evil-normal-state-map "k" 'evil-next-visual-line)
-(define-key evil-normal-state-map "j" 'nil)
-(define-key evil-visual-state-map "h" 'evil-previous-visual-line)
-(define-key evil-visual-state-map "k" 'evil-next-visual-line)
-(define-key evil-visual-state-map "j" 'nil)
-(define-key evil-normal-state-map "K" 'nil)
-(define-key evil-normal-state-map "L" 'spacemacs/smart-doc-lookup)
-(define-key evil-motion-state-map "K" 'evil-window-bottom)
-(define-key evil-motion-state-map "L" 'evil-lookup)
-(define-key evil-motion-state-map "h" 'evil-previous-line)
-(define-key evil-motion-state-map "k" 'evil-next-line)
-(define-key evil-motion-state-map "j" 'evil-backward-char)
-(define-key evil-motion-state-map "gh" 'evil-previous-visual-line)
-(define-key evil-motion-state-map "gk" 'evil-next-visual-line)
-(define-key evil-motion-state-map "gj" 'nil)
-(define-key evil-motion-state-map "zh" 'nil)
-(define-key evil-motion-state-map "zj" 'evil-scroll-column-left)
-(define-key evil-motion-state-map "zh" 'nil)
-(define-key evil-motion-state-map "zJ" 'evil-scroll-left)
-(define-key evil-evilified-state-map "h" 'evil-previous-visual-line)
-(define-key evil-evilified-state-map "k" 'evil-next-visual-line)
-(define-key evil-evilified-state-map "j" 'evil-backward-char)
+;; (left . j), (down . k), (top . h)
+
+;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+;; Override layers/distribution/spacemacs-base/keybindings.el
 
 (evil-leader/set-key
-  "jh" 'evil-goto-next-line-and-indent
-  "jk" 'sp-newline
-  "jj" 'spacemacs/push-mark-and-goto-beginning-of-line
-  "jl" 'spacemacs/push-mark-and-goto-end-of-line)
+  "iK" 'spacemacs/insert-line-below-no-indent
+  "iH" 'spacemacs/insert-line-above-no-indent
+  "ih" 'spacemacs/evil-insert-line-above
+  "ik" 'spacemacs/evil-insert-line-below)
+
+;; evil-loader does not define an unset-key function.
+(define-key evil-leader--default-map "iJ" nil)
+(define-key evil-leader--default-map "ij" nil)
+
+;; Overload this toggle to restore the right keybindings.
+(spacemacs|add-toggle visual-line-navigation
+  :status visual-line-mode
+  :on (progn
+        (visual-line-mode)
+        (define-key evil-motion-state-map "k" 'evil-next-visual-line)
+        (define-key evil-motion-state-map "h" 'evil-previous-visual-line)
+        (when (bound-and-true-p evil-escape-mode)
+          (evil-escape-mode -1)
+          (setq evil-escape-motion-state-shadowed-func nil)
+          (define-key evil-motion-state-map "k" 'evil-next-visual-line)
+          (define-key evil-motion-state-map "h" 'evil-previous-visual-line)
+          (evil-escape-mode)))
+  :off (progn
+         (visual-line-mode -1)
+         (define-key evil-motion-state-map "k" 'evil-next-line)
+         (define-key evil-motion-state-map "h" 'evil-previous-line)
+         (when (bound-and-true-p evil-escape-mode)
+           (evil-escape-mode -1)
+           (setq evil-escape-motion-state-shadowed-func nil)
+           (define-key evil-motion-state-map "k" 'evil-next-line)
+           (define-key evil-motion-state-map "h" 'evil-previous-line)
+           (evil-escape-mode)))
+  :documentation "Move point according to visual lines."
+  :evil-leader "tL")
 
 (evil-leader/set-key
-  "wH" 'evil-window-move-very-top
-  "wh" 'evil-window-up
-  "wK" 'evil-window-move-very-bottom
-  "wk" 'evil-window-down
   "wJ" 'evil-window-move-far-left
   "wj" 'evil-window-left
+  "wK" 'evil-window-move-very-bottom
+  "wk" 'evil-window-down
+  "wH" 'evil-window-move-very-top
+  "wh" 'evil-window-up
   "wL" 'evil-window-move-far-right
   "wl" 'evil-window-right)
-
-(define-key evil-window-map "h" 'evil-window-up)
-(define-key evil-window-map "H" 'evil-window-move-very-top)
-(define-key evil-window-map "k" 'evil-window-down)
-(define-key evil-window-map "K" 'evil-window-move-very-bottom)
-(define-key evil-window-map "j" 'evil-window-left)
-(define-key evil-window-map "J" 'evil-window-move-far-left)
-(define-key evil-window-map "\C-h" 'evil-window-up)
-(define-key evil-window-map (kbd "C-S-h") 'evil-window-move-very-top)
-(define-key evil-window-map "\C-k" 'evil-window-down)
-(define-key evil-window-map (kbd "C-S-k") 'evil-window-move-very-bottom)
-(define-key evil-window-map "\C-j" 'evil-window-left)
-(define-key evil-window-map (kbd "C-S-j") 'evil-window-move-far-left)
 
 (defun colemak-hjkl//window-manipulation-full-doc ()
   "Full documentation for window manipulation micro-state."
@@ -86,21 +83,24 @@
           "[j] [k] [h] [L] to move window, "
           "[R]otate windows, other [f]rame, other [w]indow"))
 
-(spacemacs|define-micro-state window-manipulation/colemak-hjkl
+;; Have to redefine the whole macro. Not sure if we are leaving some things
+;; dangling after that. Seems to work well.
+(spacemacs|define-micro-state window-manipulation
   :doc "[?] for help"
   :evil-leader "w."
+  :use-minibuffer t
   :bindings
   ("?" nil                                   :doc (colemak-hjkl//window-manipulation-full-doc))
-  ("0" select-window-0                       :doc (colemak-hjkl//window-manipulation-move-doc))
-  ("1" select-window-1                       :doc (colemak-hjkl//window-manipulation-move-doc))
-  ("2" select-window-2                       :doc (colemak-hjkl//window-manipulation-move-doc))
-  ("3" select-window-3                       :doc (colemak-hjkl//window-manipulation-move-doc))
-  ("4" select-window-4                       :doc (colemak-hjkl//window-manipulation-move-doc))
-  ("5" select-window-5                       :doc (colemak-hjkl//window-manipulation-move-doc))
-  ("6" select-window-6                       :doc (colemak-hjkl//window-manipulation-move-doc))
-  ("7" select-window-7                       :doc (colemak-hjkl//window-manipulation-move-doc))
-  ("8" select-window-8                       :doc (colemak-hjkl//window-manipulation-move-doc))
-  ("9" select-window-9                       :doc (colemak-hjkl//window-manipulation-move-doc))
+  ("0" select-window-0                       :doc (spacemacs//window-manipulation-number-doc))
+  ("1" select-window-1                       :doc (spacemacs//window-manipulation-number-doc))
+  ("2" select-window-2                       :doc (spacemacs//window-manipulation-number-doc))
+  ("3" select-window-3                       :doc (spacemacs//window-manipulation-number-doc))
+  ("4" select-window-4                       :doc (spacemacs//window-manipulation-number-doc))
+  ("5" select-window-5                       :doc (spacemacs//window-manipulation-number-doc))
+  ("6" select-window-6                       :doc (spacemacs//window-manipulation-number-doc))
+  ("7" select-window-7                       :doc (spacemacs//window-manipulation-number-doc))
+  ("8" select-window-8                       :doc (spacemacs//window-manipulation-number-doc))
+  ("9" select-window-9                       :doc (spacemacs//window-manipulation-number-doc))
   ("-" split-window-below-and-focus          :doc (spacemacs//window-manipulation-split-doc))
   ("/" split-window-right-and-focus          :doc (spacemacs//window-manipulation-split-doc))
   ("[" spacemacs/shrink-window-horizontally  :doc (spacemacs//window-manipulation-resize-doc))
@@ -111,15 +111,23 @@
   ("C" delete-other-windows                  :doc (spacemacs//window-manipulation-layout-doc))
   ("g" spacemacs/toggle-golden-ratio         :doc (spacemacs//window-manipulation-gratio-doc))
   ("j" evil-window-left                      :doc (colemak-hjkl//window-manipulation-move-doc))
+  ("<left>" evil-window-left                 :doc (colemak-hjkl//window-manipulation-move-doc))
   ("k" evil-window-down                      :doc (colemak-hjkl//window-manipulation-move-doc))
+  ("<down>" evil-window-down                 :doc (colemak-hjkl//window-manipulation-move-doc))
   ("h" evil-window-up                        :doc (colemak-hjkl//window-manipulation-move-doc))
+  ("<up>" evil-window-up                     :doc (colemak-hjkl//window-manipulation-move-doc))
   ("l" evil-window-right                     :doc (colemak-hjkl//window-manipulation-move-doc))
+  ("<right>" evil-window-right               :doc (colemak-hjkl//window-manipulation-move-doc))
   ("J" evil-window-move-far-left             :doc (colemak-hjkl//window-manipulation-move-doc))
+  ("<S-left>" evil-window-move-far-left      :doc (colemak-hjkl//window-manipulation-move-doc))
   ("K" evil-window-move-very-bottom          :doc (colemak-hjkl//window-manipulation-move-doc))
+  ("<S-down>" evil-window-move-very-bottom   :doc (colemak-hjkl//window-manipulation-move-doc))
   ("H" evil-window-move-very-top             :doc (colemak-hjkl//window-manipulation-move-doc))
+  ("<S-up>" evil-window-move-very-top        :doc (colemak-hjkl//window-manipulation-move-doc))
   ("L" evil-window-move-far-right            :doc (colemak-hjkl//window-manipulation-move-doc))
+  ("<S-right>" evil-window-move-far-right    :doc (colemak-hjkl//window-manipulation-move-doc))
   ("o" other-frame                           :doc (colemak-hjkl//window-manipulation-move-doc))
-  ("R" rotate-windows                        :doc (colemak-hjkl//window-manipulation-move-doc))
+  ("R" spacemacs/rotate-windows              :doc (colemak-hjkl//window-manipulation-move-doc))
   ("s" split-window-below                    :doc (spacemacs//window-manipulation-split-doc))
   ("S" split-window-below-and-focus          :doc (spacemacs//window-manipulation-split-doc))
   ("u" winner-undo                           :doc (spacemacs//window-manipulation-layout-doc))
@@ -128,30 +136,10 @@
   ("V" split-window-right-and-focus          :doc (spacemacs//window-manipulation-split-doc))
   ("w" other-window                          :doc (colemak-hjkl//window-manipulation-move-doc)))
 
-(when (configuration-layer/layer-usedp 'org)
-  (evil-define-key 'normal evil-org-mode-map
-    "gh" 'org-backward-heading-same-level
-    "gj" 'outline-up-heading
-    "gk" 'org-forward-heading-same-level)
+;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+;; Override core/core-evilified-state.el
 
-  (evil-define-key 'normal evil-org-mode-map
-    (kbd "M-h") 'org-metaup
-    (kbd "M-k") 'org-metadown
-    (kbd "M-j") 'org-metaleft
-    (kbd "M-H") 'org-shiftmetaup
-    (kbd "M-K") 'org-shiftmetadown
-    (kbd "M-J") 'org-shiftmetaleft)
-
-  (evil-define-key 'insert evil-org-mode-map
-    (kbd "M-h") 'org-metaup
-    (kbd "M-k") 'org-metadown
-    (kbd "M-j") 'org-metaleft
-    (kbd "M-H") 'org-shiftmetaup
-    (kbd "M-K") 'org-shiftmetadown
-    (kbd "M-J") 'org-shiftmetaleft)
-
-  (with-eval-after-load 'org-agenda
-    (define-key org-agenda-mode-map "j" 'nil)
-    (define-key org-agenda-mode-map "h" 'org-agenda-previous-line)
-    (define-key org-agenda-mode-map "k" 'org-agenda-next-line)
-    ))
+(with-eval-after-load 'core-evilified-state
+  (define-key evil-evilified-state-map "j" 'evil-backward-char)
+  (define-key evil-evilified-state-map "k" 'evil-next-visual-line)
+  (define-key evil-evilified-state-map "h" 'evil-previous-visual-line))
