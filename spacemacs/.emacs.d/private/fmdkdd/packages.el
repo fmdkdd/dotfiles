@@ -14,9 +14,9 @@
       '(org                                 ; Plain text powerhouse
         rainbow-mode                        ; CSS colors preview
         helm                                ; Better ido
-        reftex-dcr                          ; Needed to view citations in Org files
         js2-mode                            ; JavaScript mode
         (smart-quotes :location local)      ; Auto-insertion of ‘’ instead of '
+        (org-reftex :location local)         ; Manage citations in Org files
         web-mode                            ; HTML mode, supports CSS in <style> tags
         ))
 
@@ -51,72 +51,6 @@
 
     ;; Nice LaTeX entities
     (setq-default org-pretty-entities t)
-
-
-    (defun fmdkdd//org-reftex-setup (fun)
-      "Setup the Reftex environment from looking up the BIBLIOGRAPHY
-keyword in an Org file, and call FUN."
-      (let ((reftex-docstruct-symbol 'rds)
-            rds bib)
-        (save-excursion
-          (save-restriction
-            (widen)
-            (let ((case-fold-search t)
-                  (re "^#\\+bibliography:[ \t]+\\([^ \t\n]+\\)"))
-              (if (not (save-excursion
-                         (or (re-search-forward re nil t)
-                             (re-search-backward re nil t))))
-                  (error "No bibliography defined in file")
-                (setq bib (concat (match-string 1) ".bib")
-                      rds (list (list 'bib bib)))))))
-        (funcall fun)))
-
-    (defun fmdkdd/org-reftex-citation ()
-      "Use reftex-citation to insert a citation into the buffer.
-This looks for a line like
-
-#+BIBLIOGRAPHY: foo
-
-and derives from it that foo.bib is the bibliography file relevant
-for this document.  It then installs the necessary environment for RefTeX
-to work in this buffer and calls `reftex-citation'  to insert a citation
-into the buffer."
-      (interactive)
-      (fmdkdd//org-reftex-setup
-       (lambda ()
-         (let ((reftex-cite-format "[[cite:%l][%l]]"))
-           (call-interactively 'reftex-citation)))))
-
-    (defun fmdkdd/org-reftex-view-citation (&optional key)
-      "Follow an Org cite link using Reftex."
-      (interactive)
-      (let ((key (or key
-                     (org-icompleting-read "Citation: " (obe-citations)))))
-        (fmdkdd//org-reftex-setup
-         (lambda () (reftex-view-cr-cite nil key nil)))))
-
-    (defvar fmdkdd/papers-directory "~/Archimède/Thèse/papers"
-      "Path to search for PDF files when following a cite link in Org
-with `fmdkdd/org-view-paper'")
-
-    (defun fmdkdd/org-view-paper ()
-      "Find the PDF file corresponding to the cite link under point in an Org file.
-If point is on link [[cite:KEY][...]], then it will look for a
-file named KEY.pdf in the directory specified by
-`fmdkdd/papers-directory' and open it."
-      (interactive)
-      (save-excursion
-        (when (org-in-regexp org-bracket-link-regexp 1)
-          (let ((link (org-link-unescape (org-match-string-no-properties 1))))
-            (string-match org-link-re-with-space3 link)
-            (let ((type (match-string 1 link))
-                  (path (match-string 2 link)))
-              (when (equal type "cite")
-                (org-open-file (expand-file-name (concat path ".pdf")
-                                                 fmdkdd/papers-directory))))))))
-
-    ;; Follow citations links using Reftex.
-    (org-add-link-type "cite" #'fmdkdd/org-reftex-view-citation)
 
     ;; Open links to Mozilla Archive Format Files in Firefox
     (add-to-list 'org-file-apps '("maff" . "firefox %s"))
@@ -184,9 +118,12 @@ STDERR with `org-babel-eval-error-notify'."
           (funcall ob-eval cmd body))))
     (advice-add 'org-babel-eval :around #'fmdkdd/org-babel-eval)
 
+    ;; Handle 'cite' links via org-reftex
+    (org-add-link-type "cite" #'org-reftex/follow-citation)
+
     (evil-leader/set-key-for-mode 'org-mode
-      "c" nil "mc" 'fmdkdd/org-reftex-citation
-      "mv" 'fmdkdd/org-view-paper)
+      "c" nil "mc" 'org-reftex/insert-citation
+      "mv" 'org-reftex/view-paper)
 
     (evil-define-key 'normal evil-org-mode-map
       "g<" 'org-previous-link
@@ -199,10 +136,11 @@ STDERR with `org-babel-eval-error-notify'."
         helm-lisp-fuzzy-completion t
         helm-imenu-fuzzy-match t))
 
-;; Autoload `reftex-view-cr-cite' to follow citations in Org files.
-(defun fmdkdd/init-reftex-dcr ()
-  (use-package reftex-dcr
-    :commands reftex-view-cr-cite))
+(defun fmdkdd/init-org-reftex ()
+  (use-package org-reftex
+    :commands (org-reftex/insert-citation
+               org-reftex/follow-citation
+               org-reftex/view-paper)))
 
 (defun fmdkdd/post-init-js2-mode ()
   (add-to-list 'auto-mode-alist '("\\.es6$" . js2-mode))
