@@ -1,0 +1,16 @@
+* Writeroom contribution layer for Spacemacs
+** Description
+Distraction-free writing.  See the [[https://github.com/joostkremers/writeroom-mode][package documentation]].
+
+** Install
+To us, add the layer to your =~/.spacemacs=.
+
+#+begin_src emacs-lisp
+  (setq-default dotspacemacs-configuration-layers '(writeroom))
+#+end_src
+
+** Key bindings
+
+| Key Binding | Description           |
+|-------------+-----------------------|
+| ~<SPC> T w~ | Toggle writeroom mode |

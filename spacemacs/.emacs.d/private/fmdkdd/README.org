@@ -1,0 +1,3 @@
+* fmdkdd contribution layer for Spacemacs
+** Description
+Personal Spacemacs configuration layer.

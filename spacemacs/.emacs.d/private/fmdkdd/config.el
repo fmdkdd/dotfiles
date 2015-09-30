@@ -79,6 +79,7 @@
 ;; Automatically save private dictionary
 (setq ispell-silently-savep t)
 
+
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Programming
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -98,10 +99,6 @@
 
 ;; Don't ask confirmation to save buffers when compiling
 (setq compilation-ask-about-save nil)
-
-;; FIXME: I only use Ensime for its juicy shortcuts to run sbt
-;; (remove-hook 'scala-mode-hook 'scala/configure-ensime)
-;; (remove-hook 'scala-mode-hook 'scala/maybe-start-ensime)
 
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
