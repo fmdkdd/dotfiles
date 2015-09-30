@@ -16,8 +16,9 @@
         helm                                ; Better ido
         js2-mode                            ; JavaScript mode
         (smart-quotes :location local)      ; Auto-insertion of ‘’ instead of '
-        (org-reftex :location local)         ; Manage citations in Org files
+        (org-reftex :location local)        ; Manage citations in Org files
         web-mode                            ; HTML mode, supports CSS in <style> tags
+        powerline
         ))
 
 (defun fmdkdd/init-rainbow-mode ()
@@ -164,3 +165,32 @@ STDERR with `org-babel-eval-error-notify'."
 (defun fmdkdd/post-init-web-mode ()
   (setq web-mode-markup-indent-offset 2
         web-mode-css-indent-offset 2))
+
+(defun fmdkdd/post-init-powerline ()
+  (defun fmdkdd/org-full-outline-path ()
+    "Concatenate the results of `org-get-outline-path' and
+`org-get-heading' to get the full outline path to the heading we
+are currently in."
+    (unless (org-before-first-heading-p)
+      (let* ((path (append (org-get-outline-path)
+                           (cons (org-get-heading) nil))))
+        (org-format-outline-path path 40)))) ; XXX: not sure if the width
+                                             ; argument works right
+
+  (spacemacs|define-mode-line-segment which-org-headline-segment
+    (fmdkdd/org-full-outline-path)
+    :when (eq major-mode 'org-mode))
+
+  (setq spacemacs-mode-line-left
+        '(((workspace-number window-number)
+           :fallback state-tag :separator "|" :face state-face)
+          anzu
+          (buffer-modified buffer-id remote-host)
+          major-mode
+          ((flycheck-errors flycheck-warnings flycheck-infos)
+           :when active)
+          (erc-track :when active)
+          (version-control :when active)
+          (org-pomodoro :when active)
+          (org-clock :when active)
+          which-org-headline-segment)))
