@@ -36,6 +36,7 @@
      haml-mode            ; Don't need those brought by web-mode.
      jade-mode
      slim-mode
+     highlight-parentheses
      )
 
    dotspacemacs-delete-orphan-packages t))
@@ -74,4 +75,8 @@ user code.")
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
  This function is called at the very end of Spacemacs initialization after
-layers configuration. You are free to put any user code.")
+layers configuration. You are free to put any user code."
+
+  ;; Reset garbage collector threshold to default value after initialization.
+  (setq gc-cons-threshold 800000)
+  )
