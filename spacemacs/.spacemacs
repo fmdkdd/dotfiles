@@ -3,11 +3,13 @@
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration."
   (setq-default
+
    dotspacemacs-configuration-layers
    '(
      spell-checking
      ;; syntax-checking
-     auto-completion
+     (auto-completion :variables
+                      auto-completion-enable-sort-by-usage t)
      writeroom
 
      version-control
@@ -26,7 +28,16 @@
      fmdkdd
      )
 
-   dotspacemacs-excluded-packages '(evil-escape vi-tilde-fringe)
+   dotspacemacs-excluded-packages
+   '(
+     evil-escape          ; I bind ESC to Caps Lock key, so this is more
+                          ; annoying than useful.
+     vi-tilde-fringe      ; I prefer the Emacs way of indicating EOF.
+     haml-mode            ; Don't need those brought by web-mode.
+     jade-mode
+     slim-mode
+     )
+
    dotspacemacs-delete-orphan-packages t))
 
 (defun dotspacemacs/init ()
