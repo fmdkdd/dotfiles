@@ -15,6 +15,8 @@
 
 (defun writeroom/init-writeroom-mode ()
   (use-package writeroom-mode
-    :defer t
+    :commands (writeroom-mode)
     :init
-    (evil-leader/set-key "Tw" 'writeroom-mode)))
+    (evil-leader/set-key "Tw" 'writeroom-mode)
+    :config
+    (setq writeroom-restore-window-config t)))
