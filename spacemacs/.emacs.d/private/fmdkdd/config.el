@@ -12,6 +12,11 @@
 ;; Font
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+;; I have this weird bug where the default face of Emacs is set to "Comic Sans"
+;; ...  this kicks in when opening a new frame.  This is the only way I found to
+;; fix it.  In particular, `set-frame-font' does not help.
+(set-face-attribute 'default t :family "Ubuntu Mono" :height 105)
+
 ;; Fallback to DejaVu Sans Mono for mathematical symbols not present in the
 ;; default font (Ubuntu Mono)
 (set-fontset-font "fontset-default" '(#x2200 . #x22ff)
@@ -27,6 +32,9 @@
                   (font-spec :family "DejaVu Sans Mono"))
 
 ;; Scale down DejaVu fonts so they match the size of Ubuntu Mono characters.
+;; Ensures lines with Unicode characters have the same width as lines with ASCII
+;; chars.  We cannot set the `:size' property of the above fontspecs, because
+;; they do not scale with the size of the main font.
 (setq face-font-rescale-alist
       '((".*DejaVu Sans Mono.*" . 0.9)
         (".*DejaVu Sans.*" . 0.9)))
