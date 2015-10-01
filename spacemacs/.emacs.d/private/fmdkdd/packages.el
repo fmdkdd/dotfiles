@@ -187,12 +187,12 @@ are currently in."
         '(((workspace-number window-number)
            :fallback state-tag :separator "|" :face state-face)
           anzu
-          (buffer-modified point-position line-column buffer-id remote-host)
+          (buffer-modified buffer-id remote-host)
+          (point-position line-column)
           major-mode
           ((flycheck-errors flycheck-warnings flycheck-infos)
            :when active)
           (erc-track :when active)
-          (version-control :when active)
           (org-pomodoro :when active)
           (org-clock :when active)
           which-org-headline-segment)
@@ -200,8 +200,7 @@ are currently in."
         spacemacs-mode-line-right
         '((battery :when active)
           selection-info
-          ((buffer-encoding-abbrev)
-           :separator " | ")
+          buffer-encoding-abbrev
           ((global-mode new-version)
            :when active)
           buffer-position hud)))
