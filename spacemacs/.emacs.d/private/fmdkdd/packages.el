@@ -181,13 +181,13 @@ are currently in."
 
   (spacemacs|define-mode-line-segment which-org-headline-segment
     (fmdkdd/org-full-outline-path)
-    :when (eq major-mode 'org-mode))
+    :when (and active (eq major-mode 'org-mode)))
 
   (setq spacemacs-mode-line-left
         '(((workspace-number window-number)
            :fallback state-tag :separator "|" :face state-face)
           anzu
-          (buffer-modified buffer-id remote-host)
+          (buffer-modified point-position line-column buffer-id remote-host)
           major-mode
           ((flycheck-errors flycheck-warnings flycheck-infos)
            :when active)
@@ -195,4 +195,13 @@ are currently in."
           (version-control :when active)
           (org-pomodoro :when active)
           (org-clock :when active)
-          which-org-headline-segment)))
+          which-org-headline-segment)
+
+        spacemacs-mode-line-right
+        '((battery :when active)
+          selection-info
+          ((buffer-encoding-abbrev)
+           :separator " | ")
+          ((global-mode new-version)
+           :when active)
+          buffer-position hud)))
