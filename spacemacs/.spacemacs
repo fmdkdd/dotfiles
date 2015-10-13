@@ -8,7 +8,8 @@
    '(
      spell-checking
      ;; syntax-checking
-     (auto-completion :variables
+     (auto-completion :disabled-for org
+                      :variables
                       auto-completion-enable-sort-by-usage t)
      writeroom
 
