@@ -60,6 +60,14 @@
     (setq org-log-into-drawer t)
     (setq org-clock-into-drawer t)
 
+    ;; For use with evil-surround.  Now I can `cs~=' in Org.
+    (defun fmdkdd//add-org-text-objects ()
+      (spacemacs|define-text-object "/" "slash" "/" "/")
+      (spacemacs|define-text-object "~" "tilde" "~" "~")
+      (spacemacs|define-text-object "=" "equals" "=" "="))
+
+    (add-hook 'org-mode-hook 'fmdkdd//add-org-text-objects)
+
     (setq org-agenda-custom-commands
           '(("n" "Agenda and all unscheduled TODO's"
              ((agenda "")
