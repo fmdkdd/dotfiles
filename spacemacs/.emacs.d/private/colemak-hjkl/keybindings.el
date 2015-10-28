@@ -80,7 +80,7 @@
 (defun colemak-hjkl//window-manipulation-move-doc ()
   "Help string for moving between windows"
   (concat "[j] [k] [h] [l] to move focus, "
-          "[j] [k] [h] [L] to move window, "
+          "[J] [K] [H] [L] to move window, "
           "[R]otate windows, other [f]rame, other [w]indow"))
 
 ;; Have to redefine the whole macro. Not sure if we are leaving some things
