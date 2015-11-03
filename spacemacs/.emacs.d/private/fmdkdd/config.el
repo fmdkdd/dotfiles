@@ -119,3 +119,15 @@
 ;; Monday is the first day of the week
 (with-eval-after-load 'calendar
   (setq calendar-week-start-day 1))
+
+;; Formatting BibTeX entries on C-c C-c
+(with-eval-after-load 'bibtex
+  (setq bibtex-align-at-equal-sign t
+        bibtex-entry-format
+        '(opts-or-alts                  ; remove OPTS
+          required-fields               ; warn on missing required field
+          numerical-fields              ; delete braces around year, num fields
+          realign                       ; align on =
+          delimiters                    ; change delimiters to braces
+          whitespace                    ; trim space in fields
+          sort-fields)))
