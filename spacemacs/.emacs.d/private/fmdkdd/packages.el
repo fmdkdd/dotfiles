@@ -172,7 +172,8 @@ STDERR with `org-babel-eval-error-notify'."
 
 (defun fmdkdd/post-init-web-mode ()
   (setq web-mode-markup-indent-offset 2
-        web-mode-css-indent-offset 2))
+        web-mode-css-indent-offset 2
+        web-mode-code-indent-offset 2))
 
 (defun fmdkdd/post-init-powerline ()
   (setq powerline-default-separator 'alternate)
