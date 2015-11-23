@@ -60,7 +60,7 @@ main = do
   dbus <- D.connectSession
   getWellKnownName dbus
   theme <- loadTheme
-  xmonad $ gnomeConfig
+  xmonad $ ewmh gnomeConfig
     { logHook            = dynamicLogWithPP (prettyPrinter dbus),
       modMask            = mod4Mask,
       normalBorderColor  = borderColor theme,
