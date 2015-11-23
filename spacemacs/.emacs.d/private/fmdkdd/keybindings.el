@@ -11,4 +11,5 @@
 (evil-leader/set-key
   "oa" 'org-agenda
   "oc" 'org-capture
-  "ol" 'org-store-link)
+  "ol" 'org-store-link
+  "or" 'fmdkdd/save-and-reload-browser-window)
