@@ -36,9 +36,8 @@ event.  See the documentation of
 needed.")
 
 (defvar fmdkdd/last-browser-window-list nil
-  "List of the browser windows that were last discovered by
-`fmdkdd/discover-browser-windows', or selected by the user
-through `fmdkdd/select-browser-windows'.
+  "List of the browser windows that were last selected by the
+user through `fmdkdd/select-browser-windows'.
 
 This value is used by `fmdkdd/reload-browser-windows' when the
 buffer-local variable `fmdkdd/browser-window-list' is nil.")
@@ -68,9 +67,9 @@ it if we can.")
 The windows to reload are found by looking up the buffer-local
 variable `fmdkdd/browser-window-list', then the global
 `fmdkdd/last-browser-window-list' if the former is nil.  If both
-are nil, it asks the user to select the browser window with the
-mouse cursor and sets the forementionned variables for future
-calls.
+are nil, call `fmdkdd/select-browser-windows' to ask the user to
+select the browser window with the mouse cursor and sets the
+forementionned variables for future calls.
 
 With a prefix argument, it bypasses the variables and forces the
 reselection of the window.  Multiple windows can be selectionned
@@ -80,10 +79,10 @@ this way with a prefix argument greater than 1."
    (if reselect (fmdkdd/select-browser-windows reselect)
      (cond
       ;; I know!  I know!
-      (fmdkdd/browser-window-list fmdkdd/browser-window-list)
+      (fmdkdd/browser-window-list)
       ;; Hmm, maybe the window you specified last time?
-      (fmdkdd/last-browser-window-list fmdkdd/last-browser-window-list)
-      ;; What window?  Please tell me.
+      (fmdkdd/last-browser-window-list)
+      ;; I give up!  Please tell me.
       (t (fmdkdd/select-browser-windows)))))
   (message "Reloaded browser windows"))
 
