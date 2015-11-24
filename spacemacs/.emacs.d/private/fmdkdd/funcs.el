@@ -23,61 +23,124 @@
 (defun fmdkdd//turn-off-truncate-lines ()
   (setq truncate-lines nil))
 
-(defvar-local fmdkdd/browser-window-id nil
-  "X window id of the browser window that will receive a Ctrl+R
-key when `fmdkdd/reload-browser-window' is called.")
+(defvar-local fmdkdd/browser-window-list nil
+  "List of the browser windows that will receive a F5 key event
+when `fmdkdd/reload-browser-windows' is called.
 
-(defvar fmdkdd/last-browser-window-id nil
-  "X window id of the last browser window to be reloaded by
-  `fmdkdd/reload-browser-window'.  Used to lookup the window to
-  reload when `fmdkdd/browser-window-id' is nil.")
+Elements of the list are cons cells (ID . FOCUS) where ID is a X
+window id obtained from running 'xdotool selectwindow' (a string
+representing a number), and FOCUS is a boolean indicating whether
+we must give the focus to that window before sending the key
+event.  See the documentation of
+`fmdkdd/browser-window-no-focus-regexp' for why this field is
+needed.")
 
-(defun fmdkdd/save-and-reload-browser-window (&optional reselect)
-  "Save current buffer and call reload browser window by calling
-`fmdkdd/reload-browser-window'."
+(defvar fmdkdd/last-browser-window-list nil
+  "List of the browser windows that were last discovered by
+`fmdkdd/discover-browser-windows', or selected by the user
+through `fmdkdd/select-browser-windows'.
+
+This value is used by `fmdkdd/reload-browser-windows' when the
+buffer-local variable `fmdkdd/browser-window-list' is nil.")
+
+(defvar fmdkdd/browser-window-no-focus-regexp "Firefox"
+  "This regexp is used by `fmdkdd/select-browser-windows' on the
+names of each selected window to determine if they need
+windowactivate.
+
+Google Chrome and Chromium do not listen to the key sent by
+xdotool when the window does not have focus (see
+https://code.google.com/p/chromium/issues/detail?id=393145).
+Using windowfocus is not enough to receive the key either (it
+fails randomly).  But using the windowactivate command of xdotool
+shifts the focus away from the Emacs window, so we'd rather avoid
+it if we can.")
+
+(defun fmdkdd/save-and-reload-browser-windows (&optional reselect)
+  "Save current buffer and call `fmdkdd/reload-browser-windows'."
   (interactive "P")
   (save-buffer)
-  (fmdkdd/reload-browser-window reselect))
+  (fmdkdd/reload-browser-windows reselect))
 
-(defun fmdkdd/reload-browser-window (&optional reselect)
-  "Send Ctrl+R to the browser found by
-`fmdkdd//find-browser-window'.
+(defun fmdkdd/reload-browser-windows (&optional reselect)
+  "Send F5 to reload the browser windows.
 
-By default, it uses the content of the buffer-local variable
-`fmdkdd/browser-window-id', or the last-found window id if nil.
-If both are nil, it asks the user the select the browser window
-with the mouse cursor.
+The windows to reload are found by looking up the buffer-local
+variable `fmdkdd/browser-window-list', then the global
+`fmdkdd/last-browser-window-list' if the former is nil.  If both
+are nil, it asks the user to select the browser window with the
+mouse cursor and sets the forementionned variables for future
+calls.
 
-With a prefix argument, force the reselection of the window and
-save the window id to `fmdkdd/browser-window-id'."
+With a prefix argument, it bypasses the variables and forces the
+reselection of the window.  Multiple windows can be selectionned
+this way with a prefix argument greater than 1."
   (interactive "P")
-  (fmdkdd/do-reload-browser
-   (if reselect (fmdkdd//ask-browser-window)
+  (fmdkdd//do-reload-browser-windows
+   (if reselect (fmdkdd/select-browser-windows reselect)
      (cond
       ;; I know!  I know!
-      (fmdkdd/browser-window-id fmdkdd/browser-window-id)
+      (fmdkdd/browser-window-list fmdkdd/browser-window-list)
       ;; Hmm, maybe the window you specified last time?
-      (fmdkdd/last-browser-window-id fmdkdd/last-browser-window-id)
+      (fmdkdd/last-browser-window-list fmdkdd/last-browser-window-list)
       ;; What window?  Please tell me.
-      (t (fmdkdd//ask-browser-window)))))
-  (message "Reloaded browser window"))
+      (t (fmdkdd/select-browser-windows)))))
+  (message "Reloaded browser windows"))
 
-(defun fmdkdd/do-reload-browser (window-id)
-  (shell-command
-   ;; Just `xdotool key --window %s 'ctrl+r'` /should/ do it.  But Chrome does
-   ;; not listen to the key when the window does not have focus
-   ;; (see https://code.google.com/p/chromium/issues/detail?id=393145).
-   ;; So, we focus on the window before sending the input.  Then we wrap the
-   ;; whole thing in 'getwindowfocus ... windowfocus' to restore the focus on
-   ;; Emacs, by leveraging the WINDOW_STACK of xdotool.
-   (format "xdotool getwindowfocus windowfocus --sync %s key --window %s 'ctrl+r' windowfocus"
-           window-id window-id)))
+(defun fmdkdd//do-reload-browser-windows (window-list)
+  "Send F5 to each window of WINDOW-LISP using xdotool.
 
-(defun fmdkdd//ask-browser-window ()
-  (interactive)
-  (message "Select the browser window using the mouse cursor")
-  (let ((wid (string-trim (shell-command-to-string "xdotool selectwindow"))))
-    ;; Oh, /that/ window.  I'll remember next time.
-    (setq fmdkdd/browser-window-id wid
-          fmdkdd/last-browser-window-id wid)
-    wid))
+Elements of the list are cons cells (ID . FOCUS) where ID is a X
+window id obtained from running 'xdotool selectwindow' (a string
+representing a number), and FOCUS is a boolean indicating whether
+we must give the focus to that window before sending the key
+event."
+  (let ((cmd "")         ; xdotool command to reload each window
+        (wactivate nil)) ; must we switch the focus away from the Emacs window?
+    (dolist (w window-list)
+      (let ((id (car w))
+            (focus (cdr w)))
+        (setq
+         cmd
+         (concat
+          cmd
+          (if focus
+              (progn
+                (setq wactivate t)
+                (format "windowactivate --sync %s key --window %s 'F5' "
+                        id id))
+            (format "key --window %s 'F5' " id))))))
+    (shell-command
+     ;; If one window needed the focus, we need to save the current Emacs window
+     ;; and get focus back to it once we are done. We leverage the WINDOW_STACK
+     ;; of xdotool to do that.
+     (if wactivate
+         (format "xdotool getactivewindow %s windowactivate" cmd)
+       (format "xdotool %s" cmd)))))
+
+(defun fmdkdd/select-browser-windows (&optional times)
+  "Use 'xdotool selectwindow' to select TIMES windows interactively,
+and save the values for future calls to
+`fmdkdd/reload-browser-windows'."
+  (when (not (numberp times)) (setq times 1)) ; Default value for TIMES
+  (let ((windows nil))
+    (dotimes (n times)
+      (message
+       (format "Select the browser window using the mouse cursor (%d/%d)"
+               (1+ n) times))
+      (let* ((id (string-trim
+                  (shell-command-to-string "xdotool selectwindow")))
+             (focus (fmdkdd//must-focus-window-to-reload-p id)))
+        (setq windows (cons (cons id focus) windows))))
+    ;; Oh, /these/ windows.  I'll remember next time.
+    (setq fmdkdd/browser-window-list windows
+          fmdkdd/last-browser-window-list windows)
+    windows))
+
+(defun fmdkdd//must-focus-window-to-reload-p (window)
+  "Check if the window needs to get the focus to receive a key
+sent by xdotool."
+  (not (string-match-p
+         fmdkdd/browser-window-no-focus-regexp
+         (string-trim (shell-command-to-string
+                       (format "xdotool getwindowname %s" window))))))

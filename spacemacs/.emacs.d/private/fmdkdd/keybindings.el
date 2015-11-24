@@ -12,4 +12,4 @@
   "oa" 'org-agenda
   "oc" 'org-capture
   "ol" 'org-store-link
-  "or" 'fmdkdd/save-and-reload-browser-window)
+  "or" 'fmdkdd/save-and-reload-browser-windows)
