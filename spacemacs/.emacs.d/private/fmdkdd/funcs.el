@@ -95,21 +95,20 @@ window id obtained from running 'xdotool selectwindow' (a string
 representing a number), and FOCUS is a boolean indicating whether
 we must give the focus to that window before sending the key
 event."
-  (let ((cmd "")         ; xdotool command to reload each window
-        (wactivate nil)) ; must we switch the focus away from the Emacs window?
-    (dolist (w window-list)
-      (let ((id (car w))
-            (focus (cdr w)))
-        (setq
-         cmd
-         (concat
-          cmd
-          (if focus
-              (progn
-                (setq wactivate t)
-                (format "windowactivate --sync %s key --window %s 'F5' "
-                        id id))
-            (format "key --window %s 'F5' " id))))))
+  (let ((cmd)        ; xdotool command to reload each window
+        (wactivate)) ; must we switch the focus away from the Emacs window?
+    (setq cmd
+          (mapconcat
+           (lambda (w)
+             (let ((id (car w))
+                   (focus (cdr w)))
+               (if focus
+                   (progn
+                     (setq wactivate t)
+                     (format "windowactivate --sync %s key --window %s 'F5'"
+                             id id))
+                 (format "key --window %s 'F5'" id))))
+           window-list " "))
     (shell-command
      ;; If one window needed the focus, we need to save the current Emacs window
      ;; and get focus back to it once we are done. We leverage the WINDOW_STACK
@@ -123,7 +122,7 @@ event."
 and save the values for future calls to
 `fmdkdd/reload-browser-windows'."
   (when (not (numberp times)) (setq times 1)) ; Default value for TIMES
-  (let ((windows nil))
+  (let ((windows))
     (dotimes (n times)
       (message
        (format "Select the browser window using the mouse cursor (%d/%d)"
@@ -141,6 +140,6 @@ and save the values for future calls to
   "Check if the window needs to get the focus to receive a key
 sent by xdotool."
   (not (string-match-p
-         fmdkdd/browser-window-no-focus-regexp
-         (string-trim (shell-command-to-string
-                       (format "xdotool getwindowname %s" window))))))
+        fmdkdd/browser-window-no-focus-regexp
+        (string-trim (shell-command-to-string
+                      (format "xdotool getwindowname %s" window))))))
