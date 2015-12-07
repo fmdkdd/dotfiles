@@ -20,7 +20,7 @@
      javascript
      html
      ;; scala
-     haskell
+     ;; haskell
 
      ;; markdown
      org
@@ -28,6 +28,9 @@
      colemak-hjkl
      fmdkdd
      )
+
+   dotspacemacs-additional-packages
+   '(haskell-mode)
 
    dotspacemacs-excluded-packages
    '(
@@ -80,4 +83,8 @@ layers configuration. You are free to put any user code."
 
   ;; Reset garbage collector threshold to default value after initialization.
   (setq gc-cons-threshold 800000)
+
+  (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+  (setq haskell-interactive-popup-errors nil)
   )
