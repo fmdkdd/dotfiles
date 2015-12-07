@@ -50,6 +50,9 @@
     ;; No indentation of src blocks.
     (setq org-src-preserve-indentation t)
 
+    ;; Edit SRC blocks in the same window.
+    (setq org-src-window-setup 'current-window)
+
     ;; Nice LaTeX entities
     (setq-default org-pretty-entities t)
 
