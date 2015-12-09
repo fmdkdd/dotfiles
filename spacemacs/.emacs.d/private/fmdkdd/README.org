@@ -1,3 +1,6 @@
 * fmdkdd contribution layer for Spacemacs
 ** Description
 Personal Spacemacs configuration layer.
+
+** Requirements
+- =xdotool= is required for reloading the browser.
