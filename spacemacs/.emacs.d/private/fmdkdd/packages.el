@@ -18,6 +18,7 @@
         (smart-quotes :location local)      ; Auto-insertion of ‘’ instead of '
         (org-reftex :location local)        ; Manage citations in Org files
         web-mode                            ; HTML mode, supports CSS in <style> tags
+        rust-mode
         powerline
         ))
 
