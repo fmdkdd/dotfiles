@@ -8,12 +8,12 @@
    '(
      spell-checking
      ;; syntax-checking
-     (auto-completion :disabled-for org
-                      :variables
-                      auto-completion-enable-sort-by-usage t)
+     ;; (auto-completion :disabled-for org
+     ;;                  :variables
+     ;;                  auto-completion-enable-sort-by-usage t)
      writeroom
 
-     version-control
+     ;; version-control
      git
 
      emacs-lisp
@@ -60,6 +60,11 @@ values."
    ;; Vim bindings
    dotspacemacs-editing-style 'vim
 
+   dotspacemacs-leader-key "SPC"
+   dotspacemacs-emacs-leader-key "M-m"
+   dotspacemacs-major-mode-leader-key ","
+   dotspacemacs-command-key ":"
+
    ;; Solarized themes
    dotspacemacs-themes '(solarized-dark
                          solarized-light)
@@ -71,8 +76,8 @@ values."
                                :width normal
                                :powerline-scale 1.25)
 
-   ;; No progress bar
-   dotspacemacs-loading-progress-bar nil
+   ;; Smooth scrolling is slooooow
+   dotspacemacs-smooth-scrolling nil
    ))
 
 (defun dotspacemacs/user-init ()
@@ -86,7 +91,7 @@ user code.")
 layers configuration. You are free to put any user code."
 
   ;; Reset garbage collector threshold to default value after initialization.
-  (setq gc-cons-threshold 800000)
+  ;; (setq gc-cons-threshold 800000)
 
   (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
