@@ -91,6 +91,4 @@ layers configuration. You are free to put any user code."
   (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   (setq haskell-interactive-popup-errors nil)
-
-  (setq rust-indent-offset 2)
   )
