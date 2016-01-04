@@ -7,13 +7,13 @@
    dotspacemacs-configuration-layers
    '(
      spell-checking
-     ;; syntax-checking
      ;; (auto-completion :disabled-for org
      ;;                  :variables
      ;;                  auto-completion-enable-sort-by-usage t)
      writeroom
+     ;; markdown
+     org
 
-     ;; version-control
      git
 
      emacs-lisp
@@ -23,28 +23,31 @@
      ;; haskell
      rust
 
-     ;; markdown
-     org
-
      colemak-hjkl
      fmdkdd
      )
 
-   dotspacemacs-additional-packages
-   '(haskell-mode)
+   dotspacemacs-additional-packages '()
 
    dotspacemacs-excluded-packages
    '(
+     ;; These come with spacemacs-base
      evil-escape          ; I bind ESC to Caps Lock key, so this is more
-                          ; annoying than useful.
+                                        ; annoying than useful.
      vi-tilde-fringe      ; I prefer the Emacs way of indicating EOF.
-     haml-mode            ; Don't need those brought by web-mode.
+     hl-todo              ; The fmdkdd layer does that already.
+
+     ;; These come with html
+     haml-mode
      jade-mode
      slim-mode
-     highlight-parentheses
 
+     ;; These come with rust
      racer                ; CPU hog
      company-racer        ; Too slow to be useful
+
+     ;; This comes with git
+     evil-magit           ; I'm okay with evilified bindings
      )
 
    dotspacemacs-delete-orphan-packages t))
@@ -66,8 +69,8 @@ values."
    dotspacemacs-command-key ":"
 
    ;; Solarized themes
-   dotspacemacs-themes '(solarized-dark
-                         solarized-light)
+   dotspacemacs-themes '(spacemacs-light
+                         solarized-dark)
 
    ;; Ubuntu Mono
    dotspacemacs-default-font '("Ubuntu Mono"
@@ -76,8 +79,17 @@ values."
                                :width normal
                                :powerline-scale 1.25)
 
+   ;; More recent files
+   dotspacemacs-startup-recent-list-size 10
+
+   ;; Don't highlight delimiters in the current scope
+   dotspacemacs-highlight-delimiters 'any
+
    ;; Smooth scrolling is slooooow
    dotspacemacs-smooth-scrolling nil
+
+   ;; Delete trailing whitespace on file save
+   dotspacemacs-whitespace-cleanup 'trailing
    ))
 
 (defun dotspacemacs/user-init ()
@@ -87,13 +99,11 @@ user code.")
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
- This function is called at the very end of Spacemacs initialization after
+This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
-  ;; Reset garbage collector threshold to default value after initialization.
-  ;; (setq gc-cons-threshold 800000)
-
-  (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
-  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-  (setq haskell-interactive-popup-errors nil)
+  ;; XXX: these should not be necessary with the Haskell layer in 0.105
+  ;; (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+  ;; (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+  ;; (setq haskell-interactive-popup-errors nil)
   )
