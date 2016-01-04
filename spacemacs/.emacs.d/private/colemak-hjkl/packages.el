@@ -29,6 +29,7 @@
         company
         auto-complete
         org
+        org-agenda
         evil-org
         web-mode
         magit))
@@ -85,15 +86,17 @@
       "\C-]" 'Info-follow-nearest-node
       (kbd "DEL") 'Info-scroll-down)
 
-    ;; TAB goes to next link in Help buffers.
-    ;; FIXME: upstream this.
-    (evil-define-key 'motion help-mode-map (kbd "TAB") 'forward-button)
-
     ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     ;; In layers/distribution/spacemacs-base/packages.el
 
     (define-key evil-normal-state-map "L" 'spacemacs/evil-smart-doc-lookup)
     (define-key evil-normal-state-map "K" nil)))
+
+;; In layers/distribution/spacemacs-base/local/evil-evilified-state
+(with-eval-after-load 'evil-evilified-state
+  (define-key evil-evilified-state-map-original "j" 'evil-backward-char)
+  (define-key evil-evilified-state-map-original "k" 'evil-next-visual-line)
+  (define-key evil-evilified-state-map-original "h" 'evil-previous-visual-line))
 
 (defun colemak-hjkl/pre-init-helm ()
   (spacemacs|use-package-add-hook helm
@@ -114,13 +117,15 @@ ARG non nil means that the editing style is `vim'."
         (define-key helm-map (kbd "C-j") 'helm-next-source)
         (define-key helm-map (kbd "C-S-h") 'describe-key)
         (dolist (keymap (list helm-find-files-map helm-read-file-map))
+          (define-key keymap (kbd "C-l") 'helm-execute-persistent-action)
           (define-key keymap (kbd "C-j") 'helm-find-files-up-one-level)
           (define-key keymap (kbd "C-h") nil)
           (define-key keymap (kbd "C-S-h") 'describe-key)))
        (t
         (define-key helm-map (kbd "C-k") 'helm-execute-persistent-action)
         (define-key helm-map (kbd "C-h") 'helm-delete-minibuffer-contents)
-        (define-key helm-map (kbd "C-j") nil))))
+        (define-key helm-map (kbd "C-j") nil)
+        (define-key helm-map (kbd "C-l") 'helm-recenter-top-bottom-other-window))))
     (colemak-hjkl//helm-hjkl-navigation (member dotspacemacs-editing-style '(vim hybrid)))
 
     (defun colemak-hjkl//helm-navigation-ms-full-doc ()
@@ -129,7 +134,7 @@ ARG non nil means that the editing style is `vim'."
   [?]          display this help
   [a]          toggle action selection page
   [e]          edit occurrences if supported
-  [k] [j]      next/previous candidate
+  [k] [h]      next/previous candidate
   [j] [l]      previous/next source
   [t]          toggle visible mark
   [T]          toggle all mark
@@ -143,12 +148,24 @@ ARG non nil means that the editing style is `vim'."
       :on-enter (spacemacs//helm-navigation-ms-on-enter)
       :on-exit  (spacemacs//helm-navigation-ms-on-exit)
       :bindings
+      ("1" spacemacs/helm-action-1 :exit t)
+      ("2" spacemacs/helm-action-2 :exit t)
+      ("3" spacemacs/helm-action-3 :exit t)
+      ("4" spacemacs/helm-action-4 :exit t)
+      ("5" spacemacs/helm-action-5 :exit t)
+      ("6" spacemacs/helm-action-6 :exit t)
+      ("7" spacemacs/helm-action-7 :exit t)
+      ("8" spacemacs/helm-action-8 :exit t)
+      ("9" spacemacs/helm-action-9 :exit t)
+      ("0" spacemacs/helm-action-10 :exit t)
       ("<tab>" helm-select-action :exit t)
-      ("C-i" helm-select-action :exit t)
+      ("TAB" helm-select-action :exit t)
       ("<RET>" helm-maybe-exit-minibuffer :exit t)
       ("?" nil :doc (colemak-hjkl//helm-navigation-ms-full-doc))
       ("a" helm-select-action :post (spacemacs//helm-navigation-ms-set-face))
       ("e" spacemacs/helm-edit)
+      ("g" helm-beginning-of-buffer)
+      ("G" helm-end-of-buffer)
       ("j" helm-previous-source)
       ("k" helm-next-line)
       ("h" helm-previous-line)
@@ -181,35 +198,56 @@ ARG non nil means that the editing style is `vim'."
 (defun colemak-hjkl/pre-init-org ()
   (spacemacs|use-package-add-hook org
     :post-config
-    (evil-leader/set-key-for-mode 'org-mode
+    (spacemacs/set-leader-keys-for-major-mode 'org-mode
       ;; More cycling options (timestamps, headlines, items, properties)
-      "mJ" 'org-shiftleft
-      "mK" 'org-shiftdown
-      "mH" 'org-shiftup
+      "J" 'org-shiftleft
+      "K" 'org-shiftdown
+      "H" 'org-shiftup
 
       ;; Change between TODO sets
-      "m C-S-j" 'org-shiftcontrolleft
-      "m C-S-k" 'org-shiftcontroldown
-      "m C-S-h" 'org-shiftcontrolup
+      "C-S-j" 'org-shiftcontrolleft
+      "C-S-k" 'org-shiftcontroldown
+      "C-S-h" 'org-shiftcontrolup
 
       ;; Subtree editing
-      "mSl" 'org-demote-subtree
-      "mSj" 'org-promote-subtree
-      "mSk" 'org-move-subtree-down
-      "mSh" 'org-move-subtree-up
+      "Sl" 'org-demote-subtree
+      "Sj" 'org-promote-subtree
+      "Sk" 'org-move-subtree-down
+      "Sh" 'org-move-subtree-up
 
       ;; tables
-      "mtj" 'org-table-previous-field
-      "mtJ" 'org-table-move-column-left
-      "mtk" 'org-table-next-row
-      "mtK" 'org-table-move-row-down
-      "mtH" 'org-table-move-row-up)
+      "tj" 'org-table-previous-field
+      "tJ" 'org-table-move-column-left
+      "tk" 'org-table-next-row
+      "tK" 'org-table-move-row-down
+      "tH" 'org-table-move-row-up)
 
-    (with-eval-after-load 'org-agenda
-      (define-key org-agenda-mode-map "k" 'org-agenda-next-line)
-      (define-key org-agenda-mode-map "h" 'org-agenda-previous-line)
-      (define-key org-agenda-mode-map "j" nil))))
+    ;; Evilify the calendar tool on C-c .
+    (unless (eq 'emacs dotspacemacs-editing-style)
+      (define-key org-read-date-minibuffer-local-map (kbd "M-j")
+        (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-day 1))))
+      (define-key org-read-date-minibuffer-local-map (kbd "M-h")
+        (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-week 1))))
+      (define-key org-read-date-minibuffer-local-map (kbd "M-k")
+        (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-week 1))))
+      (define-key org-read-date-minibuffer-local-map (kbd "M-J")
+        (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-month 1))))
+      (define-key org-read-date-minibuffer-local-map (kbd "M-H")
+        (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-year 1))))
+      (define-key org-read-date-minibuffer-local-map (kbd "M-K")
+        (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-year 1)))))))
 
+
+(defun colemak-hjkl/pre-init-org-agenda ()
+  (spacemacs|use-package-add-hook org-agenda
+    :post-config
+    (evil-define-key 'evilified org-agenda-mode-map
+      "k" 'org-agenda-next-line
+      "h" 'org-agenda-previous-line
+      "j" nil
+      (kbd "M-k") 'org-agenda-next-item
+      (kbd "M-h") 'org-agenda-previous-item
+      (kbd "M-j") 'org-agenda-earlier)))
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Override elpa/evil-org/evil.org.el
@@ -255,7 +293,7 @@ ARG non nil means that the editing style is `vim'."
     (spacemacs|define-micro-state web-mode
       :doc (colemak-hjkl//web-mode-ms-doc)
       :persistent t
-      :evil-leader-for-mode (web-mode . "m.")
+      :evil-leader-for-mode (web-mode . ".")
       :bindings
       ("<escape>" nil :exit t)
       ("?" spacemacs//web-mode-ms-toggle-doc)

@@ -16,15 +16,15 @@
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Override layers/distribution/spacemacs-base/keybindings.el
 
-(evil-leader/set-key
+(spacemacs/set-leader-keys
   "iK" 'spacemacs/insert-line-below-no-indent
   "iH" 'spacemacs/insert-line-above-no-indent
   "ih" 'spacemacs/evil-insert-line-above
   "ik" 'spacemacs/evil-insert-line-below)
 
 ;; evil-loader does not define an unset-key function.
-(define-key evil-leader--default-map "iJ" nil)
-(define-key evil-leader--default-map "ij" nil)
+(define-key spacemacs-default-map "iJ" nil)
+(define-key spacemacs-default-map "ij" nil)
 
 ;; Overload this toggle to restore the right keybindings.
 (spacemacs|add-toggle visual-line-navigation
@@ -52,7 +52,7 @@
   :documentation "Move point according to visual lines."
   :evil-leader "tL")
 
-(evil-leader/set-key
+(spacemacs/set-leader-keys
   "wJ" 'evil-window-move-far-left
   "wj" 'evil-window-left
   "wK" 'evil-window-move-very-bottom
@@ -135,11 +135,3 @@
   ("v" split-window-right                    :doc (spacemacs//window-manipulation-split-doc))
   ("V" split-window-right-and-focus          :doc (spacemacs//window-manipulation-split-doc))
   ("w" other-window                          :doc (colemak-hjkl//window-manipulation-move-doc)))
-
-;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; Override core/core-evilified-state.el
-
-(with-eval-after-load 'core-evilified-state
-  (define-key evil-evilified-state-map "j" 'evil-backward-char)
-  (define-key evil-evilified-state-map "k" 'evil-next-visual-line)
-  (define-key evil-evilified-state-map "h" 'evil-previous-visual-line))
