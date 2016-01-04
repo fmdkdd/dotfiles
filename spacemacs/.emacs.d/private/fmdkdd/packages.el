@@ -13,13 +13,12 @@
 (setq fmdkdd-packages
       '(org                                 ; Plain text powerhouse
         rainbow-mode                        ; CSS colors preview
-        helm                                ; Better ido
         js2-mode                            ; JavaScript mode
         (smart-quotes :location local)      ; Auto-insertion of ‘’ instead of '
         (org-reftex :location local)        ; Manage citations in Org files
         web-mode                            ; HTML mode, supports CSS in <style> tags
         rust-mode
-        powerline
+        ;; powerline
         ))
 
 (defun fmdkdd/init-rainbow-mode ()
@@ -27,7 +26,7 @@
     :commands rainbow-mode
     :init
     (add-hook 'css-mode-hook 'rainbow-mode)
-    (evil-leader/set-key "tCc" 'rainbow-mode)
+    (spacemacs/set-leader-keys "tCc" 'rainbow-mode)
     :config (spacemacs|hide-lighter rainbow-mode)))
 
 (defun fmdkdd/pre-init-org ()
@@ -63,14 +62,6 @@
     ;; Hide history of done state into PROPERTIES drawer.
     (setq org-log-into-drawer t)
     (setq org-clock-into-drawer t)
-
-    ;; For use with evil-surround.  Now I can `cs~=' in Org.
-    (defun fmdkdd//add-org-text-objects ()
-      (spacemacs|define-text-object "/" "slash" "/" "/")
-      (spacemacs|define-text-object "~" "tilde" "~" "~")
-      (spacemacs|define-text-object "=" "equals" "=" "="))
-
-    (add-hook 'org-mode-hook 'fmdkdd//add-org-text-objects)
 
     (setq org-agenda-custom-commands
           '(("n" "Agenda and all unscheduled TODO's"
@@ -134,20 +125,13 @@ STDERR with `org-babel-eval-error-notify'."
     ;; Handle 'cite' links via org-reftex
     (org-add-link-type "cite" #'org-reftex/follow-citation)
 
-    (evil-leader/set-key-for-mode 'org-mode
-      "c" nil "mc" 'org-reftex/insert-citation
-      "mv" 'org-reftex/view-paper)
+    (spacemacs/set-leader-keys-for-major-mode 'org-mode
+      "c" 'org-reftex/insert-citation
+      "v" 'org-reftex/view-paper)
 
     (evil-define-key 'normal evil-org-mode-map
       "g<" 'org-previous-link
       "g>" 'org-next-link)))
-
-(defun fmdkdd/post-init-helm ()
-  ;; Fuzzy matching is fstr
-  (setq helm-M-x-fuzzy-match t
-        helm-recentf-fuzzy-match t
-        helm-lisp-fuzzy-completion t
-        helm-imenu-fuzzy-match t))
 
 (defun fmdkdd/init-org-reftex ()
   (use-package org-reftex
@@ -182,41 +166,41 @@ STDERR with `org-babel-eval-error-notify'."
 (defun fmdkdd/post-init-rust-mode ()
   (setq rust-indent-offset 2))
 
-(defun fmdkdd/post-init-powerline ()
-  (setq powerline-default-separator 'alternate)
+;; (defun fmdkdd/post-init-powerline ()
+;;   (setq powerline-default-separator 'alternate)
 
-  (defun fmdkdd/org-full-outline-path ()
-    "Concatenate the results of `org-get-outline-path' and
-`org-get-heading' to get the full outline path to the heading we
-are currently in."
-    (unless (org-before-first-heading-p)
-      (let* ((path (append (org-get-outline-path)
-                           (cons (org-get-heading t t) nil))))
-        (org-format-outline-path path 40)))) ; XXX: not sure if the width
-                                             ; argument works right
+;;   (defun fmdkdd/org-full-outline-path ()
+;;     "Concatenate the results of `org-get-outline-path' and
+;; `org-get-heading' to get the full outline path to the heading we
+;; are currently in."
+;;     (unless (org-before-first-heading-p)
+;;       (let* ((path (append (org-get-outline-path)
+;;                            (cons (org-get-heading t t) nil))))
+;;         (org-format-outline-path path 40)))) ; XXX: not sure if the width
+;;                                              ; argument works right
 
-  (spacemacs|define-mode-line-segment which-org-headline-segment
-    (fmdkdd/org-full-outline-path)
-    :when (and active (eq major-mode 'org-mode)))
+;;   (spacemacs|define-mode-line-segment which-org-headline-segment
+;;     (fmdkdd/org-full-outline-path)
+;;     :when (and active (eq major-mode 'org-mode)))
 
-  (setq spacemacs-mode-line-left
-        '(((workspace-number window-number)
-           :fallback state-tag :separator "|" :face state-face)
-          anzu
-          (buffer-modified buffer-id remote-host)
-          (point-position line-column)
-          major-mode
-          ((flycheck-errors flycheck-warnings flycheck-infos)
-           :when active)
-          (erc-track :when active)
-          (org-pomodoro :when active)
-          (org-clock :when active)
-          which-org-headline-segment)
+;;   (setq spacemacs-mode-line-left
+;;         '(((workspace-number window-number)
+;;            :fallback state-tag :separator "|" :face state-face)
+;;           anzu
+;;           (buffer-modified buffer-id remote-host)
+;;           (point-position line-column)
+;;           major-mode
+;;           ((flycheck-errors flycheck-warnings flycheck-infos)
+;;            :when active)
+;;           (erc-track :when active)
+;;           (org-pomodoro :when active)
+;;           (org-clock :when active)
+;;           which-org-headline-segment)
 
-        spacemacs-mode-line-right
-        '((battery :when active)
-          selection-info
-          buffer-encoding-abbrev
-          ((global-mode new-version)
-           :when active)
-          buffer-position hud)))
+;;         spacemacs-mode-line-right
+;;         '((battery :when active)
+;;           selection-info
+;;           buffer-encoding-abbrev
+;;           ((global-mode new-version)
+;;            :when active)
+;;           buffer-position hud)))

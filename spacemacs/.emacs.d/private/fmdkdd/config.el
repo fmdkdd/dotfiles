@@ -55,9 +55,6 @@
 ;; Follow symlinks to versioned files
 (setq vc-follow-symlinks t)
 
-;; Delete trailing whitespace on file save
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Editing

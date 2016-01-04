@@ -8,7 +8,7 @@
 ;;
 ;;; License: GPLv3
 
-(evil-leader/set-key
+(spacemacs/set-leader-keys
   "oa" 'org-agenda
   "oc" 'org-capture
   "ol" 'org-store-link
