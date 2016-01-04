@@ -18,7 +18,7 @@
         (org-reftex :location local)        ; Manage citations in Org files
         web-mode                            ; HTML mode, supports CSS in <style> tags
         rust-mode
-        ;; powerline
+        spaceline
         ))
 
 (defun fmdkdd/init-rainbow-mode ()
@@ -166,41 +166,32 @@ STDERR with `org-babel-eval-error-notify'."
 (defun fmdkdd/post-init-rust-mode ()
   (setq rust-indent-offset 2))
 
-;; (defun fmdkdd/post-init-powerline ()
-;;   (setq powerline-default-separator 'alternate)
+(defun fmdkdd/post-init-spaceline ()
+  (setq powerline-default-separator 'alternate)
 
-;;   (defun fmdkdd/org-full-outline-path ()
-;;     "Concatenate the results of `org-get-outline-path' and
-;; `org-get-heading' to get the full outline path to the heading we
-;; are currently in."
-;;     (unless (org-before-first-heading-p)
-;;       (let* ((path (append (org-get-outline-path)
-;;                            (cons (org-get-heading t t) nil))))
-;;         (org-format-outline-path path 40)))) ; XXX: not sure if the width
-;;                                              ; argument works right
+  (spaceline-define-segment which-org-headline-segment
+    (fmdkdd/org-full-outline-path)
+    :when (and active (eq major-mode 'org-mode)))
 
-;;   (spacemacs|define-mode-line-segment which-org-headline-segment
-;;     (fmdkdd/org-full-outline-path)
-;;     :when (and active (eq major-mode 'org-mode)))
+  (setq spaceline-left
+        '(((persp-name workspace-number window-number)
+           :fallback evil-state :separator "|" :face highlight-face)
+          anzu auto-compile
+          (buffer-modified buffer-id remote-host)
+          (point-position line-column)
+          major-mode
+          ((flycheck-error flycheck-warning flycheck-info)
+           :when active)
+          (erc-track :when active)
+          (org-pomodoro :when active)
+          (org-clock :when active)
+          which-org-headline-segment)
 
-;;   (setq spacemacs-mode-line-left
-;;         '(((workspace-number window-number)
-;;            :fallback state-tag :separator "|" :face state-face)
-;;           anzu
-;;           (buffer-modified buffer-id remote-host)
-;;           (point-position line-column)
-;;           major-mode
-;;           ((flycheck-errors flycheck-warnings flycheck-infos)
-;;            :when active)
-;;           (erc-track :when active)
-;;           (org-pomodoro :when active)
-;;           (org-clock :when active)
-;;           which-org-headline-segment)
-
-;;         spacemacs-mode-line-right
-;;         '((battery :when active)
-;;           selection-info
-;;           buffer-encoding-abbrev
-;;           ((global-mode new-version)
-;;            :when active)
-;;           buffer-position hud)))
+        spaceline-right
+        '((battery :when active)
+          (python-pyvenv :fallback python-pyenv)
+          selection-info
+          buffer-encoding-abbrev
+          (global :when active)
+          (new-version :when active)
+          buffer-position hud)))

@@ -142,3 +142,13 @@ sent by xdotool."
         fmdkdd/browser-window-no-focus-regexp
         (string-trim (shell-command-to-string
                       (format "xdotool getwindowname %s" window))))))
+
+(defun fmdkdd/org-full-outline-path ()
+  "Concatenate the results of `org-get-outline-path' and
+`org-get-heading' to get the full outline path to the heading we
+are currently in."
+  (unless (org-before-first-heading-p)
+    (let* ((path (append (org-get-outline-path)
+                         (cons (org-get-heading t t) nil))))
+      (org-format-outline-path path 40)))) ; XXX: not sure if the width
+                                        ; argument works right
