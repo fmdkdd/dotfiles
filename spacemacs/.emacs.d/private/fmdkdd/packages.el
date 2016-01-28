@@ -18,7 +18,8 @@
         (org-reftex :location local)        ; Manage citations in Org files
         web-mode                            ; HTML mode, supports CSS in <style> tags
         rust-mode
-        spaceline
+        spaceline                           ; Customize the modeline
+        page-break-lines                    ; Horizontal rule for ^L character
         ))
 
 (defun fmdkdd/init-rainbow-mode ()
@@ -195,3 +196,7 @@ STDERR with `org-babel-eval-error-notify'."
           (global :when active)
           (new-version :when active)
           buffer-position hud)))
+
+(defun fmdkdd/post-init-page-break-lines ()
+  (add-to-list 'page-break-lines-modes 'js2-mode)
+  (add-to-list 'page-break-lines-modes 'web-mode))
