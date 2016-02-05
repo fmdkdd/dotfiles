@@ -126,6 +126,13 @@ STDERR with `org-babel-eval-error-notify'."
     ;; Handle 'cite' links via org-reftex
     (org-add-link-type "cite" #'org-reftex/follow-citation)
 
+    (add-to-list 'org-structure-template-alist
+                 '("as" "#+BEGIN_aside\n?\n#+END_aside"))
+    (add-to-list 'org-structure-template-alist
+                 '("sf" "#+BEGIN_side-figure\n?\n#+END_side-figure"))
+    (add-to-list 'org-structure-template-alist
+                 '("ff" "#+BEGIN_full-figure\n?\n#+END_full-figure"))
+
     (spacemacs/set-leader-keys-for-major-mode 'org-mode
       "c" 'org-reftex/insert-citation
       "v" 'org-reftex/view-paper)
