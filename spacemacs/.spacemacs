@@ -7,12 +7,14 @@
    dotspacemacs-configuration-layers
    '(
      spell-checking
-     ;; (auto-completion :disabled-for org
-     ;;                  :variables
-     ;;                  auto-completion-enable-sort-by-usage t)
+     (auto-completion :disabled-for org
+                      :variables
+                      auto-completion-enable-sort-by-usage t)
      writeroom
      ;; markdown
      org
+
+     syntax-checking
 
      git
 
@@ -41,10 +43,6 @@
      haml-mode
      jade-mode
      slim-mode
-
-     ;; These come with rust
-     racer                ; CPU hog
-     company-racer        ; Too slow to be useful
 
      ;; This comes with git
      evil-magit           ; I'm okay with evilified bindings
@@ -101,6 +99,11 @@ user code.")
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
+
+  (setq racer-cmd "~/.cargo/bin/racer"
+        racer-rust-src-path "/usr/local/src/rustc-1.7.0/src")
+
+  (setq company-selection-wrap-around t)
 
   ;; XXX: these should not be necessary with the Haskell layer in 0.105
   ;; (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
