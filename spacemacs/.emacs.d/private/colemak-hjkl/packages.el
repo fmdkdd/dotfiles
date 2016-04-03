@@ -28,6 +28,7 @@
         helm
         company
         auto-complete
+        flycheck
         org
         org-agenda
         evil-org
@@ -322,3 +323,29 @@ ARG non nil means that the editing style is `vim'."
     (evil-define-key 'evilified git-rebase-mode-map "H" 'git-rebase-move-line-up)
     (evil-define-key 'evilified git-rebase-mode-map "K" 'git-rebase-move-line-down)
     (evil-define-key 'evilified git-rebase-mode-map "J" nil)))
+
+;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+;; Override layers/+syntax-checking/packages.el
+
+(defun colemak-hjkl/pre-init-flycheck ()
+  (spacemacs|use-package-add-hook flycheck
+    :post-config
+
+    (defun colemak-hjkl/toggle-flycheck-error-list ()
+      "Toggle flycheck's error list window.
+If the error list is visible, hide it.  Otherwise, show it."
+      (interactive)
+      (-if-let (window (flycheck-get-error-list-window))
+          (quit-window nil window)
+        (flycheck-list-errors)))
+
+    (evilified-state-evilify-map flycheck-error-list-mode-map
+      :mode flycheck-error-list-mode
+      :bindings
+      "RET" 'flycheck-error-list-goto-error
+      "k" 'flycheck-error-list-next-error
+      "h" 'flycheck-error-list-previous-error)
+
+    ;; key bindings
+    (spacemacs/set-leader-keys
+      "el" 'spacemacs/toggle-flycheck-error-list)))
