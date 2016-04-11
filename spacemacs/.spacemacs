@@ -14,7 +14,8 @@
      ;; markdown
      org
 
-     syntax-checking
+     (syntax-checking :variables
+                      syntax-checking-enable-tooltips nil)
 
      git
 
@@ -67,7 +68,8 @@ values."
    dotspacemacs-command-key ":"
 
    ;; Solarized themes
-   dotspacemacs-themes '(spacemacs-light
+   dotspacemacs-themes '(zenburn
+                         spacemacs-light
                          solarized-dark)
 
    ;; Ubuntu Mono
