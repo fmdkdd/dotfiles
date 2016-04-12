@@ -74,10 +74,8 @@ values."
 
    ;; Ubuntu Mono
    dotspacemacs-default-font '("Ubuntu Mono"
-                               :size 14
-                               :weight normal
-                               :width normal
-                               :powerline-scale 1.25)
+                               :powerline-scale 1.1
+                               :size 14)
 
    ;; More recent files
    dotspacemacs-startup-recent-list-size 10
