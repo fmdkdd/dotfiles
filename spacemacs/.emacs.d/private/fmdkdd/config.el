@@ -84,6 +84,11 @@
 ;; Automatically save private dictionary
 (setq ispell-silently-savep t)
 
+;; Sticky means highlight current line in all windows, not just in the selected
+;; window.  When not sticky, hl-line unhlighlights the current line before
+;; re-highlighting, which causes a flash when editing.
+(setq global-hl-line-sticky-flag t)
+
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Programming
