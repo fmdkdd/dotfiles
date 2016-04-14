@@ -69,3 +69,10 @@ URxvt.color12:                 S_base0
 URxvt.color13:                 S_violet
 URxvt.color14:                 S_base1
 URxvt.color15:                 S_base3
+
+! Rofi
+
+rofi.modi:    run,papers:~/.config/rofi/papers.sh
+rofi.font:    mono 9
+rofi.width:   30
+rofi.lines:   7
