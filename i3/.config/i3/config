@@ -167,5 +167,10 @@ bindsym XF86AudioLowerVolume exec "amixer set Master 5%-"
 bindsym XF86AudioRaiseVolume exec "amixer set Master 5%+"
 bindsym XF86AudioMute exec "amixer set Master toggle"
 
+# For keyboard without the media keys
+bindsym $mod+Print exec "amixer set Master 5%-"
+bindsym $mod+Scroll_Lock exec "amixer set Master 5%+"
+bindsym $mod+Pause exec "amixer set Master toggle"
+
 # Gain pixels
 hide_edge_borders both
