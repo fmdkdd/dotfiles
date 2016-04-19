@@ -83,8 +83,7 @@ this way with a prefix argument greater than 1."
       ;; Hmm, maybe the window you specified last time?
       (fmdkdd/last-browser-window-list)
       ;; I give up!  Please tell me.
-      (t (fmdkdd/select-browser-windows)))))
-  (message "Reloaded browser windows"))
+      (t (fmdkdd/select-browser-windows))))))
 
 (defun fmdkdd//do-reload-browser-windows (window-list)
   "Send F5 to each window of WINDOW-LISP using xdotool.
