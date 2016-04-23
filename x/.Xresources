@@ -72,7 +72,7 @@ URxvt.color15:                 S_base3
 
 ! Rofi
 
-rofi.modi:    run,papers:~/.config/rofi/papers.sh
+rofi.modi:    run,drun,papers:~/.config/rofi/papers.sh
 rofi.font:    mono 9
 rofi.width:   30
 rofi.lines:   7
