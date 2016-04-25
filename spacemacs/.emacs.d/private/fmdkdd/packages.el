@@ -14,7 +14,6 @@
       '(org                                 ; Plain text powerhouse
         rainbow-mode                        ; CSS colors preview
         js2-mode                            ; JavaScript mode
-        (smart-quotes :location local)      ; Auto-insertion of ‘’ instead of '
         (org-reftex :location local)        ; Manage citations in Org files
         web-mode                            ; HTML mode, supports CSS in <style> tags
         rust-mode
@@ -153,18 +152,6 @@ STDERR with `org-babel-eval-error-notify'."
   (setq js2-basic-offset 2
         js2-strict-missing-semi-warning nil
         js2-strict-trailing-comma-warning nil))
-
-
-(defun fmdkdd/init-smart-quotes ()
-  (use-package smart-quotes
-    :commands (turn-on-smart-quotes
-               turn-off-smart-quotes)
-    :init
-    (add-hook 'text-mode-hook 'turn-on-smart-quotes)
-    (add-hook 'html-mode-hook 'turn-off-smart-quotes)
-
-    :config
-    (diminish 'smart-quotes-mode)))
 
 (defun fmdkdd/post-init-web-mode ()
   (setq web-mode-markup-indent-offset 2

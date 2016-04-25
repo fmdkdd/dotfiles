@@ -73,9 +73,9 @@ values."
                          solarized-dark)
 
    ;; Ubuntu Mono
-   dotspacemacs-default-font '("Ubuntu Mono"
+   dotspacemacs-default-font '("Dina"
                                :powerline-scale 1.1
-                               :size 14)
+                               :size 10)
 
    ;; More recent files
    dotspacemacs-startup-recent-list-size 10
