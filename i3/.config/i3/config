@@ -44,7 +44,7 @@ bindsym $mod+Shift+c kill
 # bindsym $mod+p exec --no-startup-id i3-dmenu-desktop
 
 # Rofi has history and more
-bindsym $mod+p exec --no-startup-id "rofi -show run"
+bindsym $mod+p exec --no-startup-id "rofi -show drun"
 
 # change focus
 bindsym $mod+j focus left
