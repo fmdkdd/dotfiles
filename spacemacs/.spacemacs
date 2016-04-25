@@ -30,7 +30,10 @@
      fmdkdd
      )
 
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages
+   '(
+     fish-mode                          ; Fish shell scripts
+     )
 
    dotspacemacs-excluded-packages
    '(
