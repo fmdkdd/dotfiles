@@ -2,7 +2,7 @@
 
 # No arg, generate list of candidates
 if [ -z $@ ]; then
-    find ~/papers -name '*.pdf'
+    find ~/papers ~/books -name '*.pdf' -or -name '*.djvu'
 else
     PAPER=$@
 
