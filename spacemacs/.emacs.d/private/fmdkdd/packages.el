@@ -168,7 +168,7 @@ STDERR with `org-babel-eval-error-notify'."
     (fmdkdd/org-full-outline-path)
     :when (and active (eq major-mode 'org-mode)))
 
-  (setq spaceline-left
+  (spaceline-compile "main"
         '(((persp-name workspace-number window-number)
            :fallback evil-state :separator "|" :face highlight-face)
           anzu auto-compile
@@ -182,7 +182,6 @@ STDERR with `org-babel-eval-error-notify'."
           (org-clock :when active)
           which-org-headline-segment)
 
-        spaceline-right
         '((battery :when active)
           (python-pyvenv :fallback python-pyenv)
           selection-info
