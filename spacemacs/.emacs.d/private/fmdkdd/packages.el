@@ -131,6 +131,8 @@ STDERR with `org-babel-eval-error-notify'."
                  '("sf" "#+BEGIN_side-figure\n?\n#+END_side-figure"))
     (add-to-list 'org-structure-template-alist
                  '("ff" "#+BEGIN_full-figure\n?\n#+END_full-figure"))
+    (add-to-list 'org-structure-template-alist
+                 '("ep" "#+BEGIN_epigraph\n?\n#+END_epigraph"))
 
     (spacemacs/set-leader-keys-for-major-mode 'org-mode
       "c" 'org-reftex/insert-citation
