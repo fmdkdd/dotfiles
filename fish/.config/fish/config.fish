@@ -1,5 +1,9 @@
 # Source /etc/profile and /etc/profile.d files
-env -i HOME=$HOME dash -l -c printenv | sed -e '/PATH/s/:/ /g;s/=/ /;s/^/set -x /' | source
+# Get environments by executing dash (a minimalist bash).
+# Skip PWD variable (cannot be set in fish).
+# Change PATH to fish syntax (space-separated)
+# Use `set -x` to set them (environment variables).
+env -i HOME=$HOME dash -l -c printenv | sed -e '/^PWD=/d;/PATH/s/:/ /g;s/=/ /;s/^/set -x /' | source
 
 set PATH $PATH ~/.cargo/bin ~/.node_modules/bin
 #set PATH ~/.cabal/bin $PATH
