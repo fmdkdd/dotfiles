@@ -33,6 +33,7 @@
    dotspacemacs-additional-packages
    '(
      fish-mode                          ; Fish shell scripts
+     markdown-mode                      ; markdown highlighting without the cruft
      )
 
    dotspacemacs-excluded-packages
