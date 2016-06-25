@@ -34,6 +34,7 @@
    '(
      fish-mode                          ; Fish shell scripts
      markdown-mode                      ; markdown highlighting without the cruft
+     glsl-mode                          ; GL shader language mode
      )
 
    dotspacemacs-excluded-packages
