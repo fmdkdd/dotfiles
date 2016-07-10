@@ -9,6 +9,9 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
+# Disable DPMS when an application is fullscreen.
+exec --no-startup-id ~/.config/i3/disable-standby-fs.py
+
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
