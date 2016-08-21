@@ -52,6 +52,8 @@
 
      ;; This comes with git
      evil-magit           ; I'm okay with evilified bindings
+
+     org-bullets
      )
 
    dotspacemacs-delete-orphan-packages t))
@@ -62,6 +64,11 @@ This function is called at the very startup of Spacemacs initialization
 before layers configuration.
 You should not put any user code in there besides modifying the variable
 values."
+
+  ;; Must add this here otherwise Spacemacs will try to load it from MELPA
+  ;; (hint: it's not on MELPA).
+  (add-to-list 'custom-theme-load-path "~/.emacs.d/private/zenrub-theme")
+
   (setq-default
 
    ;; Vim bindings
@@ -73,9 +80,7 @@ values."
    dotspacemacs-command-key ":"
 
    ;; Solarized themes
-   dotspacemacs-themes '(zenburn
-                         spacemacs-light
-                         solarized-dark)
+   dotspacemacs-themes '(zenrub)
 
    ;; Ubuntu Mono
    dotspacemacs-default-font '("Dina"
@@ -93,6 +98,9 @@ values."
 
    ;; Delete trailing whitespace on file save
    dotspacemacs-whitespace-cleanup 'trailing
+
+   ;; Doesn't play nice with Dina
+   dotspacemacs-mode-line-unicode-symbols nil
    ))
 
 (defun dotspacemacs/user-init ()
@@ -104,6 +112,8 @@ user code.")
   "Configuration function for user code.
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
+
+  (global-hl-line-mode -1)
 
   (setq racer-cmd "~/.cargo/bin/racer"
         racer-rust-src-path "/usr/local/src/rustc-1.9.0/src")

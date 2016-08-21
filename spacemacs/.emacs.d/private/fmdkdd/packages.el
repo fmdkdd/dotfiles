@@ -13,6 +13,7 @@
 (setq fmdkdd-packages
       '(org                                 ; Plain text powerhouse
         rainbow-mode                        ; CSS colors preview
+        rainbow-delimiters                  ; font-lock parens, braces
         js2-mode                            ; JavaScript mode
         (org-reftex :location local)        ; Manage citations in Org files
         web-mode                            ; HTML mode, supports CSS in <style> tags
@@ -28,6 +29,9 @@
     (add-hook 'css-mode-hook 'rainbow-mode)
     (spacemacs/set-leader-keys "tCc" 'rainbow-mode)
     :config (spacemacs|hide-lighter rainbow-mode)))
+
+(defun fmdkdd/post-init-rainbow-delimiters ()
+  (setq rainbow-delimiters-max-face-count 1))
 
 (defun fmdkdd/pre-init-org ()
   (spacemacs|use-package-add-hook org
