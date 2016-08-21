@@ -101,6 +101,9 @@ values."
 
    ;; Doesn't play nice with Dina
    dotspacemacs-mode-line-unicode-symbols nil
+
+   ;; They way it's meant to be
+   dotspacemacs-scratch-mode 'emacs-lisp-mode
    ))
 
 (defun dotspacemacs/user-init ()
