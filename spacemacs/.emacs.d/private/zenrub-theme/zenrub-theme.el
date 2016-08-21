@@ -20,9 +20,9 @@
        (zenrub-d3 "#36455c")
        (zenrub-d4 "#1a2a31")
 
-       (zenrub-green "#9fd77a")
-       (zenrub-red "#ed9393")
-       (zenrub-yellow "#aaa939")
+       (zenrub-green "#8fd488")
+       (zenrub-red "#d75e4e")
+       (zenrub-yellow "#d7c84e")
 
        ;; Extra colors
        (zenrub-error zenrub-red)
@@ -32,8 +32,9 @@
 
    ;; Main text
    `(default ((t (:foreground ,zenrub-d0 :background ,zenrub-d4))))
-   `(rainbow-delimiters-depth-1-face ((t (:foreground ,zenrub-d2))))
    `(region ((t (:background ,zenrub-d2))))
+   `(rainbow-delimiters-depth-1-face ((t (:foreground ,zenrub-d2))))
+   `(show-paren-match ((t (:background ,zenrub-d1))))
 
    `(error ((t (:foreground ,zenrub-error :weight bold))))
    `(warning ((t (:foreground ,zenrub-warning :weight bold))))
@@ -48,16 +49,24 @@
    `(font-lock-builtin-face ((t (:inherit unspecified))))
    `(font-lock-type-face ((t (:inherit unspecified))))
    `(font-lock-variable-name-face ((t (:inherit unspecified))))
-   `(font-lock-warning-face ((t (:inherit unspecified))))
+   `(font-lock-warning-face ((t (:inherit warning))))
 
    ;; Here we want some color
    `(font-lock-comment-face ((t (:foreground ,zenrub-a0 :background ,zenrub-d4))))
    `(font-lock-doc-face ((t (:inherit font-lock-comment-face))))
    `(font-lock-string-face ((t (:foreground ,zenrub-c0))))
-   `(font-lock-warning-face ((t (:inherit warning))))
 
-   ;; Show paren
+   ;; Search
    `(show-paren-match ((t (:background ,zenrub-d1))))
+   `(isearch ((t (:background ,zenrub-green
+                              :foreground ,zenrub-d3))))
+
+   ;; Helm
+   `(helm-selection ((t (:inherit highlight))))
+   `(helm-ff-directory ((t (:foreground ,zenrub-a0))))
+   `(helm-swoop-target-word-face ((t (:background ,zenrub-green
+                                                  :foreground ,zenrub-d2))))
+   `(helm-swoop-target-line-face ((t (:background ,zenrub-d3))))
 
    ;; UI
    `(fringe ((t (:inherit unspecified))))
@@ -65,7 +74,7 @@
                                 :box (:line-width -1 :style released-button)))))
    `(mode-line-buffer-id ((t (:inherit unspecified))))
    `(mode-line-inactive ((t (:foreground ,zenrub-d1
-                                         :box (:line-width -1 :style pressed-button)))))
+                                         :box (:line-width -1 :color ,zenrub-d3)))))
 
    `(powerline-active1 ((t (:background ,zenrub-d4))))
    `(powerline-active2 ((t (:background ,zenrub-d4))))
@@ -139,10 +148,8 @@
    `(info-string ((t (:inherit unspecified))))
    `(info-double-quoted-name ((t (:inherit unspecified))))
 
-   ;; Helm
-   `(helm-selection ((t (:inherit highlight))))
-   `(helm-ff-directory ((t (:foreground ,zenrub-a0))))
-   `(helm-swoop-target-line-face ((t (:background ,zenrub-d3))))
+   ;; js2
+   `(js2-function-param ((t (:inherit unspecified))))
 
    ))
 

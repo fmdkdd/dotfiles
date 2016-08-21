@@ -53,7 +53,9 @@
      ;; This comes with git
      evil-magit           ; I'm okay with evilified bindings
 
+     ;; Unnecessary cosmetics
      org-bullets
+     highlight-numbers
      )
 
    dotspacemacs-delete-orphan-packages t))
