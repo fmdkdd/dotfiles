@@ -106,6 +106,9 @@ values."
 
    ;; They way it's meant to be
    dotspacemacs-scratch-mode 'emacs-lisp-mode
+
+   ;; Y is y$
+   dotspacemacs-remap-Y-to-y$ t
    ))
 
 (defun dotspacemacs/user-init ()
