@@ -103,7 +103,7 @@
    `(org-done ((t (:inherit success))))
    `(org-todo ((t (:inherit error))))
    `(org-date ((t (:inherit unspecified))))
-   `(org-code ((t (:foreground ,zenrub-c0))))
+   `(org-code ((t (:inherit unspecified))))
    `(org-table ((t (:inherit unspecified))))
    `(org-block ((t (:inherit unspecified))))
 
