@@ -96,12 +96,16 @@
    `(outline-3 ((t (:foreground ,zenrub-c2))))
    `(outline-4 ((t (:foreground ,zenrub-c3))))
 
-   `(org-document-title ((t (:inherit font-lock-comment-face))))
-   `(org-document-info-keyword ((t (:inherit font-lock-comment-face))))
-   `(org-document-info ((t (:inherit font-lock-comment-face))))
+   `(org-meta-line ((t (:foreground ,zenrub-a1))))
+   `(org-document-title ((t (:inherit org-meta-line))))
+   `(org-document-info-keyword ((t (:inherit org-meta-line))))
+   `(org-document-info ((t (:inherit org-meta-line))))
    `(org-done ((t (:inherit success))))
    `(org-todo ((t (:inherit error))))
    `(org-date ((t (:inherit unspecified))))
+   `(org-code ((t (:foreground ,zenrub-c0))))
+   `(org-table ((t (:inherit unspecified))))
+   `(org-block ((t (:inherit unspecified))))
 
    ;; flyspell
    `(flyspell-incorrect ((t :underline (:style wave :color ,zenrub-error))))
