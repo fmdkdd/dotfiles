@@ -155,6 +155,7 @@
 
    ;; js2
    `(js2-function-param ((t (:inherit unspecified))))
+   `(js2-error ((t (:foreground ,zenrub-error))))
 
    ;; Elisp
    `(eval-sexp-fu-flash ((t (:background ,zenrub-c4))))
