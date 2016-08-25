@@ -150,6 +150,7 @@
 
    ;; Info
    `(info-string ((t (:inherit unspecified))))
+   `(info-quoted-name ((t (:inherit font-lock-string-face))))
    `(info-double-quoted-name ((t (:inherit unspecified))))
 
    ;; js2
