@@ -153,6 +153,11 @@
    `(info-string ((t (:inherit unspecified))))
    `(info-quoted-name ((t (:inherit font-lock-string-face))))
    `(info-double-quoted-name ((t (:inherit unspecified))))
+   `(info-reference-item ((t (:foreground ,zenrub-c0))))
+   `(info-function-ref-item ((t (:inherit unspecified))))
+   `(info-macro-ref-item ((t (:inherit unspecified))))
+   `(info-xref-visited ((t (:foreground ,zenrub-d1 :inherit link))))
+   `(info-menu-star ((t (:inherit unspecified))))
 
    ;; js2
    `(js2-function-param ((t (:inherit unspecified))))
