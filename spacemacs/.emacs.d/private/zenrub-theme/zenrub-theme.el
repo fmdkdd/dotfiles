@@ -106,6 +106,7 @@
    `(org-code ((t (:inherit unspecified))))
    `(org-table ((t (:inherit unspecified))))
    `(org-block ((t (:inherit unspecified))))
+   `(org-macro ((t (:inherit unspecified)))) ; I don't hide braces around macros
 
    ;; flyspell
    `(flyspell-incorrect ((t :underline (:style wave :color ,zenrub-error))))
