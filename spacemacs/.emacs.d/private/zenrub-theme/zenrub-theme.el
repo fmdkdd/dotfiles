@@ -34,7 +34,8 @@
    `(default ((t (:foreground ,zenrub-d0 :background ,zenrub-d4))))
    `(region ((t (:background ,zenrub-d2))))
    `(rainbow-delimiters-depth-1-face ((t (:foreground ,zenrub-d2))))
-   `(show-paren-match ((t (:background ,zenrub-d1))))
+   `(show-paren-match ((t (:foreground ,zenrub-a0))))
+   `(sp-pair-overlay-face ((t (:inherit unspecified))))
 
    `(error ((t (:foreground ,zenrub-error :weight bold))))
    `(warning ((t (:foreground ,zenrub-warning :weight bold))))
@@ -57,7 +58,6 @@
    `(font-lock-string-face ((t (:foreground ,zenrub-c0))))
 
    ;; Search
-   `(show-paren-match ((t (:background ,zenrub-d1))))
    `(isearch ((t (:background ,zenrub-green
                               :foreground ,zenrub-d3))))
 
