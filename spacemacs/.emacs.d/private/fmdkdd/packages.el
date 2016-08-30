@@ -165,7 +165,13 @@ STDERR with `org-babel-eval-error-notify'."
         web-mode-code-indent-offset 2))
 
 (defun fmdkdd/post-init-rust-mode ()
-  (setq rust-indent-offset 2))
+  (setq rust-indent-offset 2)
+
+  (spacemacs/set-leader-keys-for-major-mode 'rust-mode
+    "e" #'flycheck-rust-explain-error)
+
+  (evil-define-key 'normal rust-mode-map
+    "L" #'racer-describe))
 
 (defun fmdkdd/post-init-spaceline ()
   (setq powerline-default-separator 'alternate)

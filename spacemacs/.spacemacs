@@ -124,7 +124,7 @@ layers configuration. You are free to put any user code."
   (global-hl-line-mode -1)
 
   (setq racer-cmd "~/.cargo/bin/racer"
-        racer-rust-src-path "/usr/local/src/rustc-1.9.0/src")
+        racer-rust-src-path "/usr/local/src/rustc-1.11.0/src")
 
   (setq company-selection-wrap-around t)
 
