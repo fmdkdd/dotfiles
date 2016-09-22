@@ -322,7 +322,17 @@ ARG non nil means that the editing style is `vim'."
     :post-config
     (evil-define-key 'evilified git-rebase-mode-map "H" 'git-rebase-move-line-up)
     (evil-define-key 'evilified git-rebase-mode-map "K" 'git-rebase-move-line-down)
-    (evil-define-key 'evilified git-rebase-mode-map "J" nil)))
+    (evil-define-key 'evilified git-rebase-mode-map "J" nil)
+
+    ;; Hunk map is for visual selection of hunks.  k is bound to `magit-discard'
+    ;; by default, but since we already have it on K, leave k to `evil-next-line'.
+    (dolist (map (list magit-hunk-section-map
+                       magit-file-section-map
+                       magit-untracked-section-map
+                       magit-unstaged-section-map
+                       magit-staged-section-map
+                       magit-branch-section-map))
+      (define-key map "k" nil))))
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Override layers/+syntax-checking/packages.el
