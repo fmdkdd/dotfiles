@@ -332,7 +332,17 @@ ARG non nil means that the editing style is `vim'."
                        magit-unstaged-section-map
                        magit-staged-section-map
                        magit-branch-section-map))
-      (define-key map "k" nil))))
+      (define-key map "k" nil))
+
+    ;; l is useless in magit, but log-popup is useful
+    (dolist (map (list magit-hunk-section-map
+                       magit-file-section-map
+                       magit-untracked-section-map
+                       magit-unstaged-section-map
+                       magit-staged-section-map
+                       magit-branch-section-map))
+      (evil-define-key 'evilified map "l" nil))
+    (evil-define-key 'evilified magit-mode-map "l" 'magit-log-popup)))
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Override layers/+syntax-checking/packages.el
