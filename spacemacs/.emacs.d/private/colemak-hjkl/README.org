@@ -40,3 +40,8 @@ Other people have asked on the Spacemacs issue tracker how to remap HJKL.
 web-mode, where it redefines the bindings.  Global minor mode means you can
 toggle it dynamically, but unless you hand your keyboard to someone, this is of
 little advantage.  Via a layer, you can just comment it and reload Spacemacs.
+
+The [[https://github.com/syl20bnr/spacemacs/tree/develop/layers/+intl/keyboard-layout][keyboard-layout]] layer is now part of Spacemacs, and allows one to easily
+define alternative configuration like bépo, dvorak, and even colemak.  I
+recommend using ~keyboard-layout~ with colemak first, then improve it's coverage
+of packages, as it has the potential to be useful for more users.
