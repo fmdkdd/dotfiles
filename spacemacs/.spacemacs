@@ -128,6 +128,8 @@ layers configuration. You are free to put any user code."
 
   (setq company-selection-wrap-around t)
 
+  (setq helm-ag-base-command "rg --line-number --color never --hidden --no-heading")
+
   ;; XXX: these should not be necessary with the Haskell layer in 0.105
   ;; (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
   ;; (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
