@@ -86,7 +86,8 @@
    ;; Company
    `(company-tooltip ((t (:background ,zenrub-d3))))
    `(company-tooltip-selection ((t (:inherit isearch))))
-   `(company-tooltip-annotation ((t (:foreground ,zenrub-a0))))
+   `(company-tooltip-annotation ((t (:foreground ,zenrub-d0))))
+   `(company-tooltip-annotation-selection ((t (:foreground ,zenrub-d3))))
    `(company-scrollbar-fg ((t (:background ,zenrub-d4))))
    `(company-scrollbar-bg ((t (:background ,zenrub-d3))))
 
