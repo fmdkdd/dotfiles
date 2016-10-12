@@ -160,6 +160,9 @@
    `(info-xref-visited ((t (:foreground ,zenrub-d1 :inherit link))))
    `(info-menu-star ((t (:inherit unspecified))))
 
+   ;; Help
+   `(describe-variable-value ((t (:inherit unspecified))))
+
    ;; js2
    `(js2-function-param ((t (:inherit unspecified))))
    `(js2-error ((t (:foreground ,zenrub-error))))
