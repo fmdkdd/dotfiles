@@ -23,26 +23,27 @@
 ;; Using `with-eval-after-load' is not sufficient, as we do not know if the body
 ;; will be executed after the `:config' phase of `use-package'.
 
-(setq colemak-hjkl-packages
-      '(evil
-        helm
-        company
-        auto-complete
-        flycheck
-        org
-        org-agenda
-        evil-org
-        web-mode
-        magit))
+(defconst colemak-hjkl-packages
+  '(evil
+    helm
+    company
+    ;; flycheck
+    ;; org
+    ;; org-agenda
+    ;; evil-org
+    ;; web-mode
+    ;; magit
+    ))
 
-;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-;; Override layers/distribution/spacemacs-base/packages.el
+;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+;; Override layers/distribution/spacemacs-bootstrap/packages.el
 
 (defun colemak-hjkl/pre-init-evil ()
-  (spacemacs|use-package-add-hook evil
-    :post-config
-
-    ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ;; spacemacs|add-hook doesn't work here, because evil is `require'd in
+  ;; spacemacs-bootstrap and doesn't go through use-package.
+  ;; `with-eval-after-load' is not necessary either, but doesn't hurt.
+  (with-eval-after-load 'evil
+    ;;~~~~~~~~~~~~~~~~~~~~~~~~~~
     ;; In elpa/evil/evil-maps.el
 
     ;; Window commands
@@ -75,7 +76,7 @@
     (define-key evil-motion-state-map "zj" 'evil-scroll-column-left)
     (define-key evil-motion-state-map "zJ" 'evil-scroll-left)
 
-    ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     ;; In elpa/evil/evil-integration.el
 
     (evil-add-hjkl-bindings Info-mode-map 'motion
@@ -85,96 +86,85 @@
       "\C-o" 'Info-history-back
       "x" 'Info-scroll-up ; SPC is taken in Spacemacs
       "\C-]" 'Info-follow-nearest-node
-      (kbd "DEL") 'Info-scroll-down)
+      (kbd "DEL") 'Info-scroll-down)))
 
-    ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    ;; In layers/distribution/spacemacs-base/packages.el
+;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+;; In layers/distribution/spacemacs-bootstrap/packages.el
 
-    (define-key evil-normal-state-map "L" 'spacemacs/evil-smart-doc-lookup)
-    (define-key evil-normal-state-map "K" nil)))
+;; Use post-init to override the bindings made by spacemacs-bootstrap
+(defun colemak-hjkl/post-init-evil ()
+  (define-key evil-normal-state-map "L" 'spacemacs/evil-smart-doc-lookup)
+  (define-key evil-normal-state-map "K" nil)
 
+  ;; Transient states are defined in this hook, so we /append/ to it in order to
+  ;; run this redefinition after the transient states are defined, otherwise the
+  ;; keymap and hint variables won't be defined.
+  (add-hook 'spacemacs-post-user-config-hook
+            (lambda ()
+              (define-key spacemacs/paste-transient-state/keymap (kbd "C-j") nil)
+              (define-key spacemacs/paste-transient-state/keymap
+                (kbd "C-h") 'spacemacs/paste-transient-state/evil-paste-pop)
+
+              ;; The hint is a bit convoluted, but we can pattern match the
+              ;; place we want.
+              (pcase spacemacs/paste-transient-state/hint
+                (`(concat ,_ (concat (format ,_ ,_ ,_ ,str . ,_) . ,_) . ,_)
+                 (store-substring str 0 "C-h"))))
+            ;; Run this redefinition /after/ the transient state definitions
+            t)
+
+  ;; comint
+  (evil-define-key 'insert comint-mode-map
+    (kbd "C-h") 'comint-previous-input
+    (kbd "C-k") 'comint-next-input
+    (kbd "C-j") nil)
+  )
+
+;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; In layers/distribution/spacemacs-base/local/evil-evilified-state
 (with-eval-after-load 'evil-evilified-state
   (define-key evil-evilified-state-map-original "j" 'evil-backward-char)
   (define-key evil-evilified-state-map-original "k" 'evil-next-visual-line)
   (define-key evil-evilified-state-map-original "h" 'evil-previous-visual-line))
 
+
+;; The helm layer is implicitly loaded with the spacemacs distribution
 (defun colemak-hjkl/pre-init-helm ()
   (spacemacs|use-package-add-hook helm
     :post-config
     ;; need this otherwise helm-find-files-map is not defined
     (helm-mode +1)
 
+    ;; from layers/+spacemacs/spacemacs-completion/funcs.el
     ;; helm navigation on hjkl
-    (defun colemak-hjkl//helm-hjkl-navigation (&optional arg)
-      "Set navigation in helm on `jklh'.
-ARG non nil means that the editing style is `vim'."
-      (cond
-       (arg
-        ;; better navigation on homerow
-        ;; rebind `describe-key' for convenience
-        (define-key helm-map (kbd "C-k") 'helm-next-line)
-        (define-key helm-map (kbd "C-h") 'helm-previous-line)
-        (define-key helm-map (kbd "C-j") 'helm-next-source)
-        (define-key helm-map (kbd "C-S-h") 'describe-key)
-        (dolist (keymap (list helm-find-files-map helm-read-file-map))
-          (define-key keymap (kbd "C-l") 'helm-execute-persistent-action)
-          (define-key keymap (kbd "C-j") 'helm-find-files-up-one-level)
-          (define-key keymap (kbd "C-h") nil)
-          (define-key keymap (kbd "C-S-h") 'describe-key)))
-       (t
-        (define-key helm-map (kbd "C-k") 'helm-execute-persistent-action)
-        (define-key helm-map (kbd "C-h") 'helm-delete-minibuffer-contents)
-        (define-key helm-map (kbd "C-j") nil)
-        (define-key helm-map (kbd "C-l") 'helm-recenter-top-bottom-other-window))))
-    (colemak-hjkl//helm-hjkl-navigation (member dotspacemacs-editing-style '(vim hybrid)))
+    (define-key helm-map (kbd "C-k") 'helm-next-line)
+    (define-key helm-map (kbd "C-h") 'helm-previous-line)
+    (define-key helm-map (kbd "C-j") 'helm-next-source)
+    (dolist (keymap (list helm-find-files-map helm-read-file-map))
+      (define-key keymap (kbd "C-l") 'helm-execute-persistent-action)
+      (define-key keymap (kbd "C-j") 'helm-find-files-up-one-level)
+      (define-key keymap (kbd "C-h") nil))
 
-    (defun colemak-hjkl//helm-navigation-ms-full-doc ()
-      "Full documentation for helm navigation micro-state."
-      "
-  [?]          display this help
-  [a]          toggle action selection page
-  [e]          edit occurrences if supported
-  [k] [h]      next/previous candidate
-  [j] [l]      previous/next source
-  [t]          toggle visible mark
-  [T]          toggle all mark
-  [v]          persistent action
-  [q]          quit")
+    ;; from layers/+spacemacs/spacemacs-completion/packages.el
+    ;; Yet another transient state, yeepee
+    (add-hook
+     'spacemacs-post-user-config-hook
+     (lambda ()
+       (let ((keymap spacemacs/helm-navigation-transient-state/keymap)
+             (prefix "spacemacs/helm-navigation-transient-state"))
+         (define-key keymap "h" (intern (format "%s/%s" prefix 'helm-previous-line)))
+         (define-key keymap "j" (intern (format "%s/%s" prefix 'helm-previous-source)))
+         (define-key keymap "k" (intern (format "%s/%s" prefix 'helm-next-line)))
 
-    (spacemacs|define-micro-state colemak-hjkl/helm-navigation
-      :persistent t
-      :disable-evil-leader t
-      :define-key (helm-map . "M-SPC") (helm-map . "s-M-SPC")
-      :on-enter (spacemacs//helm-navigation-ms-on-enter)
-      :on-exit  (spacemacs//helm-navigation-ms-on-exit)
-      :bindings
-      ("1" spacemacs/helm-action-1 :exit t)
-      ("2" spacemacs/helm-action-2 :exit t)
-      ("3" spacemacs/helm-action-3 :exit t)
-      ("4" spacemacs/helm-action-4 :exit t)
-      ("5" spacemacs/helm-action-5 :exit t)
-      ("6" spacemacs/helm-action-6 :exit t)
-      ("7" spacemacs/helm-action-7 :exit t)
-      ("8" spacemacs/helm-action-8 :exit t)
-      ("9" spacemacs/helm-action-9 :exit t)
-      ("0" spacemacs/helm-action-10 :exit t)
-      ("<tab>" helm-select-action :exit t)
-      ("TAB" helm-select-action :exit t)
-      ("<RET>" helm-maybe-exit-minibuffer :exit t)
-      ("?" nil :doc (colemak-hjkl//helm-navigation-ms-full-doc))
-      ("a" helm-select-action :post (spacemacs//helm-navigation-ms-set-face))
-      ("e" spacemacs/helm-edit)
-      ("g" helm-beginning-of-buffer)
-      ("G" helm-end-of-buffer)
-      ("j" helm-previous-source)
-      ("k" helm-next-line)
-      ("h" helm-previous-line)
-      ("l" helm-next-source)
-      ("q" nil :exit t)
-      ("t" helm-toggle-visible-mark)
-      ("T" helm-toggle-all-marks)
-      ("v" helm-execute-persistent-action))))
+         ;; and the hint
+         (pcase-let ((`(concat ,_ (concat (format ,_ ,j ,k ,_ ,_ ,h . ,_)
+                                          . ,_)
+                               . ,_)
+                      spacemacs/helm-navigation-transient-state/hint))
+           (store-substring j 0 "h")
+           (store-substring k 0 "k")
+           (store-substring h 0 "j"))))
+     t)))
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Override layers/auto-completion/packages.el
@@ -184,188 +174,181 @@ ARG non nil means that the editing style is `vim'."
     :post-config
     (define-key company-active-map (kbd "C-k") 'company-select-next)
     (define-key company-active-map (kbd "C-h") 'company-select-previous)
-    (define-key company-active-map (kbd "C-j") nil)))
-
-(defun colemak-hjkl/pre-init-auto-complete ()
-  (spacemacs|use-package-add-hook auto-complete
-    :post-config
-    (define-key ac-completing-map (kbd "C-k") 'ac-next)
-    (define-key ac-completing-map (kbd "C-h") 'ac-previous)
-    (define-key ac-completing-map (kbd "C-j") nil)))
+    (define-key company-active-map (kbd "C-j") 'company-show-doc-buffer)))
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Override layers/org/packages.el
 
-(defun colemak-hjkl/pre-init-org ()
-  (spacemacs|use-package-add-hook org
-    :post-config
-    (spacemacs/set-leader-keys-for-major-mode 'org-mode
-      ;; More cycling options (timestamps, headlines, items, properties)
-      "J" 'org-shiftleft
-      "K" 'org-shiftdown
-      "H" 'org-shiftup
+;; (defun colemak-hjkl/pre-init-org ()
+;;   (spacemacs|use-package-add-hook org
+;;     :post-config
+;;     (spacemacs/set-leader-keys-for-major-mode 'org-mode
+;;       ;; More cycling options (timestamps, headlines, items, properties)
+;;       "J" 'org-shiftleft
+;;       "K" 'org-shiftdown
+;;       "H" 'org-shiftup
 
-      ;; Change between TODO sets
-      "C-S-j" 'org-shiftcontrolleft
-      "C-S-k" 'org-shiftcontroldown
-      "C-S-h" 'org-shiftcontrolup
+;;       ;; Change between TODO sets
+;;       "C-S-j" 'org-shiftcontrolleft
+;;       "C-S-k" 'org-shiftcontroldown
+;;       "C-S-h" 'org-shiftcontrolup
 
-      ;; Subtree editing
-      "Sl" 'org-demote-subtree
-      "Sj" 'org-promote-subtree
-      "Sk" 'org-move-subtree-down
-      "Sh" 'org-move-subtree-up
+;;       ;; Subtree editing
+;;       "Sl" 'org-demote-subtree
+;;       "Sj" 'org-promote-subtree
+;;       "Sk" 'org-move-subtree-down
+;;       "Sh" 'org-move-subtree-up
 
-      ;; tables
-      "tj" 'org-table-previous-field
-      "tJ" 'org-table-move-column-left
-      "tk" 'org-table-next-row
-      "tK" 'org-table-move-row-down
-      "tH" 'org-table-move-row-up)
+;;       ;; tables
+;;       "tj" 'org-table-previous-field
+;;       "tJ" 'org-table-move-column-left
+;;       "tk" 'org-table-next-row
+;;       "tK" 'org-table-move-row-down
+;;       "tH" 'org-table-move-row-up)
 
-    ;; Evilify the calendar tool on C-c .
-    (unless (eq 'emacs dotspacemacs-editing-style)
-      (define-key org-read-date-minibuffer-local-map (kbd "M-j")
-        (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-day 1))))
-      (define-key org-read-date-minibuffer-local-map (kbd "M-h")
-        (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-week 1))))
-      (define-key org-read-date-minibuffer-local-map (kbd "M-k")
-        (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-week 1))))
-      (define-key org-read-date-minibuffer-local-map (kbd "M-J")
-        (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-month 1))))
-      (define-key org-read-date-minibuffer-local-map (kbd "M-H")
-        (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-year 1))))
-      (define-key org-read-date-minibuffer-local-map (kbd "M-K")
-        (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-year 1)))))))
+;;     ;; Evilify the calendar tool on C-c .
+;;     (unless (eq 'emacs dotspacemacs-editing-style)
+;;       (define-key org-read-date-minibuffer-local-map (kbd "M-j")
+;;         (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-day 1))))
+;;       (define-key org-read-date-minibuffer-local-map (kbd "M-h")
+;;         (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-week 1))))
+;;       (define-key org-read-date-minibuffer-local-map (kbd "M-k")
+;;         (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-week 1))))
+;;       (define-key org-read-date-minibuffer-local-map (kbd "M-J")
+;;         (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-month 1))))
+;;       (define-key org-read-date-minibuffer-local-map (kbd "M-H")
+;;         (lambda () (interactive) (org-eval-in-calendar '(calendar-backward-year 1))))
+;;       (define-key org-read-date-minibuffer-local-map (kbd "M-K")
+;;         (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-year 1)))))))
 
 
-(defun colemak-hjkl/pre-init-org-agenda ()
-  (spacemacs|use-package-add-hook org-agenda
-    :post-config
-    (evil-define-key 'evilified org-agenda-mode-map
-      "k" 'org-agenda-next-line
-      "h" 'org-agenda-previous-line
-      "j" nil
-      (kbd "M-k") 'org-agenda-next-item
-      (kbd "M-h") 'org-agenda-previous-item
-      (kbd "M-j") 'org-agenda-earlier)))
+;; (defun colemak-hjkl/pre-init-org-agenda ()
+;;   (spacemacs|use-package-add-hook org-agenda
+;;     :post-config
+;;     (evil-define-key 'evilified org-agenda-mode-map
+;;       "k" 'org-agenda-next-line
+;;       "h" 'org-agenda-previous-line
+;;       "j" nil
+;;       (kbd "M-k") 'org-agenda-next-item
+;;       (kbd "M-h") 'org-agenda-previous-item
+;;       (kbd "M-j") 'org-agenda-earlier)))
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Override elpa/evil-org/evil.org.el
 
-(defun colemak-hjkl/pre-init-evil-org ()
-  (spacemacs|use-package-add-hook evil-org
-    :post-config
-    (evil-define-key 'normal evil-org-mode-map
-      "gj" 'outline-up-heading
-      "gk" 'org-forward-heading-same-level
-      "gh" 'org-backward-heading-same-level
-      (kbd "M-j") 'org-metaleft
-      (kbd "M-h") 'org-metaup
-      (kbd "M-k") 'org-metadown
-      (kbd "M-J") 'org-shiftmetaleft
-      (kbd "M-H") 'org-shiftmetaup
-      (kbd "M-K") 'org-shiftmetadown)
+;; (defun colemak-hjkl/pre-init-evil-org ()
+;;   (spacemacs|use-package-add-hook evil-org
+;;     :post-config
+;;     (evil-define-key 'normal evil-org-mode-map
+;;       "gj" 'outline-up-heading
+;;       "gk" 'org-forward-heading-same-level
+;;       "gh" 'org-backward-heading-same-level
+;;       (kbd "M-j") 'org-metaleft
+;;       (kbd "M-h") 'org-metaup
+;;       (kbd "M-k") 'org-metadown
+;;       (kbd "M-J") 'org-shiftmetaleft
+;;       (kbd "M-H") 'org-shiftmetaup
+;;       (kbd "M-K") 'org-shiftmetadown)
 
-    (evil-define-key 'insert evil-org-mode-map
-      (kbd "M-j") 'org-metaleft
-      (kbd "M-h") 'org-metaup
-      (kbd "M-k") 'org-metadown
-      (kbd "M-J") 'org-shiftmetaleft
-      (kbd "M-H") 'org-shiftmetaup
-      (kbd "M-K") 'org-shiftmetadown)))
+;;     (evil-define-key 'insert evil-org-mode-map
+;;       (kbd "M-j") 'org-metaleft
+;;       (kbd "M-h") 'org-metaup
+;;       (kbd "M-k") 'org-metadown
+;;       (kbd "M-J") 'org-shiftmetaleft
+;;       (kbd "M-H") 'org-shiftmetaup
+;;       (kbd "M-K") 'org-shiftmetadown)))
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Override layers/+lang/html/packages.el
 
-(defun colemak-hjkl/pre-init-web-mode ()
-  (spacemacs|use-package-add-hook web-mode
-    :post-config
-    (defun colemak-hjkl//web-mode-ms-doc ()
-      (if (equal 0 spacemacs--web-mode-ms-doc-toggle)
-          "[?] for help"
-        "
-  [?] display this help
-  [h] previous [k] next   [H] previous sibling [K] next sibling
-  [h] parent   [l] child  [c] clone [d] delete [D] kill [r] rename
-  [w] wrap     [p] xpath
-  [q] quit"))
+;; (defun colemak-hjkl/pre-init-web-mode ()
+;;   (spacemacs|use-package-add-hook web-mode
+;;     :post-config
+;;     (defun colemak-hjkl//web-mode-ms-doc ()
+;;       (if (equal 0 spacemacs--web-mode-ms-doc-toggle)
+;;           "[?] for help"
+;;         "
+;;   [?] display this help
+;;   [h] previous [k] next   [H] previous sibling [K] next sibling
+;;   [h] parent   [l] child  [c] clone [d] delete [D] kill [r] rename
+;;   [w] wrap     [p] xpath
+;;   [q] quit"))
 
-    (spacemacs|define-micro-state web-mode
-      :doc (colemak-hjkl//web-mode-ms-doc)
-      :persistent t
-      :evil-leader-for-mode (web-mode . ".")
-      :bindings
-      ("<escape>" nil :exit t)
-      ("?" spacemacs//web-mode-ms-toggle-doc)
-      ("c" web-mode-element-clone)
-      ("d" web-mode-element-vanish)
-      ("D" web-mode-element-kill)
-      ("k" web-mode-element-next)
-      ("K" web-mode-element-sibling-next)
-      ("gk" web-mode-element-sibling-next)
-      ("h" web-mode-element-previous)
-      ("H" web-mode-element-sibling-previous)
-      ("gh" web-mode-element-sibling-previous)
-      ("j" web-mode-element-parent)
-      ("l" web-mode-element-child)
-      ("p" web-mode-dom-xpath)
-      ("r" web-mode-element-rename :exit t)
-      ("q" nil :exit t)
-      ("w" web-mode-element-wrap))))
+;;     (spacemacs|define-micro-state web-mode
+;;       :doc (colemak-hjkl//web-mode-ms-doc)
+;;       :persistent t
+;;       :evil-leader-for-mode (web-mode . ".")
+;;       :bindings
+;;       ("<escape>" nil :exit t)
+;;       ("?" spacemacs//web-mode-ms-toggle-doc)
+;;       ("c" web-mode-element-clone)
+;;       ("d" web-mode-element-vanish)
+;;       ("D" web-mode-element-kill)
+;;       ("k" web-mode-element-next)
+;;       ("K" web-mode-element-sibling-next)
+;;       ("gk" web-mode-element-sibling-next)
+;;       ("h" web-mode-element-previous)
+;;       ("H" web-mode-element-sibling-previous)
+;;       ("gh" web-mode-element-sibling-previous)
+;;       ("j" web-mode-element-parent)
+;;       ("l" web-mode-element-child)
+;;       ("p" web-mode-dom-xpath)
+;;       ("r" web-mode-element-rename :exit t)
+;;       ("q" nil :exit t)
+;;       ("w" web-mode-element-wrap))))
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Override layers/+source-control/git/packages.el
 
-(defun colemak-hjkl/pre-init-magit ()
-  (spacemacs|use-package-add-hook magit
-    :post-config
-    (evil-define-key 'evilified git-rebase-mode-map "H" 'git-rebase-move-line-up)
-    (evil-define-key 'evilified git-rebase-mode-map "K" 'git-rebase-move-line-down)
-    (evil-define-key 'evilified git-rebase-mode-map "J" nil)
+;; (defun colemak-hjkl/pre-init-magit ()
+;;   (spacemacs|use-package-add-hook magit
+;;     :post-config
+;;     (evil-define-key 'evilified git-rebase-mode-map "H" 'git-rebase-move-line-up)
+;;     (evil-define-key 'evilified git-rebase-mode-map "K" 'git-rebase-move-line-down)
+;;     (evil-define-key 'evilified git-rebase-mode-map "J" nil)
 
-    ;; Hunk map is for visual selection of hunks.  k is bound to `magit-discard'
-    ;; by default, but since we already have it on K, leave k to `evil-next-line'.
-    (dolist (map (list magit-hunk-section-map
-                       magit-file-section-map
-                       magit-untracked-section-map
-                       magit-unstaged-section-map
-                       magit-staged-section-map
-                       magit-branch-section-map))
-      (define-key map "k" nil))
+;;     ;; Hunk map is for visual selection of hunks.  k is bound to `magit-discard'
+;;     ;; by default, but since we already have it on K, leave k to `evil-next-line'.
+;;     (dolist (map (list magit-hunk-section-map
+;;                        magit-file-section-map
+;;                        magit-untracked-section-map
+;;                        magit-unstaged-section-map
+;;                        magit-staged-section-map
+;;                        magit-branch-section-map))
+;;       (define-key map "k" nil))
 
-    ;; l is useless in magit, but log-popup is useful
-    (dolist (map (list magit-hunk-section-map
-                       magit-file-section-map
-                       magit-untracked-section-map
-                       magit-unstaged-section-map
-                       magit-staged-section-map
-                       magit-branch-section-map))
-      (evil-define-key 'evilified map "l" nil))
-    (evil-define-key 'evilified magit-mode-map "l" 'magit-log-popup)))
+;;     ;; l is useless in magit, but log-popup is useful
+;;     (dolist (map (list magit-hunk-section-map
+;;                        magit-file-section-map
+;;                        magit-untracked-section-map
+;;                        magit-unstaged-section-map
+;;                        magit-staged-section-map
+;;                        magit-branch-section-map))
+;;       (evil-define-key 'evilified map "l" nil))
+;;     (evil-define-key 'evilified magit-mode-map "l" 'magit-log-popup)))
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Override layers/+syntax-checking/packages.el
 
-(defun colemak-hjkl/pre-init-flycheck ()
-  (spacemacs|use-package-add-hook flycheck
-    :post-config
+;; (defun colemak-hjkl/pre-init-flycheck ()
+;;   (spacemacs|use-package-add-hook flycheck
+;;     :post-config
 
-    (defun colemak-hjkl/toggle-flycheck-error-list ()
-      "Toggle flycheck's error list window.
-If the error list is visible, hide it.  Otherwise, show it."
-      (interactive)
-      (-if-let (window (flycheck-get-error-list-window))
-          (quit-window nil window)
-        (flycheck-list-errors)))
+;;     (defun colemak-hjkl/toggle-flycheck-error-list ()
+;;       "Toggle flycheck's error list window.
+;; If the error list is visible, hide it.  Otherwise, show it."
+;;       (interactive)
+;;       (-if-let (window (flycheck-get-error-list-window))
+;;           (quit-window nil window)
+;;         (flycheck-list-errors)))
 
-    (evilified-state-evilify-map flycheck-error-list-mode-map
-      :mode flycheck-error-list-mode
-      :bindings
-      "RET" 'flycheck-error-list-goto-error
-      "k" 'flycheck-error-list-next-error
-      "h" 'flycheck-error-list-previous-error)
+;;     (evilified-state-evilify-map flycheck-error-list-mode-map
+;;       :mode flycheck-error-list-mode
+;;       :bindings
+;;       "RET" 'flycheck-error-list-goto-error
+;;       "k" 'flycheck-error-list-next-error
+;;       "h" 'flycheck-error-list-previous-error)
 
-    ;; key bindings
-    (spacemacs/set-leader-keys
-      "el" 'spacemacs/toggle-flycheck-error-list)))
+;;     ;; key bindings
+;;     (spacemacs/set-leader-keys
+;;       "el" 'spacemacs/toggle-flycheck-error-list)))
