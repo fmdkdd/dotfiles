@@ -169,8 +169,8 @@ STDERR with `org-babel-eval-error-notify'."
 (defun fmdkdd/post-init-rust-mode ()
   (setq rust-indent-offset 2)
 
-  (spacemacs/set-leader-keys-for-major-mode 'rust-mode
-    "e" #'flycheck-rust-explain-error)
+  (spacemacs/set-leader-keys
+    "ee" #'flycheck-explain-error-at-point)
 
   (evil-define-key 'normal rust-mode-map
     "L" #'racer-describe))
