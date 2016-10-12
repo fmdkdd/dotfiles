@@ -11,15 +11,17 @@
 ;; List of all packages to install and/or initialize. Built-in packages which
 ;; require an initialization must be listed explicitly in the list.
 (setq fmdkdd-packages
-      '(org                                 ; Plain text powerhouse
-        rainbow-mode                        ; CSS colors preview
-        rainbow-delimiters                  ; font-lock parens, braces
-        js2-mode                            ; JavaScript mode
-        (org-reftex :location local)        ; Manage citations in Org files
-        web-mode                            ; HTML mode, supports CSS in <style> tags
+      '(org                            ; Plain text powerhouse
+        rainbow-mode                   ; CSS colors preview
+        rainbow-delimiters             ; font-lock parens, braces
+        js2-mode                       ; JavaScript mode
+        (org-reftex :location local)   ; Manage citations in Org files
+        web-mode                       ; HTML mode, supports CSS in <style> tags
         rust-mode
-        spaceline                           ; Customize the modeline
-        page-break-lines                    ; Horizontal rule for ^L character
+        racer                          ; Completion for rust
+        spaceline                      ; Customize the modeline
+        page-break-lies                ; Horizontal rule for ^L character
+        company                        ; Auto completion
         ))
 
 (defun fmdkdd/init-rainbow-mode ()
@@ -173,6 +175,12 @@ STDERR with `org-babel-eval-error-notify'."
   (evil-define-key 'normal rust-mode-map
     "L" #'racer-describe))
 
+(defun fmdkdd/pre-init-racer ()
+  (spacemacs|use-package-add-hook racer
+    :post-init
+    (setq racer-cmd "~/.cargo/bin/racer"
+          racer-rust-src-path "/usr/local/src/rustc-1.11.0/src")))
+
 (defun fmdkdd/post-init-spaceline ()
   (setq powerline-default-separator 'alternate)
 
@@ -205,3 +213,8 @@ STDERR with `org-babel-eval-error-notify'."
 (defun fmdkdd/post-init-page-break-lines ()
   (add-to-list 'page-break-lines-modes 'js2-mode)
   (add-to-list 'page-break-lines-modes 'web-mode))
+
+(defun fmdkdd/pre-init-company ()
+  (spacemacs|use-package-add-hook company
+    :post-init
+    (setq company-selection-wrap-around t)))

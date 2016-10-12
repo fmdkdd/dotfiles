@@ -89,6 +89,8 @@
 ;; re-highlighting, which causes a flash when editing.
 (setq global-hl-line-sticky-flag t)
 
+;; Actually, global highlight is distracting
+(global-hl-line-mode -1)
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Programming
@@ -106,6 +108,9 @@
 
 ;; CSS indentation
 (setq css-indent-offset 2)
+
+;; JS indentation in web mode
+(setq js-indent-level 2)
 
 ;; Don't ask confirmation to save buffers when compiling
 (setq compilation-ask-about-save nil)

@@ -129,12 +129,10 @@ user code.")
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
-  (global-hl-line-mode -1)
-
-  (setq racer-cmd "~/.cargo/bin/racer"
-        racer-rust-src-path "/usr/local/src/rustc-1.11.0/src")
-
-  (setq company-selection-wrap-around t)
+  ;; Override these packages locally
+  (add-to-list 'load-path "~/proj/flycheck")
+  (add-to-list 'load-path "~/proj/flycheck-rust")
+  (add-to-list 'load-path "~/proj/smartparens")
 
   (setq helm-ag-base-command "rg --line-number --color never --hidden --no-heading")
 
