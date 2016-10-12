@@ -87,13 +87,18 @@ values."
    dotspacemacs-major-mode-leader-key ","
    dotspacemacs-command-key ":"
 
-   ;; Solarized themes
+   ;; Zenrub theme!
    dotspacemacs-themes '(zenrub)
 
-   ;; Ubuntu Mono
+   ;; Crisply bitmap font
    dotspacemacs-default-font '("Dina"
-                               :powerline-scale 1.1
-                               :size 10)
+                               :size 10
+                               :powerline-scale 1.1)
+   ;; Doesn't play nice with Dina
+   dotspacemacs-mode-line-unicode-symbols nil
+
+   ;; What to put on the startup screen
+   dotspacemacs-startup-lists '((recents) (projects) (todos))
 
    ;; More recent files
    dotspacemacs-startup-recent-list-size 10
@@ -106,9 +111,6 @@ values."
 
    ;; Delete trailing whitespace on file save
    dotspacemacs-whitespace-cleanup 'trailing
-
-   ;; Doesn't play nice with Dina
-   dotspacemacs-mode-line-unicode-symbols nil
 
    ;; They way it's meant to be
    dotspacemacs-scratch-mode 'emacs-lisp-mode
