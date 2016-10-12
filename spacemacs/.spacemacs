@@ -41,9 +41,21 @@
    '(
      ;; These come with spacemacs-base
      evil-escape          ; I bind ESC to Caps Lock key, so this is more
-                                        ; annoying than useful.
-     vi-tilde-fringe      ; I prefer the Emacs way of indicating EOF.
+                          ; annoying than useful.
+     centered-buffer-mode
+
+     ;; From spacemacs-ui-visual
+     golden-ratio
      hl-todo              ; The fmdkdd layer does that already.
+
+     ;; From spacemacs-evil
+     vi-tilde-fringe      ; I prefer the Emacs way of indicating EOF.
+
+     ;; From spacemacs-editing-visual
+     highlight-numbers
+
+     ;; From spacemacs-org
+     org-bullets
 
      ;; These come with html
      haml-mode
@@ -52,13 +64,7 @@
 
      ;; This comes with git
      evil-magit           ; I'm okay with evilified bindings
-
-     ;; Unnecessary cosmetics
-     org-bullets
-     highlight-numbers
-     )
-
-   dotspacemacs-delete-orphan-packages t))
+     )))
 
 (defun dotspacemacs/init ()
   "Initialization function.
