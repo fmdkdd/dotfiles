@@ -132,7 +132,6 @@ layers configuration. You are free to put any user code."
   ;; Override these packages locally
   (add-to-list 'load-path "~/proj/flycheck")
   (add-to-list 'load-path "~/proj/flycheck-rust")
-  (add-to-list 'load-path "~/proj/smartparens")
 
   (setq helm-ag-base-command "rg --line-number --color never --hidden --no-heading")
 
