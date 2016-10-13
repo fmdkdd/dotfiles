@@ -188,27 +188,34 @@ STDERR with `org-babel-eval-error-notify'."
     (fmdkdd/org-full-outline-path)
     :when (and active (eq major-mode 'org-mode)))
 
-  (spaceline-compile "main"
-        '(((persp-name workspace-number window-number)
-           :fallback evil-state :separator "|" :face highlight-face)
-          anzu auto-compile
-          (buffer-modified buffer-id remote-host)
-          (point-position line-column)
-          major-mode
-          ((flycheck-error flycheck-warning flycheck-info)
-           :when active)
-          (erc-track :when active)
-          (org-pomodoro :when active)
-          (org-clock :when active)
-          which-org-headline-segment)
+  ;; Spacemacs 0.200 installs its own spaceline in this user-config hook.  We
+  ;; append our own configuration after it.
+  (add-hook 'spacemacs-post-user-config-hook
+            (lambda ()
+              (spaceline-compile
+               "main"
+               '(((persp-name workspace-number window-number)
+                  :fallback evil-state :separator "|" :face highlight-face)
+                 anzu auto-compile
+                 (buffer-modified buffer-id remote-host)
+                 (point-position line-column)
+                 major-mode
+                 ((flycheck-error flycheck-warning flycheck-info)
+                  :when active)
+                 (version-control :when active)
+                 (erc-track :when active)
+                 (org-pomodoro :when active)
+                 (org-clock :when active)
+                 which-org-headline-segment)
 
-        '((battery :when active)
-          (python-pyvenv :fallback python-pyenv)
-          selection-info
-          buffer-encoding-abbrev
-          (global :when active)
-          (new-version :when active)
-          buffer-position hud)))
+               '((battery :when active)
+                 (python-pyvenv :fallback python-pyenv)
+                 selection-info
+                 buffer-encoding-abbrev
+                 (global :when active)
+                 (new-version :when active)
+                 buffer-position hud)))
+            t))
 
 (defun fmdkdd/post-init-page-break-lines ()
   (add-to-list 'page-break-lines-modes 'js2-mode)
