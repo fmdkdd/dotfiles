@@ -85,6 +85,7 @@
       "\C-t" 'Info-history-back ; "l"
       "\C-o" 'Info-history-back
       "x" 'Info-scroll-up ; SPC is taken in Spacemacs
+      "X" 'Info-scroll-down ; might as well
       "\C-]" 'Info-follow-nearest-node
       (kbd "DEL") 'Info-scroll-down)))
 
