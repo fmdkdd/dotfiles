@@ -32,7 +32,7 @@
     ;; org-agenda
     ;; evil-org
     ;; web-mode
-    ;; magit
+    magit
     ))
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -300,32 +300,32 @@
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Override layers/+source-control/git/packages.el
 
-;; (defun colemak-hjkl/pre-init-magit ()
-;;   (spacemacs|use-package-add-hook magit
-;;     :post-config
-;;     (evil-define-key 'evilified git-rebase-mode-map "H" 'git-rebase-move-line-up)
-;;     (evil-define-key 'evilified git-rebase-mode-map "K" 'git-rebase-move-line-down)
-;;     (evil-define-key 'evilified git-rebase-mode-map "J" nil)
+(defun colemak-hjkl/pre-init-magit ()
+  (spacemacs|use-package-add-hook magit
+    :post-config
+    (evil-define-key 'evilified git-rebase-mode-map "H" 'git-rebase-move-line-up)
+    (evil-define-key 'evilified git-rebase-mode-map "K" 'git-rebase-move-line-down)
+    (evil-define-key 'evilified git-rebase-mode-map "J" nil)
 
-;;     ;; Hunk map is for visual selection of hunks.  k is bound to `magit-discard'
-;;     ;; by default, but since we already have it on K, leave k to `evil-next-line'.
-;;     (dolist (map (list magit-hunk-section-map
-;;                        magit-file-section-map
-;;                        magit-untracked-section-map
-;;                        magit-unstaged-section-map
-;;                        magit-staged-section-map
-;;                        magit-branch-section-map))
-;;       (define-key map "k" nil))
+    ;; Hunk map is for visual selection of hunks.  k is bound to `magit-discard'
+    ;; by default, but since we already have it on K, leave k to `evil-next-line'.
+    (dolist (map (list magit-hunk-section-map
+                       magit-file-section-map
+                       magit-untracked-section-map
+                       magit-unstaged-section-map
+                       magit-staged-section-map
+                       magit-branch-section-map))
+      (define-key map "k" nil))
 
-;;     ;; l is useless in magit, but log-popup is useful
-;;     (dolist (map (list magit-hunk-section-map
-;;                        magit-file-section-map
-;;                        magit-untracked-section-map
-;;                        magit-unstaged-section-map
-;;                        magit-staged-section-map
-;;                        magit-branch-section-map))
-;;       (evil-define-key 'evilified map "l" nil))
-;;     (evil-define-key 'evilified magit-mode-map "l" 'magit-log-popup)))
+    ;; l is useless in magit, but log-popup is useful
+    (dolist (map (list magit-hunk-section-map
+                       magit-file-section-map
+                       magit-untracked-section-map
+                       magit-unstaged-section-map
+                       magit-staged-section-map
+                       magit-branch-section-map))
+      (evil-define-key 'evilified map "l" nil))
+    (evil-define-key 'evilified magit-mode-map "l" 'magit-log-popup)))
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Override layers/+syntax-checking/packages.el
