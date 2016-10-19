@@ -60,6 +60,7 @@
    ;; Search
    `(isearch ((t (:background ,zenrub-green
                               :foreground ,zenrub-d3))))
+   `(lazy-highlight ((t (:inherit isearch))))
 
    ;; Helm
    `(helm-selection ((t (:inherit highlight))))
