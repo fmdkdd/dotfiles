@@ -103,6 +103,9 @@ values."
    ;; More recent files
    dotspacemacs-startup-recent-list-size 10
 
+   ;; I can install layers myself, thank you
+   dotspacemacs-ask-for-lazy-installation nil
+
    ;; Don't highlight delimiters in the current scope
    dotspacemacs-highlight-delimiters 'any
 
