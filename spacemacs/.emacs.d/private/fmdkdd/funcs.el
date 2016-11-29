@@ -67,13 +67,13 @@ it if we can.")
 The windows to reload are found by looking up the buffer-local
 variable `fmdkdd/browser-window-list', then the global
 `fmdkdd/last-browser-window-list' if the former is nil.  If both
-are nil, call `fmdkdd/select-browser-windows' to ask the user to
-select the browser window with the mouse cursor and sets the
-forementionned variables for future calls.
+are nil, it calls `fmdkdd/select-browser-windows' to ask the user
+to select the browser window with the mouse cursor and sets the
+aforementioned variables for future calls.
 
 With a prefix argument, it bypasses the variables and forces the
-reselection of the window.  Multiple windows can be selectionned
-this way with a prefix argument greater than 1."
+selection of the window.  When the prefix argument is a number
+greater than 1, multiple windows can be selected."
   (interactive "P")
   (fmdkdd//do-reload-browser-windows
    (if reselect (fmdkdd/select-browser-windows reselect)
@@ -93,27 +93,25 @@ window id obtained from running 'xdotool selectwindow' (a string
 representing a number), and FOCUS is a boolean indicating whether
 we must give the focus to that window before sending the key
 event."
-  (let ((cmd)        ; xdotool command to reload each window
-        (wactivate)) ; must we switch the focus away from the Emacs window?
-    (setq cmd
-          (mapconcat
+  (let ((args)            ; xdotool command to reload each window
+        (wactivate))      ; must we switch the focus away from the Emacs window?
+    (setq args
+          (seq-mapcat
            (lambda (w)
              (let ((id (car w))
                    (focus (cdr w)))
                (if focus
                    (progn
                      (setq wactivate t)
-                     (format "windowactivate --sync %s key --window %s 'F5'"
-                             id id))
-                 (format "key --window %s 'F5'" id))))
-           window-list " "))
-    (shell-command
-     ;; If one window needed the focus, we need to save the current Emacs window
-     ;; and get focus back to it once we are done. We leverage the WINDOW_STACK
-     ;; of xdotool to do that.
-     (if wactivate
-         (format "xdotool getactivewindow %s windowactivate" cmd)
-       (format "xdotool %s" cmd)))))
+                     (list "windowactivate" "--sync" id "key" "--window" id "F5"))
+                 (list "key" "--window" id "F5"))))
+           window-list))
+    ;; If one window needed the focus, we need to save the current Emacs window
+    ;; and get focus back to it once we are done. We leverage the WINDOW_STACK
+    ;; of xdotool to do that.
+    (if wactivate
+        (apply #'call-process `("xdotool" nil 0 nil "getactivewindow" ,@args "windowactivate"))
+      (apply #'call-process `("xdotool" nil 0 nil ,@args)))))
 
 (defun fmdkdd/select-browser-windows (&optional times)
   "Use 'xdotool selectwindow' to select TIMES windows interactively,
