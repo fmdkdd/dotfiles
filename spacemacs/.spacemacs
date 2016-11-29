@@ -137,9 +137,4 @@ layers configuration. You are free to put any user code."
   (add-to-list 'load-path "~/proj/flycheck-rust")
 
   (setq helm-ag-base-command "rg --no-heading --line-number --hidden --smart-case")
-
-  ;; XXX: these should not be necessary with the Haskell layer in 0.105
-  ;; (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
-  ;; (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-  ;; (setq haskell-interactive-popup-errors nil)
   )
