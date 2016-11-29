@@ -11,7 +11,6 @@
                       :variables
                       auto-completion-enable-sort-by-usage t)
      writeroom
-     ;; markdown
      org
 
      (syntax-checking :variables
