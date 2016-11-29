@@ -105,6 +105,7 @@ values."
 
    ;; I can install layers myself, thank you
    dotspacemacs-ask-for-lazy-installation nil
+   dotspacemacs-enable-lazy-installation nil
 
    ;; Don't highlight delimiters in the current scope
    dotspacemacs-highlight-delimiters 'any
