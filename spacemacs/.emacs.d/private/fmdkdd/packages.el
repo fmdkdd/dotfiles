@@ -20,7 +20,7 @@
         rust-mode
         racer                          ; Completion for rust
         spaceline                      ; Customize the modeline
-        page-break-lies                ; Horizontal rule for ^L character
+        page-break-lines               ; Horizontal rule for ^L character
         company                        ; Auto completion
         ))
 
