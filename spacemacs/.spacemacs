@@ -86,7 +86,7 @@ values."
    dotspacemacs-leader-key "SPC"
    dotspacemacs-emacs-leader-key "M-m"
    dotspacemacs-major-mode-leader-key ","
-   dotspacemacs-command-key ":"
+   dotspacemacs-command-key "SPC"
 
    ;; Zenrub theme!
    dotspacemacs-themes '(zenrub)
