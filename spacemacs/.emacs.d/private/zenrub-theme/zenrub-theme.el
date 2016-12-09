@@ -172,6 +172,11 @@
    `(eval-sexp-fu-flash ((t (:background ,zenrub-c4))))
    `(eval-sexp-fu-flash-error ((t (:background ,zenrub-error))))
 
+   ;; git-gutter
+   `(git-gutter:added ((t (:foreground ,zenrub-green))))
+   `(git-gutter:deleted ((t (:foreground ,zenrub-error))))
+   `(git-gutter:modified ((t (:foreground ,zenrub-yellow))))
+
    ))
 
 (provide-theme 'zenrub)

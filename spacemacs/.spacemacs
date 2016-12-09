@@ -17,6 +17,8 @@
                       syntax-checking-enable-tooltips nil)
 
      git
+     (version-control :variables
+                      version-control-diff-tool 'git-gutter)
 
      emacs-lisp
      javascript
