@@ -110,6 +110,9 @@
    `(org-block ((t (:inherit unspecified))))
    `(org-macro ((t (:inherit unspecified)))) ; I don't hide braces around macros
 
+   ;; Markdown
+   `(markdown-blockquote-face ((t (:inherit unspecified))))
+
    ;; flyspell
    `(flyspell-incorrect ((t :underline (:style wave :color ,zenrub-error))))
    `(flyspell-duplicate ((t :underline (:style wave :color ,zenrub-warning))))
