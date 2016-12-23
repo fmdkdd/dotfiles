@@ -174,5 +174,9 @@ bindsym $mod+Print exec "amixer set Master 5%-"
 bindsym $mod+Scroll_Lock exec "amixer set Master 5%+"
 bindsym $mod+Pause exec "amixer set Master toggle"
 
+# Backlight keys
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 5 -time 100"
+bindsym XF86MonBrightnessDown exec "xbacklight -dec 5 -time 100"
+
 # Gain pixels
 hide_edge_borders both
