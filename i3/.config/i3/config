@@ -162,6 +162,10 @@ bindsym $mod+r mode "resize"
 bar {
         mode hide
         status_command i3status
+        colors {
+               background #1d1f21
+               statusline #d5d8d6
+        }
 }
 
 # Media keys to control volume
