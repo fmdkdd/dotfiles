@@ -11,6 +11,7 @@ general {
         interval = 5
 }
 
+order += "wireless wlp2s0"
 order += "battery 1"
 order += "load"
 order += "tztime local"
@@ -34,3 +35,9 @@ battery 1 {
         path = "/sys/class/power_supply/BAT%d/uevent"
         low_threshold = 15
 }
+
+wireless wlp2s0 {
+         format_up = "W: %essid (%ip)"
+         format_down = "W: down"
+}
+
