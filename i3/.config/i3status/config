@@ -11,6 +11,7 @@ general {
         interval = 5
 }
 
+order += "battery 1"
 order += "load"
 order += "tztime local"
 
@@ -22,3 +23,14 @@ load {
         format = "%1min"
 }
 
+battery 1 {
+        format = "%status %remaining (%percentage)"
+        format_down = "No battery"
+        status_chr = "⚇"
+        status_bat = "⚡"
+        status_full = "☻"
+        hide_seconds = true
+        integer_battery_capacity = true
+        path = "/sys/class/power_supply/BAT%d/uevent"
+        low_threshold = 15
+}
