@@ -160,11 +160,20 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        mode hide
+        mode dock
         status_command i3status
+
         colors {
-               background #1d1f21
-               statusline #d5d8d6
+        background #1d2021
+        statusline #a89984
+        separator  #72675e
+
+        #                  border  backgr. text
+        focused_workspace  #60463b #60463b #fbf1c7
+        active_workspace   #60463b #60463b #fbf1c7
+        inactive_workspace #252323 #252323 #a89984
+        urgent_workspace   #d79921 #d79921 #1d2021
+        binding_mode       #1d2021 #458588 #000000
         }
 }
 
@@ -184,3 +193,12 @@ bindsym XF86MonBrightnessDown exec "xbacklight -dec 5 -time 100"
 
 # Gain pixels
 hide_edge_borders both
+
+# colors                border  backgr. text    indicator child_border
+client.focused          #916958 #282828 #ebdbb2 #916958   #916958
+client.focused_inactive #1d2021 #282828 #928374 #1d2021   #1d2021
+client.unfocused        #1d2021 #282828 #928374 #1d2021   #1d2021
+client.urgent           #d79921 #282828 #fabd2f #252323   #d79921
+client.placeholder      #000000 #0c0c0c #ffffff #0c0c0c   #0c0c0c
+
+# Palette mostly from https://github.com/morhetz/gruvbox

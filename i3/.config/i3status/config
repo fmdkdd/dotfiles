@@ -7,14 +7,19 @@
 # If the above line is not correctly displayed, fix your editor first!
 
 general {
+        output_format=i3bar
+        separator = ""
         colors = true
+        color_good = "#689d6a"
+        color_degraded = "#d79921"
+        color_bad = "#cc241d"
         interval = 5
 }
 
 order += "wireless wlp2s0"
 order += "battery 1"
-order += "load"
 order += "volume master"
+order += "load"
 order += "tztime local"
 
 tztime local {
@@ -27,25 +32,26 @@ load {
 
 battery 1 {
         format = "%status %remaining (%percentage)"
-        format_down = "No battery"
+        format_down = ""
         status_chr = "⚇"
         status_bat = "⚡"
         status_full = "☻"
         hide_seconds = true
         integer_battery_capacity = true
         path = "/sys/class/power_supply/BAT%d/uevent"
-        low_threshold = 15
+        threshold_type = "percentage"
+        low_threshold = 10
 }
 
 wireless wlp2s0 {
-         format_up = "W: %essid (%ip)"
-         format_down = "W: down"
+        format_up = "%essid"
+        format_down = ""
 }
 
 volume master {
-         format = "♪: %volume"
-         format_muted = "♪: muted (%volume)"
-         device = "default"
-         mixer = "Master"
-         mixer_idx = 0
+        format = "♪ %volume"
+        format_muted = "♪ [%volume]"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
 }

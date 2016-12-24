@@ -79,16 +79,16 @@ URxvt.color15:                 S_base3
 ! Rofi
 
 rofi.modi:    drun,run,papers:~/.config/rofi/papers.sh,pass:~/.config/rofi/pass.sh
-rofi.font:    sans 9
+rofi.font:    sans 10
 rofi.width:   30
 rofi.lines:   7
 
-! ------------------------------------------------------------------------------
+! ---------------------------------------------------------------------
 ! ROFI Color theme
-! ------------------------------------------------------------------------------
+! ---------------------------------------------------------------------
 rofi.color-enabled: true
-rofi.color-window: #232c33, #232c33, #99736e
-rofi.color-normal: #232c33, #f0f0f0, #232c33, #505050, #f0f0f0
-rofi.color-active: #fdf6e3, #268bd2, #eee8d5, #268bd2, #fdf6e3
+rofi.color-window: #282828, #1d2021, #916958
+rofi.color-normal: #282828, #bdae93, #282828, #504945, #d5c4a1
+rofi.color-active: #fdf6e3, #268bd2, #ff0000, #268bd2, #fdf6e3
 rofi.color-urgent: #fdf6e3, #dc322f, #eee8d5, #dc322f, #fdf6e3
 rofi.separator-style: solid
