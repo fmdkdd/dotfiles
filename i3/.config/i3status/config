@@ -23,7 +23,7 @@ order += "load"
 order += "tztime local"
 
 tztime local {
-        format = "%d-%m %H:%M"
+        format = "%d-%m   %H:%M"
 }
 
 load {
