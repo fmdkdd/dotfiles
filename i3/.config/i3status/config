@@ -44,7 +44,7 @@ battery 1 {
 }
 
 wireless wlp2s0 {
-        format_up = "%essid"
+        format_up = "%ip@%essid"
         format_down = ""
 }
 
