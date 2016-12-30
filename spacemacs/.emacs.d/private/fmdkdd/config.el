@@ -97,6 +97,9 @@
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ;; Highlight 'XXX', 'FIXME', etc. in comments
+(defface fmdkdd-comment-keyword-face
+  '((t . (:inherit warning)))
+  "Face used to highlight comment keywords in code (TODO, FIXME, etc.)")
 (add-hook 'prog-mode-hook 'fmdkdd//add-watchwords)
 
 ;; Java indentation

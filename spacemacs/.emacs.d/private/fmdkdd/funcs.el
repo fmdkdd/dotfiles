@@ -15,7 +15,7 @@
 (defun fmdkdd//add-watchwords ()
   (font-lock-add-keywords
    nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\|DELETE\\|XXX\\):"
-          1 font-lock-warning-face t))))
+          1 'fmdkdd-comment-keyword-face t))))
 
 (defun fmdkdd//customize-java-mode ()
   (c-set-style "user-java"))

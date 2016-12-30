@@ -56,6 +56,7 @@
    `(font-lock-comment-face ((t (:foreground ,zenrub-a0 :background ,zenrub-d4))))
    `(font-lock-doc-face ((t (:inherit font-lock-comment-face))))
    `(font-lock-string-face ((t (:foreground ,zenrub-c0))))
+   `(fmdkdd-comment-keyword-face ((t (:box -1 :inherit warning))))
 
    ;; Search
    `(isearch ((t (:background ,zenrub-green
@@ -179,6 +180,9 @@
    `(git-gutter:added ((t (:foreground ,zenrub-green))))
    `(git-gutter:deleted ((t (:foreground ,zenrub-error))))
    `(git-gutter:modified ((t (:foreground ,zenrub-yellow))))
+
+   ;; web
+   `(web-mode-comment-keyword-face ((t (:inherit fmdkdd-comment-keyword-face))))
 
    ))
 
