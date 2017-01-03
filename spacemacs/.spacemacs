@@ -131,9 +131,12 @@ user code.")
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
-  ;; Override these packages locally
-  (add-to-list 'load-path "~/proj/flycheck")
-  (add-to-list 'load-path "~/proj/flycheck-rust")
+
+  ;; Override these locally since I'm working on them.  This is the only
+  ;; reliable way to override these packages locally.  Using :location local in
+  ;; additional-packages doesn't work.
+  (load-file "~/proj/flycheck/flycheck.el")
+  (load-file "~/proj/flycheck-rust/flycheck-rust.el")
 
   (setq helm-ag-base-command "rg --no-heading --line-number --hidden --smart-case")
   )
