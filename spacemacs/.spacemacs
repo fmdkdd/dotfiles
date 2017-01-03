@@ -52,9 +52,6 @@
      ;; From spacemacs-evil
      vi-tilde-fringe      ; I prefer the Emacs way of indicating EOF.
 
-     ;; From spacemacs-editing-visual
-     highlight-numbers
-
      ;; From spacemacs-org
      org-bullets
 

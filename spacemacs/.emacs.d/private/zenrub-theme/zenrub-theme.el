@@ -46,7 +46,6 @@
    ;; Mute those colors
    `(font-lock-keyword-face ((t (:weight bold))))
    `(font-lock-function-name-face ((t (:inherit unspecified))))
-   `(font-lock-constant-face ((t (:inherit unspecified))))
    `(font-lock-builtin-face ((t (:inherit unspecified))))
    `(font-lock-type-face ((t (:inherit unspecified))))
    `(font-lock-variable-name-face ((t (:inherit unspecified))))
@@ -56,6 +55,7 @@
    `(font-lock-comment-face ((t (:foreground ,zenrub-a0 :background ,zenrub-d4))))
    `(font-lock-doc-face ((t (:inherit font-lock-comment-face))))
    `(font-lock-string-face ((t (:foreground ,zenrub-c0))))
+   `(font-lock-constant-face ((t (:foreground ,zenrub-c0))))
    `(fmdkdd-comment-keyword-face ((t (:box -1 :inherit warning))))
 
    ;; Search
