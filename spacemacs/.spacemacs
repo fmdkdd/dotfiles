@@ -46,8 +46,9 @@
      centered-buffer-mode
 
      ;; From spacemacs-ui-visual
-     golden-ratio
+     golden-ratio         ; what is this even
      hl-todo              ; The fmdkdd layer does that already.
+     popwin               ; less helpful than display-buffer-alist
 
      ;; From spacemacs-evil
      vi-tilde-fringe      ; I prefer the Emacs way of indicating EOF.
@@ -139,4 +140,14 @@ layers configuration. You are free to put any user code."
   (load-file "~/proj/flycheck-rust/flycheck-rust.el")
 
   (setq helm-ag-base-command "rg --no-heading --line-number --hidden --smart-case")
+
+  ;; Auto-resize the flycheck error list
+  (setq flycheck-error-list-after-refresh-hook
+        ;; Using display-buffer-alist is not sufficient, as the list is not
+        ;; populated at once.
+        (lambda ()
+          ;; The hooks don't run inside the error-list window, so we have to
+          ;; select it first.
+          (with-selected-window (flycheck-get-error-list-window)
+            (shrink-window-if-larger-than-buffer))))
   )
