@@ -5,7 +5,7 @@
 # Use `set -x` to set them (environment variables).
 env -i HOME=$HOME dash -l -c printenv | sed -e '/^PWD=/d;/PATH/s/:/ /g;s/=/ /;s/^/set -x /' | source
 
-set PATH $PATH ~/.cargo/bin ~/.node_modules/bin
+set PATH $PATH ~/.node_modules/bin
 #set PATH ~/.cabal/bin $PATH
 
 # Remove greeting

@@ -178,8 +178,7 @@ STDERR with `org-babel-eval-error-notify'."
 (defun fmdkdd/pre-init-racer ()
   (spacemacs|use-package-add-hook racer
     :post-init
-    (setq racer-cmd "~/.cargo/bin/racer"
-          racer-rust-src-path "/usr/local/src/rustc-1.13.0/src")))
+    (setq racer-rust-src-path "/usr/local/src/rustc-1.13.0/src")))
 
 (defun fmdkdd/post-init-spaceline ()
   (setq powerline-default-separator 'alternate)
