@@ -18,7 +18,6 @@
         (org-reftex :location local)   ; Manage citations in Org files
         web-mode                       ; HTML mode, supports CSS in <style> tags
         rust-mode
-        racer                          ; Completion for rust
         spaceline                      ; Customize the modeline
         page-break-lines               ; Horizontal rule for ^L character
         company                        ; Auto completion
@@ -174,11 +173,6 @@ STDERR with `org-babel-eval-error-notify'."
 
   (evil-define-key 'normal rust-mode-map
     "L" #'racer-describe))
-
-(defun fmdkdd/pre-init-racer ()
-  (spacemacs|use-package-add-hook racer
-    :post-init
-    (setq racer-rust-src-path "/usr/local/src/rustc-1.13.0/src")))
 
 (defun fmdkdd/post-init-spaceline ()
   (setq powerline-default-separator 'alternate)
