@@ -152,3 +152,6 @@
           delimiters                    ; change delimiters to braces
           whitespace                    ; trim space in fields
           sort-fields)))
+
+;; Use ssh for finding remote files
+(setq tramp-default-method "ssh")
