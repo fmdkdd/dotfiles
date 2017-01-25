@@ -184,6 +184,10 @@
    ;; web
    `(web-mode-comment-keyword-face ((t (:inherit fmdkdd-comment-keyword-face))))
 
+   `(web-mode-html-tag-face ((t (:inherit unspecified))))
+   `(web-mode-html-attr-name-face ((t (:inherit unspecified))))
+   `(web-mode-html-tag-bracket-face ((t (:foreground ,zenrub-d2))))
+
    ))
 
 (provide-theme 'zenrub)
