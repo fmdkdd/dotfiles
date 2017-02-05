@@ -156,3 +156,7 @@
 
 ;; Use ssh for finding remote files
 (setq tramp-default-method "ssh")
+
+;; Emacs assumes I cannot run xdg-open because I don't have Gnome.  I know
+;; better.
+(setq browse-url-browser-function #'browse-url-xdg-open)
