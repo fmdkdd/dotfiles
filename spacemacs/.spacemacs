@@ -65,6 +65,8 @@
 
      ;; This comes with git
      evil-magit           ; I'm okay with evilified bindings
+
+     smartparens                        ; Too slow on flycheck.el
      )))
 
 (defun dotspacemacs/init ()
