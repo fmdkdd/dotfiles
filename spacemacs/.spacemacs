@@ -22,6 +22,7 @@
 
      emacs-lisp
      javascript
+     react
      html
      ;; scala
      ;; haskell
