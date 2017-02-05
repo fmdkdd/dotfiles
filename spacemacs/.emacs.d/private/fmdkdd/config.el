@@ -74,6 +74,7 @@
 (setq-default fringe-indicator-alist
               '((truncation left-arrow right-arrow)
                 (continuation left-curly-arrow right-curly-arrow)
+                (overlay-arrow . right-triangle)
                 (empty-line empty-line)))
 
 ;; Indicate empty lines in fringe using default Emacs bitmap

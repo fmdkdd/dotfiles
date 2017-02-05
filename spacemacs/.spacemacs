@@ -27,6 +27,8 @@
      ;; haskell
      rust
 
+     edebug
+
      colemak-hjkl
      fmdkdd
      )
