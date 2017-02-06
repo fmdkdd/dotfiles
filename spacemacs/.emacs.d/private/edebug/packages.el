@@ -22,27 +22,61 @@
     (spacemacs|define-transient-state edebug-mode
       :title "Edebug Transient State"
       :doc "
-[_s_] step          [_t_] trace              [_c_] goto-point
-[_i_] step-in       [_e_] eval-expression    [_S_] stop
-[_o_] step-out      [_b_] set-breakpoing     [_?_] help
-[_n_] next          [_I_] instrument-callee  [_q_] quit
-[_f_] forward-sexp
+Execution modes     ^^Jumping                ^^Views
+[_S_] stop            [_h_] goto-here          [_v_] view outside
+[_s_] step            [_f_] forward-sexp       [_p_] bounce point
+[_n_] next            [_o_] step-out           [_w_] where
+[_t_] trace           [_i_] step-in            [_W_] toggle save windows
+[_T_] rapid trace
+[_g_] go              ^Breakpoints^            ^Misc^
+[_c_] continue        [_b_] set                [_?_] help
+[_C_] rapid continue  [_u_] unset              [_Q_] top level
+[_G_] go non-stop     [_x_] conditional        [_q_] top level non-stop
+^^                    [_X_] global condition   [_r_] echo previous result
+^^                    [_B_] move to breakpoint [_d_] backtrace
+
+[_I_] instrument callee [_e_] eval expression
 "
-      :foreign-keys warn
+      ;; Allow foreign keys without quitting the transient-state
+      ;; For e.g., moving point or switching windows
+      :foreign-keys run
       :bindings
-      ("q" edebug-top-level-nonstop :exit t)
+      ;; Instrumenting
+      ("I" edebug-instrument-callee)
+      ;; Execution modes
+      ("S" edebug-stop)
       ("s" edebug-step-mode)
       ("n" edebug-next-mode)
-      ("i" edebug-step-in)
-      ("o" edebug-step-out)
-      ("b" edebug-set-breakpoint)
       ("t" edebug-trace-mode)
-      ("e" edebug-eval-last-sexp)
+      ("T" edebug-Trace-fast-mode)
+      ("g" edebug-go-mode)
+      ("c" edebug-continue-mode)
+      ("C" edebug-Continue-fast-mode)
+      ("G" edebug-Go-nonstop-mode)
+      ;; Jumping
+      ("h" edebug-goto-here)
       ("f" edebug-forward-sexp)
-      ("c" edebug-goto-here)
-      ("I" edebug-instrument-callee)
-      ("S" edebug-stop)
-      ("?" edebug-help))
+      ("o" edebug-step-out)
+      ("i" edebug-step-in)
+      ;; Misc
+      ("?" edebug-help)
+      ("Q" top-level)
+      ("q" edebug-top-level-nonstop :exit t)
+      ("r" edebug-previous-result)
+      ("d" edebug-backtrace)
+      ;; Breakpoints
+      ("b" edebug-set-breakpoint)
+      ("u" edebug-unset-breakpoint)
+      ("x" edebug-set-conditional-breakpoint)
+      ("X" edebug-global-break-condition)
+      ("B" edebug-next-breakpoint)
+      ;; Views
+      ("v" edebug-view-outside)
+      ("p" edebug-bounce-point)
+      ("w" edebug-where)
+      ("W" edebug-toggle-save-windows)
+      ;; Evaluation
+      ("e" edebug-eval-expression))
 
     ;; Exit the transient state when edebug-mode is off
     (defun spacemacs/toggle-edebug-mode-transient-state ()
