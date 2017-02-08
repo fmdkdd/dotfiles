@@ -29,7 +29,7 @@
     company
     ;; flycheck
     ;; org
-    ;; org-agenda
+    org-agenda
     ;; evil-org
     ;; web-mode
     magit
@@ -223,16 +223,16 @@
 ;;         (lambda () (interactive) (org-eval-in-calendar '(calendar-forward-year 1)))))))
 
 
-;; (defun colemak-hjkl/pre-init-org-agenda ()
-;;   (spacemacs|use-package-add-hook org-agenda
-;;     :post-config
-;;     (evil-define-key 'evilified org-agenda-mode-map
-;;       "k" 'org-agenda-next-line
-;;       "h" 'org-agenda-previous-line
-;;       "j" nil
-;;       (kbd "M-k") 'org-agenda-next-item
-;;       (kbd "M-h") 'org-agenda-previous-item
-;;       (kbd "M-j") 'org-agenda-earlier)))
+(defun colemak-hjkl/pre-init-org-agenda ()
+  (spacemacs|use-package-add-hook org-agenda
+    :post-config
+    (evil-define-key 'evilified org-agenda-mode-map
+      "k" 'org-agenda-next-line
+      "h" 'org-agenda-previous-line
+      "j" nil
+      (kbd "M-k") 'org-agenda-next-item
+      (kbd "M-h") 'org-agenda-previous-item
+      (kbd "M-j") 'org-agenda-earlier)))
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Override elpa/evil-org/evil.org.el
