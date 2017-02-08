@@ -103,6 +103,8 @@
 ;; Actually, global highlight is distracting
 (global-hl-line-mode -1)
 
+;; Without smartparens, this is necessary
+(show-paren-mode)
 
 ;;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Programming
