@@ -24,6 +24,7 @@
      javascript
      react
      html
+     yaml
      ;; scala
      ;; haskell
      rust
