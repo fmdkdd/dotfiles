@@ -138,12 +138,24 @@ user code.")
 This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
 
-
   ;; Override these locally since I'm working on them.  This is the only
   ;; reliable way to override these packages locally.  Using :location local in
   ;; additional-packages doesn't work.
   (load-file "~/proj/flycheck/flycheck.el")
   (load-file "~/proj/flycheck-rust/flycheck-rust.el")
+  (load-file "~/proj/flycheck/flycheck-inline.el")
+  (with-eval-after-load 'flycheck
+    (flycheck-inline-mode))
+
+  ;; (add-to-load-path "~/proj/vibhavp-lsp")
+  ;; (require 'lsp-mode)
+  ;; (setenv "RLS_ROOT" "/home/fmdkdd/proj/rustls")
+  ;; (setenv "LD_LIBRARY_PATH" "/home/fmdkdd/.rustup/toolchains/nightly-x86_64-unknown-linux-gnu/lib")
+  ;; (global-lsp-mode t)
+
+  ;; (with-eval-after-load 'lsp-mode
+  ;;   (require 'lsp-flycheck)
+  ;;   (lsp-flycheck-setup))
 
   (setq helm-ag-base-command "rg --no-heading --line-number --hidden --smart-case")
 
