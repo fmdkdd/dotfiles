@@ -17,6 +17,8 @@ general {
 }
 
 order += "wireless wlp2s0"
+order += "wireless wl01"
+order += "battery 0"
 order += "battery 1"
 order += "volume master"
 order += "load"
@@ -30,6 +32,19 @@ load {
         format = "%1min"
 }
 
+battery 0 {
+        format = "%status %remaining (%percentage)"
+        format_down = ""
+        status_chr = "⚇"
+        status_bat = "⚡"
+        status_full = "☻"
+        hide_seconds = true
+        integer_battery_capacity = true
+        path = "/sys/class/power_supply/BAT%d/uevent"
+        threshold_type = "percentage"
+        low_threshold = 10
+}
+
 battery 1 {
         format = "%status %remaining (%percentage)"
         format_down = ""
@@ -41,6 +56,11 @@ battery 1 {
         path = "/sys/class/power_supply/BAT%d/uevent"
         threshold_type = "percentage"
         low_threshold = 10
+}
+
+wireless wl01 {
+        format_up = "%ip@%essid"
+        format_down = ""
 }
 
 wireless wlp2s0 {
