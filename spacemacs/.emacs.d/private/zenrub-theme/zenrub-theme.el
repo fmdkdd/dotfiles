@@ -190,6 +190,10 @@
    `(web-mode-html-tag-bracket-face ((t (:foreground ,zenrub-d2))))
    `(web-mode-constant-face ((t (:inherit unspecified))))
 
+   ;; smerge (magit in-buffer diff)
+   `(smerge-refined-added ((t (:background ,zenrub-c4))))
+   `(smerge-refined-removed ((t (:background "IndianRed4"))))
+
    ))
 
 (provide-theme 'zenrub)
