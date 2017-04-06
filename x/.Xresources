@@ -10,6 +10,7 @@ Xft.lcdfilter:  lcddefault
 
 URxvt.cursorBlink: true
 URxvt.scrollBar:   false
+URxvt.font: xft:dina:size=7
 
 ! Clickable urls
 URxvt.perl-ext-common: default,matcher
