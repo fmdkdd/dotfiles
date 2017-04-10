@@ -126,6 +126,9 @@ values."
 
    ;; Y is y$
    dotspacemacs-remap-Y-to-y$ t
+
+   ;; How do you cycle otherwise?
+   dotspacemacs-enable-paste-transient-state t
    ))
 
 (defun dotspacemacs/user-init ()
