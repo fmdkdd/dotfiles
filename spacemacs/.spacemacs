@@ -160,7 +160,7 @@ layers configuration. You are free to put any user code."
   ;;   (require 'lsp-flycheck)
   ;;   (lsp-flycheck-setup))
 
-  (setq helm-ag-base-command "rg --no-heading --line-number --hidden --smart-case")
+  (setq helm-ag-base-command "rg --color=always --no-heading --line-number --hidden --smart-case %s %s %s")
 
   ;; Auto-resize the flycheck error list
   (setq flycheck-error-list-after-refresh-hook
