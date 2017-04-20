@@ -70,6 +70,8 @@
    `(helm-swoop-target-word-face ((t (:background ,zenrub-green
                                                   :foreground ,zenrub-d2))))
    `(helm-swoop-target-line-face ((t (:background ,zenrub-d3))))
+   `(helm-grep-file ((t (:inherit unspecified))))
+   `(helm-grep-lineno ((t (:inherit unspecified))))
 
    ;; UI
    `(fringe ((t (:inherit unspecified))))
