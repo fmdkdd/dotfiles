@@ -171,4 +171,6 @@ layers configuration. You are free to put any user code."
           ;; select it first.
           (with-selected-window (flycheck-get-error-list-window)
             (shrink-window-if-larger-than-buffer))))
+
+  (blink-cursor-mode)
   )
