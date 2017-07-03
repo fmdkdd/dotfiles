@@ -28,6 +28,8 @@
      ;; scala
      ;; haskell
      rust
+     c-c++
+     gtags
 
      ;; edebug
 
