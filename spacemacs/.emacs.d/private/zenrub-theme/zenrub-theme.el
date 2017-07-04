@@ -195,6 +195,9 @@
    `(smerge-refined-added ((t (:background ,zenrub-c4))))
    `(smerge-refined-removed ((t (:background "IndianRed4"))))
 
+   ;; ggtags
+   `(ggtags-highlight ((t (:inherit unspecified))))
+
    ))
 
 (provide-theme 'zenrub)
