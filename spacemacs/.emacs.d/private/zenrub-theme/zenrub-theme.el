@@ -115,6 +115,7 @@
 
    ;; Markdown
    `(markdown-blockquote-face ((t (:inherit unspecified))))
+   `(markdown-code-face ((t (:background "#1f323a" :inherit unspecified))))
 
    ;; flyspell
    `(flyspell-incorrect ((t :underline (:style wave :color ,zenrub-error))))
