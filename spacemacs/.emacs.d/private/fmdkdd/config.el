@@ -162,3 +162,6 @@
 ;; Emacs assumes I cannot run xdg-open because I don't have Gnome.  I know
 ;; better.
 (setq browse-url-browser-function #'browse-url-xdg-open)
+
+;; This is useful just for thinking about updating copyright years.
+(add-hook 'before-save-hook #'copyright-update)
