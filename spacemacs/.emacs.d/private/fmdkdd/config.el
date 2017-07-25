@@ -1,6 +1,6 @@
 ;;; config.el --- Spacemacs Layer configuration File
 ;;
-;; Copyright (c) 2015 fmdkdd
+;; Copyright (c) 2015--2017 fmdkdd
 ;;
 ;; Author: fmdkdd
 ;;
@@ -128,6 +128,9 @@
 
 ;; JS indentation in web mode
 (setq js-indent-level 2)
+
+;; Typescript indentation
+(setq typescript-indent-level 2)
 
 ;; Don't ask confirmation to save buffers when compiling
 (setq compilation-ask-about-save nil)

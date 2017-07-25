@@ -22,6 +22,7 @@
 
      emacs-lisp
      javascript
+     typescript
      react
      html
      yaml
