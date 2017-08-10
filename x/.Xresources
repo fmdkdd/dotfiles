@@ -6,6 +6,12 @@ Xft.hintstyle:  hintfull
 Xft.rgba:       rgb
 Xft.lcdfilter:  lcddefault
 
+! Emacs
+
+Emacs.background: #292929
+Emacs.menuBar: false
+Emacs.toolBar: false
+
 ! URxvt
 
 URxvt.cursorBlink: true
