@@ -149,9 +149,9 @@ layers configuration. You are free to put any user code."
   ;; additional-packages doesn't work.
   (load-file "~/proj/flycheck/flycheck.el")
   (load-file "~/proj/flycheck-rust/flycheck-rust.el")
-  (load-file "~/proj/flycheck/flycheck-inline.el")
-  (with-eval-after-load 'flycheck
-    (flycheck-inline-mode))
+  (load-file "~/proj/flycheck-inline/flycheck-inline.el")
+  (flycheck-inline-mode)
+  (setq flycheck-display-errors-delay 0.2)
 
   ;; (add-to-load-path "~/proj/vibhavp-lsp")
   ;; (require 'lsp-mode)
