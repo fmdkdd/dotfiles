@@ -1,6 +1,6 @@
 ;;; funcs.el --- fmdkdd Layer functions File
 ;;
-;; Copyright (c) 2015 fmdkdd
+;; Copyright (c) 2015, 2017 fmdkdd
 ;;
 ;; Author: fmdkdd
 ;;
@@ -14,7 +14,7 @@
 
 (defun fmdkdd//add-watchwords ()
   (font-lock-add-keywords
-   nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\|DELETE\\|XXX\\):"
+   nil '(("\\<\\(FIX\\|TODO\\|FIXME\\|HACK\\|REFACTOR\\|DELETE\\|TEMP\\|XXX\\):"
           1 'fmdkdd-comment-keyword-face t))))
 
 (defun fmdkdd//customize-java-mode ()
