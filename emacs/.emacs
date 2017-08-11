@@ -287,8 +287,8 @@
     ("n" flycheck-next-error "next")
     ("p" flycheck-previous-error "previous"))
 
-  (global-set-key (kbd "C-c n") 'fmdkdd/hydra-flycheck/flycheck-next-error)
-  (global-set-key (kbd "C-c p") 'fmdkdd/hydra-flycheck/flycheck-previous-error)
+  (global-set-key (kbd "C-c e n") 'fmdkdd/hydra-flycheck/flycheck-next-error)
+  (global-set-key (kbd "C-c e p") 'fmdkdd/hydra-flycheck/flycheck-previous-error)
   ;; TODO: could remap the original flycheck bindings as well
 
   ;; Navigation mode
@@ -313,8 +313,8 @@
 ;; Why are these not bound anywhere?
 (global-set-key (kbd "M-j") #'join-line)
 (global-set-key (kbd "C-c a") #'align-regexp)
-(global-set-key (kbd "C-c o") #'ff-find-other-file)
-(global-set-key (kbd "C-c u") #'browse-url-at-point)
+(global-set-key (kbd "C-c g o") #'ff-find-other-file)
+(global-set-key (kbd "C-c b u") #'browse-url-at-point)
 
 ;; Better bindings than the default
 (global-set-key (kbd "C-c r") #'query-replace)
