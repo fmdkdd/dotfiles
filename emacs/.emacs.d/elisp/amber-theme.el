@@ -82,6 +82,7 @@
  '(flycheck-inline-info ((t (:inherit flycheck-fringe-info :weight normal))))
 
  ;; Org
+
  '(outline-1 ((t (:foreground "#a0ba93"))))
  '(outline-2 ((t (:foreground "#93baa7"))))
  '(outline-3 ((t (:foreground "#93adba"))))
@@ -101,6 +102,11 @@
  ;; Magit
 
  '(magit-popup-option-value ((t (:weight bold))))
+
+ ;; Markdown
+
+ `(markdown-blockquote-face ((t (:inherit unspecified))))
+ `(markdown-code-face ((t (:inherit unspecified))))
 
  )
 

@@ -193,6 +193,8 @@
 
   (set-face-attribute 'embrace-help-pair-face nil :inverse-video nil))
 
+(use-package markdown-mode)
+
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Org mode
