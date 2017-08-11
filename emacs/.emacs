@@ -60,8 +60,8 @@
 
 ;; Prompt keybindings
 (use-package which-key
+  :defer 3
   :diminish which-key-mode
-  :demand t
   :config
   (which-key-mode 1))
 
@@ -98,6 +98,7 @@
 
   ;; Remember what I use in helm, as the default sorting by length is useless
   (helm-adaptive-mode 1))
+
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Files
@@ -174,7 +175,7 @@
 
 ;; Anzu makes isearch and query-replace more intuitive
 (use-package anzu
-  :demand t
+  :defer 3
   :diminish anzu-mode
   :config
   (global-anzu-mode +1)
@@ -193,7 +194,8 @@
 
   (set-face-attribute 'embrace-help-pair-face nil :inverse-video nil))
 
-(use-package markdown-mode)
+(use-package markdown-mode
+  :mode ("\\.md" . markdown-mode))
 
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -231,27 +233,24 @@
 (use-package flycheck
   :load-path "~/proj/flycheck"
   :defer 2 ; we want global-flycheck-mode, but not essential on startup
-  :init
-  ;; If we load a rust buffer though, we need this
-  (with-eval-after-load 'rust-mode
-    (use-package flycheck-rust
-      :load-path "~/proj/flycheck-rust"
-      :demand t
-      :config
-      (add-hook 'rust-mode-hook #'flycheck-rust-setup)))
   :config
   (setq flycheck-display-errors-delay 0.125
         flycheck-check-syntax-automatically '(save))
 
-  (global-flycheck-mode)
+  (global-flycheck-mode))
 
+;; If we load a rust buffer though, we need this
+(use-package flycheck-rust
+  :load-path "~/proj/flycheck-rust"
+  :after rust-mode
   :config
-  ;; We only need this after flycheck has started
-  (use-package flycheck-inline
-    :load-path "~/proj/flycheck-inline"
-    :demand t
-    :config
-    (flycheck-inline-mode +1)))
+  (add-hook 'rust-mode-hook #'flycheck-rust-setup))
+
+(use-package flycheck-inline
+  :load-path "~/proj/flycheck-inline"
+  :after flycheck
+  :config
+  (flycheck-inline-mode +1))
 
 ;; Magit!
 (use-package magit
@@ -273,6 +272,14 @@
          ("M-," . helm-gtags-pop-stack))
   :config
   (setq helm-gtags-auto-update t))
+
+;; Racer is better for Rust
+(use-package racer
+  :after rust-mode
+  :init
+  :config
+  (add-hook 'rust-mode-hook #'racer-mode)
+  (add-hook 'racer-mode-hook #'eldoc-mode))
 
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
