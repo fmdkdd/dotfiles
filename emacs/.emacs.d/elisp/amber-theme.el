@@ -22,6 +22,8 @@
  '(show-paren-match ((t (:foreground "#baaa93" :background "#6f6f6f" :weight bold))))
  '(show-paren-mismatch ((t (:background "#cc241d"))))
 
+ '(shadow ((t (:foreground "#8a7b67"))))
+
  ;; Search
 
  '(isearch ((t (:foreground "#000" :background "#cc66ab"))))
@@ -44,7 +46,7 @@
  '(font-lock-variable-name-face ((t (:inherit unspecified))))
  '(font-lock-function-name-face ((t (:inherit unspecified))))
 
- '(rainbow-delimiters-depth-1-face ((t (:foreground "#8a7b67"))))
+ '(rainbow-delimiters-depth-1-face ((t (:inherit shadow))))
 
  ;; Info
 
@@ -107,6 +109,7 @@
 
  `(markdown-blockquote-face ((t (:inherit unspecified))))
  `(markdown-code-face ((t (:inherit unspecified))))
+ `(markdown-reference-face ((t (:inherit unspecified))))
 
  )
 
