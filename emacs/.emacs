@@ -1,7 +1,3 @@
-;; TODO:
-;; - change delimiters
-;; - replace in delimiters (expand region?)
-
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Packages
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -19,6 +15,7 @@
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 (set-face-attribute 'default nil :family "Dina" :height 80 :weight 'normal)
+;; To eval when others can't read my screen:
 ;; (set-face-attribute 'default nil :family "Fira Mono" :height 120 :weight 'normal)
 
 (add-to-list 'custom-theme-load-path
@@ -50,6 +47,8 @@
 (column-number-mode t)
 (size-indication-mode t)
 
+(setq history-length 1000)
+
 ;; Shorter yes/no answers
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -75,6 +74,7 @@
          ("M-y"     . helm-show-kill-ring)
          ("C-x C-f" . helm-find-files)
          ("C-x b"   . helm-mini)
+         ("C-c p f" . helm-locate)
          ("C-c i"   . helm-imenu)
          ("C-c I"   . helm-imenu-in-all-buffers)
          ("C-c /"   . helm-do-grep-ag))
@@ -90,8 +90,8 @@
         helm-buffers-fuzzy-matching    t   ; fuzzy matching is btr
         helm-recentf-fuzzy-match       t
         helm-imenu-fuzzy-match         t
-        helm-apropos-fuzzy-match       t)
-
+        helm-apropos-fuzzy-match       t
+        helm-M-x-fuzzy-match           t)
 
   ;; Ripgrep
   (setq helm-grep-ag-command "rg --color=never --no-heading --line-number --smart-case %s %s %s")
@@ -127,6 +127,8 @@
 
 ;; Save cursor location in files
 (save-place-mode 1)
+
+(setq delete-by-moving-to-trash t)
 
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -170,7 +172,32 @@
                                          try-complete-lisp-symbol-partially
                                          try-complete-lisp-symbol))
 
+;; Anzu makes isearch and query-replace more intuitive
+(use-package anzu
+  :demand t
+  :diminish anzu-mode
+  :config
+  (global-anzu-mode +1)
+  (global-set-key [remap query-replace] 'anzu-query-replace)
+  (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp))
+
+;; Expand-region is awesome (most of the time)
+(use-package expand-region
+  :bind ("C-=" . er/expand-region))
+
+;; Embrace is like evil-surround, and pairs with expand-region
+(use-package embrace
+  :bind ("C-," . embrace-commander)
+  :config
+  (add-hook 'org-mode-hook #'embrace-org-mode-hook)
+
+  (set-face-attribute 'embrace-help-pair-face nil :inverse-video nil))
+
+
+;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Org mode
+;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 (use-package org
   :defer t
   :bind (("C-c o a" . org-agenda)
@@ -193,6 +220,7 @@
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'notdeadline))
                       (org-agenda-todo-ignore-deadlines 'near))))))))
 
+
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Programming
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -210,7 +238,8 @@
       :config
       (add-hook 'rust-mode-hook #'flycheck-rust-setup)))
   :config
-  (setq flycheck-display-errors-delay 0.125)
+  (setq flycheck-display-errors-delay 0.125
+        flycheck-check-syntax-automatically '(save))
 
   (global-flycheck-mode)
 
@@ -242,15 +271,6 @@
          ("M-," . helm-gtags-pop-stack))
   :config
   (setq helm-gtags-auto-update t))
-
-;; Anzu makes isearch and query-replace more intuitive
-(use-package anzu
-  :demand t
-  :diminish anzu-mode
-  :config
-  (global-anzu-mode +1)
-  (global-set-key [remap query-replace] 'anzu-query-replace)
-  (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp))
 
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -305,6 +325,10 @@
   (global-set-key (kbd "<escape>") 'fmdkdd/hydra-navigation/body))
 
 ;; Minimize is more confusing than helpful with i3
+(global-unset-key (kbd "C-z"))
+(global-unset-key (kbd "C-x C-z"))
+
+;; This is more useful
 (global-set-key (kbd "C-z") 'other-window)
 
 ;; Byebye dabbrev
@@ -319,6 +343,17 @@
 ;; Better bindings than the default
 (global-set-key (kbd "C-c r") #'query-replace)
 (global-set-key (kbd "C-c R") #'query-replace-regexp)
+
+;; Best of both worlds
+(defun fmdkdd/kill-region-or-backward-word ()
+  (interactive)
+  (if (region-active-p)
+      (kill-region (region-beginning) (region-end))
+    (if (and (boundp 'subword-mode) subword-mode)
+        (subword-backward-kill 1)
+        (backward-kill-word 1))))
+
+(global-set-key (kbd "C-w") #'fmdkdd/kill-region-or-backward-word)
 
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
