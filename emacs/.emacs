@@ -171,6 +171,28 @@
                                          try-complete-lisp-symbol-partially
                                          try-complete-lisp-symbol))
 
+;; Org mode
+(use-package org
+  :defer t
+  :bind (("C-c o a" . org-agenda)
+         ("C-c o l" . org-store-link))
+  :config
+  (setq org-adapt-indentation    nil    ; indentation is lost space
+        org-src-fontify-natively t      ; more useful
+        org-log-done             t)     ; log all the things
+
+  ;; Custom agenda command
+  (setq org-agenda-custom-commands
+        '(("n" "Agenda and all unscheduled TODO's"
+           ((agenda "")
+            (todo "NEXT" ((org-agenda-overriding-header "Next")))
+            (todo "WAIT" ((org-agenda-overriding-header "Waiting")))
+            (todo "TODO" ((org-agenda-overriding-header "Unscheduled tasks")
+                          (org-agenda-todo-ignore-scheduled 'all)
+                          (org-agenda-todo-ignore-deadlines 'all)))
+            (todo "" ((org-agenda-overriding-header "Upcoming deadlines")
+                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'notdeadline))
+                      (org-agenda-todo-ignore-deadlines 'near))))))))
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Programming

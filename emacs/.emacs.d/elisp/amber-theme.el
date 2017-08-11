@@ -82,9 +82,21 @@
  '(flycheck-inline-info ((t (:inherit flycheck-fringe-info :weight normal))))
 
  ;; Org
+ '(outline-1 ((t (:foreground "#a0ba93"))))
+ '(outline-2 ((t (:foreground "#93baa7"))))
+ '(outline-3 ((t (:foreground "#93adba"))))
+ '(outline-4 ((t (:foreground "#9a93ba"))))
+
+ '(org-link ((t (:inherit link))))
+ '(org-meta-line ((t (:foreground "#adb08b"))))
+ `(org-done ((t (:foreground "#8ec07c" :weight bold))))
+ `(org-todo ((t (:foreground "#fe8019" :weight bold))))
 
  '(org-date ((t (:inherit unspecified))))
- '(org-link ((t (:inherit link))))
+ '(org-block ((t (:inherit unspecified))))
+ `(org-table ((t (:inherit unspecified))))
+ `(org-block ((t (:inherit unspecified))))
+ `(org-macro ((t (:inherit unspecified)))) ; I don't hide braces around macros
 
  )
 
