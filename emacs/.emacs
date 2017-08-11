@@ -122,7 +122,6 @@
   :demand t
   :config
   (setq recentf-max-saved-items 500
-        recentf-max-menu-items  15
         recentf-auto-cleanup   '300)
   (recentf-mode t))
 
