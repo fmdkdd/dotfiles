@@ -26,7 +26,7 @@
 
  '(isearch ((t (:foreground "#000" :background "#cc66ab"))))
  '(lazy-highlight ((t (:background "#755d6d"))))
- '(anzu-mode-line ((t (:foreground "#f26dc7"))))
+ '(anzu-mode-line ((t (:inherit unspecified))))
 
  ;; Syntax highlighting
 
@@ -44,14 +44,14 @@
  '(font-lock-variable-name-face ((t (:inherit unspecified))))
  '(font-lock-function-name-face ((t (:inherit unspecified))))
 
- `(rainbow-delimiters-depth-1-face ((t (:foreground "#8a7b67"))))
+ '(rainbow-delimiters-depth-1-face ((t (:foreground "#8a7b67"))))
 
  ;; Info
 
  '(Info-quoted ((t (:inherit font-lock-string-face))))
  '(info-node ((t (:inherit default :weight bold :slant italic))))
  '(info-xref ((t (:inherit link))))
- `(info-xref-visited ((t (:foreground "#998972" :inherit link))))
+ '(info-xref-visited ((t (:foreground "#998972" :inherit link))))
  '(info-menu-star ((t (:inherit unspecified))))
 
  ;; Helm
@@ -89,14 +89,18 @@
 
  '(org-link ((t (:inherit link))))
  '(org-meta-line ((t (:foreground "#adb08b"))))
- `(org-done ((t (:foreground "#8ec07c" :weight bold))))
- `(org-todo ((t (:foreground "#fe8019" :weight bold))))
+ '(org-done ((t (:foreground "#8ec07c" :weight bold))))
+ '(org-todo ((t (:foreground "#fe8019" :weight bold))))
 
  '(org-date ((t (:inherit unspecified))))
  '(org-block ((t (:inherit unspecified))))
- `(org-table ((t (:inherit unspecified))))
- `(org-block ((t (:inherit unspecified))))
- `(org-macro ((t (:inherit unspecified)))) ; I don't hide braces around macros
+ '(org-table ((t (:inherit unspecified))))
+ '(org-block ((t (:inherit unspecified))))
+ '(org-macro ((t (:inherit unspecified)))) ; I don't hide braces around macros
+
+ ;; Magit
+
+ '(magit-popup-option-value ((t (:weight bold))))
 
  )
 
