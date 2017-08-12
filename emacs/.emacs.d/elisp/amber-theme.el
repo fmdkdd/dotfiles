@@ -5,11 +5,11 @@
 
  ;; UI
 
- '(default ((t (:foreground "#baaa93" :background "#292827"))))
- '(region ((t (:background "#393837"))))
+ '(default ((t (:foreground "#baaa93" :background "#272829"))))
+ '(region ((t (:background "#50515e"))))
  '(cursor ((t (:background "#9ed08c"))))
- '(vertical-border ((t (:foreground "#444342"))))
- '(fringe ((t (:background "#242322"))))
+ '(vertical-border ((t (:foreground "#444"))))
+ '(fringe ((t (:background "#242424"))))
 
  '(mode-line ((t (:foreground "#d4c1a7" :background "#5c4a3d" :height 80))))
  '(mode-line-inactive ((t (:foreground "#baaa93" :background "#32302f" :height 80))))
@@ -32,7 +32,7 @@
 
  ;; Syntax highlighting
 
- '(font-lock-comment-face ((t (:foreground "#deb530"))))
+ '(font-lock-comment-face ((t (:foreground "#edc133"))))
  '(font-lock-comment-delimiter-face ((t (:inherit font-lock-comment-face))))
  '(font-lock-string-face ((t (:foreground "#adb08b"))))
  '(font-lock-warning-face ((t (:foreground "#fad22f" :weight bold))))
