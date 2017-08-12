@@ -207,6 +207,9 @@
   :bind (("C-c o a" . org-agenda)
          ("C-c o l" . org-store-link))
   :config
+  ;; Org mode fucks up all my bindings
+  (define-key org-mode-map (kbd "C-,") nil)
+
   (setq org-adapt-indentation    nil    ; indentation is lost space
         org-src-fontify-natively t      ; more useful
         org-log-done             t)     ; log all the things
