@@ -282,7 +282,33 @@
   :init
   :config
   (add-hook 'rust-mode-hook #'racer-mode)
-  (add-hook 'racer-mode-hook #'eldoc-mode))
+  (add-hook 'racer-mode-hook #'eldoc-mode)
+
+  (define-key rust-mode-map (kbd "C-c l") #'racer-describe))
+
+;; xref works fine for elisp
+(define-key emacs-lisp-mode-map (kbd "M-.") #'xref-find-definitions)
+(define-key emacs-lisp-mode-map (kbd "M-,") #'xref-pop-marker-stack)
+
+;; Why is this not built-in?
+(defun fmdkdd/describe-thing-at-point ()
+  "Describe thing under cursor."
+  (interactive)
+  (let ((thing (symbol-at-point)))
+    (cond
+     ((fboundp thing) (describe-function thing))
+     ((boundp thing) (describe-variable thing)))))
+
+(define-key emacs-lisp-mode-map (kbd "C-c l") #'fmdkdd/describe-thing-at-point)
+
+;; In C, man is the better lookup (woman doesn't handle boxes, and uselessly
+;; prompts for tar.gz files)
+(defun fmdkdd/man-at-point ()
+  "Open the man page for the symbol at point."
+  (interactive)
+  (let ((thing (word-at-point)))
+    (man thing)))
+(define-key c-mode-map (kbd "C-c l") #'fmdkdd/man-at-point)
 
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -358,6 +384,7 @@
 
 ;; Best of both worlds
 (defun fmdkdd/kill-region-or-backward-word ()
+  "Kill the region if active, otherwise kill the word before point."
   (interactive)
   (if (region-active-p)
       (kill-region (region-beginning) (region-end))
