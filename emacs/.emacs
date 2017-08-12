@@ -53,7 +53,9 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; Focus follow mouse
-(setq mouse-autoselect-window t)
+;; XXX: magit-status and magit-commit move the mouse cursor, so they may end up
+;; losing focus randomly with this option.  Not worth it.
+;(setq mouse-autoselect-window nil)
 
 ;; Show empty lines in the fringe
 (setq-default indicate-empty-lines t)
@@ -307,7 +309,9 @@
   (interactive)
   (let ((thing (word-at-point)))
     (man thing)))
-(define-key c-mode-map (kbd "C-c l") #'fmdkdd/man-at-point)
+
+(with-eval-after-load 'cc-mode
+  (define-key c-mode-map (kbd "C-c l") #'fmdkdd/man-at-point))
 
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

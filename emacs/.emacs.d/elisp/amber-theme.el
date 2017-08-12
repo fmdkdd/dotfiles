@@ -98,6 +98,7 @@
 
  '(org-date ((t (:inherit unspecified))))
  '(org-code ((t (:inherit unspecified))))
+ '(org-verbatim ((t (:inherit unspecified))))
  '(org-block ((t (:inherit unspecified))))
  '(org-table ((t (:inherit unspecified))))
  '(org-block ((t (:inherit unspecified))))
