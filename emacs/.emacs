@@ -186,13 +186,12 @@
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
 
-;; Embrace is like evil-surround, and pairs with expand-region
-(use-package embrace
-  :bind ("C-," . embrace-commander)
-  :config
-  (add-hook 'org-mode-hook #'embrace-org-mode-hook)
-
-  (set-face-attribute 'embrace-help-pair-face nil :inverse-video nil))
+;; This is my evil-surround fix
+(use-package delimiter
+  :load-path "elisp/"
+  :bind (("C-, s" . delimiter-surround)
+         ("C-, c" . delimiter-change)
+         ("C-, d" . delimiter-delete)))
 
 (use-package markdown-mode
   :mode ("\\.md" . markdown-mode))
