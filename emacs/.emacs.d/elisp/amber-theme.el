@@ -91,11 +91,13 @@
  '(outline-4 ((t (:foreground "#9a93ba"))))
 
  '(org-link ((t (:inherit link))))
- '(org-meta-line ((t (:foreground "#adb08b"))))
+ '(org-meta-line ((t (:inherit shadow))))
  '(org-done ((t (:foreground "#8ec07c" :weight bold))))
  '(org-todo ((t (:foreground "#fe8019" :weight bold))))
 
+
  '(org-date ((t (:inherit unspecified))))
+ '(org-code ((t (:inherit unspecified))))
  '(org-block ((t (:inherit unspecified))))
  '(org-table ((t (:inherit unspecified))))
  '(org-block ((t (:inherit unspecified))))
