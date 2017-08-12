@@ -10,6 +10,7 @@
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/"))
 
+
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Theming
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -76,7 +77,7 @@
          ("M-y"     . helm-show-kill-ring)
          ("C-x C-f" . helm-find-files)
          ("C-x b"   . helm-mini)
-         ("C-c p f" . helm-locate)
+         ("C-c f l" . helm-locate)
          ("C-c i"   . helm-imenu)
          ("C-c I"   . helm-imenu-in-all-buffers)
          ("C-c /"   . helm-do-grep-ag))
@@ -132,6 +133,23 @@
 (save-place-mode 1)
 
 (setq delete-by-moving-to-trash t)
+
+;; There is `write-file`, but it leaves the previous file around
+;; this one is from: http://emacsredux.com/blog/2013/05/04/rename-file-and-buffer/
+(defun rename-file-and-buffer ()
+  "Rename the current buffer and file it is visiting."
+  (interactive)
+  (let ((filename (buffer-file-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (user-error "Buffer is not visiting a file!")
+      (let ((new-name (read-file-name "New name: " filename)))
+        (cond
+         ((vc-backend filename) (vc-rename-file filename new-name))
+         (t
+          (rename-file filename new-name t)
+          (set-visited-file-name new-name t t)))))))
+
+(global-set-key (kbd "C-c f r") #'rename-file-and-buffer)
 
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -396,7 +414,6 @@
         (backward-kill-word 1))))
 
 (global-set-key (kbd "C-w") #'fmdkdd/kill-region-or-backward-word)
-
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Misc

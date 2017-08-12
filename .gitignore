@@ -1,8 +1,4 @@
-/emacs/.emacs.d/.emacs.desktop
-/emacs/.emacs.d/.smex-items
-/emacs/.emacs.d/backups/
-/emacs/.emacs.d/elpa/
-/emacs/.emacs.d/ensime/
+*.elc
 /fish/.config/fish/fish_history
 /fish/.config/fish/fishd.001a926e50c5
 /xmonad/.xmonad/xmonad-x86_64-linux
