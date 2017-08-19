@@ -79,6 +79,11 @@
  '(flycheck-fringe-warning ((t (:foreground "#decf49"))))
  '(flycheck-fringe-info ((t (:foreground "#6db0cf"))))
 
+ '(flycheck-error-list-error ((t (:inherit flycheck-fringe-error))))
+ '(flycheck-error-list-warning ((t (:inherit flycheck-fringe-warning))))
+ '(flycheck-error-list-info ((t (:inherit flycheck-fringe-info))))
+ '(flycheck-error-list-highlight ((t (:inherit helm-selection))))
+
  '(flycheck-inline-error ((t (:inherit flycheck-fringe-error :weight normal))))
  '(flycheck-inline-warning ((t (:inherit flycheck-fringe-warning :weight normal))))
  '(flycheck-inline-info ((t (:inherit flycheck-fringe-info :weight normal))))
@@ -110,9 +115,13 @@
 
  ;; Markdown
 
- `(markdown-blockquote-face ((t (:inherit unspecified))))
- `(markdown-code-face ((t (:inherit unspecified))))
- `(markdown-reference-face ((t (:inherit unspecified))))
+ '(markdown-blockquote-face ((t (:inherit unspecified))))
+ '(markdown-code-face ((t (:inherit unspecified))))
+ '(markdown-reference-face ((t (:inherit unspecified))))
+
+ ;; Rust
+
+ '(rust-string-interpolation-face ((t (:inherit font-lock-string-face))))
 
  )
 
