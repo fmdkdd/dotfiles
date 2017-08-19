@@ -251,6 +251,9 @@
 ;; Programming
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+;; Indentation
+(setq-default rust-indent-offset 2)
+
 ;; Syntax checking
 (use-package flycheck
   :load-path "~/proj/flycheck"
