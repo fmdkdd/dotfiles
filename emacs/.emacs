@@ -10,6 +10,8 @@
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/"))
 
+(require 'utils (locate-user-emacs-file "elisp/utils.el"))
+
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Theming
@@ -134,23 +136,6 @@
 
 (setq delete-by-moving-to-trash t)
 
-;; There is `write-file`, but it leaves the previous file around
-;; this one is from: http://emacsredux.com/blog/2013/05/04/rename-file-and-buffer/
-(defun rename-file-and-buffer ()
-  "Rename the current buffer and file it is visiting."
-  (interactive)
-  (let ((filename (buffer-file-name)))
-    (if (not (and filename (file-exists-p filename)))
-        (user-error "Buffer is not visiting a file!")
-      (let ((new-name (read-file-name "New name: " filename)))
-        (cond
-         ((vc-backend filename) (vc-rename-file filename new-name))
-         (t
-          (rename-file filename new-name t)
-          (set-visited-file-name new-name t t)))))))
-
-(global-set-key (kbd "C-c f r") #'rename-file-and-buffer)
-
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Editing
@@ -170,10 +155,7 @@
 (diminish 'auto-fill-function)
 
 ;; Auto fill comments in prog modes
-(defun fmdkdd//auto-fill-comments ()
-  (setq-local comment-auto-fill-only-comments t)
-  (turn-on-auto-fill))
-(add-hook 'prog-mode-hook #'fmdkdd//auto-fill-comments)
+(add-hook 'prog-mode-hook #'auto-fill-comments)
 
 ;; Delete trailing whitespace on file save
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
@@ -285,10 +267,6 @@
   (diminish 'auto-revert-mode))
 
 ;; Highlight TODO, FIXME keywords
-(defun add-watchwords ()
-  (font-lock-add-keywords
-   nil '(("\\<\\(TODO\\|FIXME\\|HACK\\|REFACTOR\\|DELETE\\|XXX\\):"
-          1 font-lock-warning-face t))))
 (add-hook 'prog-mode-hook #'add-watchwords)
 
 ;; GTAGS are very useful for C-mode, at least
@@ -313,26 +291,12 @@
 (define-key emacs-lisp-mode-map (kbd "M-,") #'xref-pop-marker-stack)
 
 ;; Why is this not built-in?
-(defun fmdkdd/describe-thing-at-point ()
-  "Describe thing under cursor."
-  (interactive)
-  (let ((thing (symbol-at-point)))
-    (cond
-     ((fboundp thing) (describe-function thing))
-     ((boundp thing) (describe-variable thing)))))
-
-(define-key emacs-lisp-mode-map (kbd "C-c l") #'fmdkdd/describe-thing-at-point)
+(define-key emacs-lisp-mode-map (kbd "C-c l") #'describe-thing-at-point)
 
 ;; In C, man is the better lookup (woman doesn't handle boxes, and uselessly
 ;; prompts for tar.gz files)
-(defun fmdkdd/man-at-point ()
-  "Open the man page for the symbol at point."
-  (interactive)
-  (let ((thing (word-at-point)))
-    (man thing)))
-
 (with-eval-after-load 'cc-mode
-  (define-key c-mode-map (kbd "C-c l") #'fmdkdd/man-at-point))
+  (define-key c-mode-map (kbd "C-c l") #'man-at-point))
 
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -406,17 +370,11 @@
 (global-set-key (kbd "C-c r") #'query-replace)
 (global-set-key (kbd "C-c R") #'query-replace-regexp)
 
-;; Best of both worlds
-(defun fmdkdd/kill-region-or-backward-word ()
-  "Kill the region if active, otherwise kill the word before point."
-  (interactive)
-  (if (region-active-p)
-      (kill-region (region-beginning) (region-end))
-    (if (and (boundp 'subword-mode) subword-mode)
-        (subword-backward-kill 1)
-        (backward-kill-word 1))))
+;; Additional goodies
+(global-set-key (kbd "C-w") #'kill-region-or-backward-word)
+(global-set-key (kbd "C-a") #'move-beginning-of-line-dwim)
+(global-set-key (kbd "C-c f r") #'rename-file-and-buffer)
 
-(global-set-key (kbd "C-w") #'fmdkdd/kill-region-or-backward-word)
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Misc
