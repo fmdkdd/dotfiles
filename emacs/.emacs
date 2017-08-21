@@ -249,7 +249,8 @@
   :defer 2 ; we want global-flycheck-mode, but not essential on startup
   :config
   (setq flycheck-display-errors-delay 0.125
-        flycheck-check-syntax-automatically '(save))
+        flycheck-check-syntax-automatically '(save)
+        flycheck-global-modes '(emacs-lisp-mode c-mode rust-mode))
 
   (global-flycheck-mode))
 
