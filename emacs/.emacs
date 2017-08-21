@@ -132,7 +132,10 @@
   (recentf-mode t))
 
 ;; Save cursor location in files
-(save-place-mode 1)
+(if (< emacs-major-version 25)
+    (progn (require 'saveplace)
+           (setq-default save-place t))
+  (save-place-mode 1))
 
 (setq delete-by-moving-to-trash t)
 
