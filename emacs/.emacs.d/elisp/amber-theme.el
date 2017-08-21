@@ -118,6 +118,7 @@
  '(markdown-blockquote-face ((t (:inherit unspecified))))
  '(markdown-code-face ((t (:inherit unspecified))))
  '(markdown-reference-face ((t (:inherit unspecified))))
+ '(markdown-link-title-face ((t (:inherit unspecified))))
 
  ;; Rust
 
