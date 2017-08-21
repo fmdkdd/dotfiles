@@ -213,6 +213,10 @@
   :config
   ;; Org mode fucks up all my bindings
   (define-key org-mode-map (kbd "C-,") nil)
+  (define-key org-mode-map (kbd "C-a") nil)
+
+  ;; C-c & is too inefficient
+  (define-key org-mode-map (kbd "C-c C-b") #'org-mark-ring-goto)
 
   (setq org-adapt-indentation    nil    ; indentation is lost space
         org-src-fontify-natively t      ; more useful
