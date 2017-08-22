@@ -82,7 +82,7 @@
          ("C-c f l" . helm-locate)
          ("C-c i"   . helm-imenu)
          ("C-c I"   . helm-imenu-in-all-buffers)
-         ("C-c /"   . helm-do-grep-ag))
+         ("C-c /"   . helm-do-ag-project-root))
   :config
   (use-package helm-mode
     :diminish helm-mode
@@ -99,9 +99,10 @@
         helm-M-x-fuzzy-match           t)
 
   ;; Ripgrep
-  (setq helm-grep-ag-command "rg --color=never --no-heading --line-number --smart-case %s %s %s")
+  (setq helm-ag-base-command "rg --color=never --no-heading --line-number --smart-case")
 
   ;; Remember what I use in helm, as the default sorting by length is useless
+  ;; FIXME: this actually doesn't run in any commands I care about
   (helm-adaptive-mode 1))
 
 

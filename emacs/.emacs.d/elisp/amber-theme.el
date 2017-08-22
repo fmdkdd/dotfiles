@@ -68,6 +68,7 @@
  '(helm-source-header ((t (:foreground "#ebdbb2" :background "#4a5363"))))
  '(helm-grep-file ((t (:foreground "#adb08b"))))
  '(helm-grep-finish ((t (:inherit unspecified))))
+ '(helm-moccur-buffer ((t (:foreground "#adb08b"))))
 
  ;; Flycheck
 
