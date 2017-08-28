@@ -76,7 +76,7 @@
   :demand t
   :bind (("C-h a"   . helm-apropos)
          ("M-x"     . helm-M-x)
-         ("M-y"     . helm-show-kill-ring)
+         ("C-c y"   . helm-show-kill-ring)
          ("C-x C-f" . helm-find-files)
          ("C-x b"   . helm-mini)
          ("C-c f l" . helm-locate)
