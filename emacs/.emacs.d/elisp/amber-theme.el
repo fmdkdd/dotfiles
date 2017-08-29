@@ -114,6 +114,10 @@
 
  '(magit-popup-option-value ((t (:weight bold))))
 
+ ;; smerge (magit in-buffer diff)
+ '(smerge-refined-added ((t (:background "#336633"))))
+ '(smerge-refined-removed ((t (:background "#803939"))))
+
  ;; Markdown
 
  '(markdown-blockquote-face ((t (:inherit unspecified))))
