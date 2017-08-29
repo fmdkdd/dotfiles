@@ -216,6 +216,10 @@
   (define-key org-mode-map (kbd "C-,") nil)
   (define-key org-mode-map (kbd "C-a") nil)
 
+  ;; And at the time, defines stupidly long bindings for useful commands
+  (define-key org-mode-map (kbd "M-p") #'outline-previous-heading)
+  (define-key org-mode-map (kbd "M-n") #'outline-next-heading)
+
   ;; C-c & is too inefficient
   (define-key org-mode-map (kbd "C-c C-b") #'org-mark-ring-goto)
 
