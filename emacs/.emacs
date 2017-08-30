@@ -286,7 +286,7 @@
 (use-package helm-gtags
   :bind (("M-." . helm-gtags-dwim)
          ("M-," . helm-gtags-pop-stack))
-  :config
+  :init
   (add-hook 'c-mode-hook
             (lambda ()
               (add-hook 'after-save-hook #'helm-gtags-update-tags nil t))))
@@ -378,7 +378,7 @@
 ;; Why are these not bound anywhere?
 (global-set-key (kbd "M-j") #'join-line)
 (global-set-key (kbd "C-c a") #'align-regexp)
-(global-set-key (kbd "C-c g o") #'ff-find-other-file)
+(global-set-key (kbd "C-c f o") #'ff-find-other-file)
 (global-set-key (kbd "C-c b u") #'browse-url-at-point)
 
 ;; Better bindings than the default
