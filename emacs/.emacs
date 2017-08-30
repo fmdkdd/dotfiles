@@ -287,7 +287,9 @@
   :bind (("M-." . helm-gtags-dwim)
          ("M-," . helm-gtags-pop-stack))
   :config
-  (setq helm-gtags-auto-update t))
+  (add-hook 'c-mode-hook
+            (lambda ()
+              (add-hook 'after-save-hook #'helm-gtags-update-tags nil t))))
 
 ;; Racer is better for Rust
 (use-package racer
