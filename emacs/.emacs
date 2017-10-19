@@ -294,7 +294,6 @@
 ;; Racer is better for Rust
 (use-package racer
   :after rust-mode
-  :init
   :config
   (add-hook 'rust-mode-hook #'racer-mode)
   (add-hook 'racer-mode-hook #'eldoc-mode)
