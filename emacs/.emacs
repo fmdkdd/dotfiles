@@ -312,6 +312,11 @@
 (with-eval-after-load 'cc-mode
   (define-key c-mode-map (kbd "C-c l") #'man-at-point))
 
+;; Auto byte-compile on save
+(add-hook 'emacs-lisp-mode-hook
+          (lambda ()
+            (add-hook 'after-save-hook #'emacs-lisp-byte-compile nil t)))
+
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Bindings
