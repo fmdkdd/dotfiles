@@ -238,7 +238,12 @@
                           (org-agenda-todo-ignore-deadlines 'all)))
             (todo "" ((org-agenda-overriding-header "Upcoming deadlines")
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'notdeadline))
-                      (org-agenda-todo-ignore-deadlines 'near))))))))
+                      (org-agenda-todo-ignore-deadlines 'near)))))))
+
+  ;; Activate gnuplot in Babel
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((gnuplot . t))))
 
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
