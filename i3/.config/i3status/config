@@ -16,10 +16,10 @@ general {
         interval = 5
 }
 
-order += "wireless wlp2s0"
-order += "wireless wl01"
-order += "battery 0"
-order += "battery 1"
+order+= "disk /"
+order += "wireless _first_"
+order += "ethernet _first_"
+order += "battery all"
 order += "volume master"
 order += "load"
 order += "tztime local"
@@ -32,7 +32,7 @@ load {
         format = "%1min"
 }
 
-battery 0 {
+battery all {
         format = "%status %remaining (%percentage)"
         format_down = ""
         status_chr = "⚇"
@@ -40,38 +40,28 @@ battery 0 {
         status_full = "☻"
         hide_seconds = true
         integer_battery_capacity = true
-        path = "/sys/class/power_supply/BAT%d/uevent"
         threshold_type = "percentage"
         low_threshold = 10
 }
 
-battery 1 {
-        format = "%status %remaining (%percentage)"
-        format_down = ""
-        status_chr = "⚇"
-        status_bat = "⚡"
-        status_full = "☻"
-        hide_seconds = true
-        integer_battery_capacity = true
-        path = "/sys/class/power_supply/BAT%d/uevent"
-        threshold_type = "percentage"
-        low_threshold = 10
-}
-
-wireless wl01 {
+wireless _first_ {
         format_up = "%ip@%essid"
         format_down = ""
 }
 
-wireless wlp2s0 {
-        format_up = "%ip@%essid"
-        format_down = ""
+ethernet _first_ {
+	 format_up = "%ip"
+	 format_down = ""
 }
 
 volume master {
-        format = "♪ %volume"
+        format = " %volume"
         format_muted = "♪ [%volume]"
         device = "default"
         mixer = "Master"
         mixer_idx = 0
+}
+
+disk "/" {
+     format = "%avail"
 }
