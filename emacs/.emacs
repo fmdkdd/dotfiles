@@ -224,6 +224,7 @@
   (define-key org-mode-map (kbd "C-c C-b") #'org-mark-ring-goto)
 
   (setq org-adapt-indentation    nil    ; indentation is lost space
+        org-edit-src-content-indentation 0
         org-src-fontify-natively t      ; more useful
         org-log-done             t)     ; log all the things
 
