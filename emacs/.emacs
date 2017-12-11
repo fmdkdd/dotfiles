@@ -12,6 +12,9 @@
 
 (require 'utils (locate-user-emacs-file "elisp/utils.el"))
 
+;; Always load fresh .el files over byte-compiled ones
+(setq load-prefer-newer t)
+
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Theming
