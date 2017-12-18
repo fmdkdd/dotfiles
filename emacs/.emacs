@@ -256,6 +256,7 @@
 
 ;; Indentation
 (setq-default rust-indent-offset 2)
+(setq-default js-indent-level 2)
 
 ;; Syntax checking
 (use-package flycheck
