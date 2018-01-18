@@ -259,6 +259,13 @@
 (setq-default js-indent-level 2)
 (setq-default css-indent-offset 2)
 
+(c-add-style "user-java"
+             '("java"
+               (c-basic-offset . 2)))
+(defun fmdkdd/customize-java-mode ()
+  (c-set-style "user-java"))
+(add-hook 'java-mode-hook #'fmdkdd/customize-java-mode)
+
 ;; Syntax checking
 (use-package flycheck
   :load-path "~/proj/flycheck"
