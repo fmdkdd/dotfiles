@@ -232,7 +232,8 @@
         org-log-done             t)     ; log all the things
 
   ;; Custom agenda command
-  (setq org-agenda-custom-commands
+  (setq org-agenda-restore-windows-after-quit t
+        org-agenda-custom-commands
         '(("n" "Agenda and all unscheduled TODO's"
            ((agenda "")
             (todo "NEXT" ((org-agenda-overriding-header "Next")))
