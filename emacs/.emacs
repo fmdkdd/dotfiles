@@ -262,10 +262,9 @@
 
 (c-add-style "user-java"
              '("java"
-               (c-basic-offset . 2)))
-(defun fmdkdd/customize-java-mode ()
-  (c-set-style "user-java"))
-(add-hook 'java-mode-hook #'fmdkdd/customize-java-mode)
+               (c-basic-offset . 4)))
+(add-hook 'java-mode-hook (lambda () (c-set-style "user-java")))
+(add-hook 'java-mode-hook (lambda () (subword-mode)))
 
 ;; Syntax checking
 (use-package flycheck
@@ -306,9 +305,11 @@
   :bind (("M-." . helm-gtags-dwim)
          ("M-," . helm-gtags-pop-stack))
   :init
-  (add-hook 'c-mode-hook
-            (lambda ()
-              (add-hook 'after-save-hook #'helm-gtags-update-tags nil t))))
+  (defun fmdkdd/add-update-gtags-hook ()
+    (add-hook 'after-save-hook #'helm-gtags-update-tags nil t))
+  (add-hook 'c-mode-hook #'fmdkdd/add-update-gtags-hook)
+  (add-hook 'java-mode-hook #'fmdkdd/add-update-gtags-hook))
+
 
 ;; Racer is better for Rust
 (use-package racer
