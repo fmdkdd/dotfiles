@@ -63,6 +63,9 @@
 ;; losing focus randomly with this option.  Not worth it.
 ;(setq mouse-autoselect-window nil)
 
+;; Much more useful
+(setq mouse-yank-at-point t)
+
 ;; Show empty lines in the fringe
 (setq-default indicate-empty-lines t)
 
