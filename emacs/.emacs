@@ -306,7 +306,12 @@
   :bind ("C-x g" . magit-status)
   :config
   ;; magit turns this on for files under git (which makes sense)
-  (diminish 'auto-revert-mode))
+  (diminish 'auto-revert-mode)
+
+  ;; I don't use these, but they shadow useful global bindings
+  (define-key magit-status-mode-map (kbd "M-1") nil)
+  (define-key magit-status-mode-map (kbd "M-2") nil)
+  (define-key magit-status-mode-map (kbd "M-3") nil))
 
 ;; Highlight TODO, FIXME keywords
 (add-hook 'prog-mode-hook #'add-watchwords)
