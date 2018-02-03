@@ -216,6 +216,7 @@
 (use-package org
   :defer t
   :bind (("C-c o a" . org-agenda)
+         ("C-c o c" . org-capture)
          ("C-c o l" . org-store-link))
   :config
   ;; Org mode fucks up all my bindings
@@ -233,6 +234,13 @@
         org-edit-src-content-indentation 0
         org-src-fontify-natively t      ; more useful
         org-log-done             t)     ; log all the things
+
+  (setq org-default-notes-file "tasks.org"
+        org-capture-templates
+        '(("t" "Task" entry (file+headline "" "Tasks")
+           "* TODO %?")
+          ("r" "Rendez-vous" entry (file+headline "" "Rendez-vous")
+           "* %?")))
 
   ;; Custom agenda command
   (setq org-agenda-restore-windows-after-quit t
