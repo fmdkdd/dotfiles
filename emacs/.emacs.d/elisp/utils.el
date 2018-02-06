@@ -1,6 +1,6 @@
 ;;; utils.el --- Miscellaneous editing functions -*- lexical-binding: t; -*-
 
-;; Copyright (c) 2017 fmdkdd
+;; Copyright (c) 2017, 2018 fmdkdd
 ;;
 ;; Author: fmdkdd
 
@@ -8,7 +8,7 @@
 
 ;;; Commentary:
 
-;; Soome
+;; Utilities functions for my own configuration.
 
 ;;; Code:
 
@@ -66,7 +66,7 @@
   (let ((point-at-first-text))
     (save-excursion
       (beginning-of-line)
-      (skip-chars-forward "[:space:]")
+      (skip-chars-forward "[ \t]")
       (setq point-at-first-text (point)))
     ;; If we are already at the first non-whitespace char, then move to the
     ;; beginning of line
