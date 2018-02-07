@@ -243,7 +243,7 @@
            "* %?")))
 
   ;; Custom agenda command
-  (setq org-agenda-restore-windows-after-quit t
+  (setq org-agenda-window-setup 'current-window
         org-agenda-custom-commands
         '(("n" "Agenda and all unscheduled TODO's"
            ((agenda "")
