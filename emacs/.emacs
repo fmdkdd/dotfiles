@@ -326,7 +326,6 @@
   (add-hook 'c-mode-hook #'fmdkdd/add-update-gtags-hook)
   (add-hook 'java-mode-hook #'fmdkdd/add-update-gtags-hook))
 
-
 ;; Racer is better for Rust
 (use-package racer
   :after rust-mode
@@ -353,6 +352,10 @@
           (lambda ()
             (add-hook 'after-save-hook #'emacs-lisp-byte-compile nil t)))
 
+;; Faster to type, and overrides my binding.
+(with-eval-after-load 'nxml-mode
+  (define-key nxml-mode-map (kbd "C-c /") #'helm-do-ag-project-root)
+  (define-key nxml-mode-map (kbd "C-c C-/") #'nxml-finish-element))
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Bindings
