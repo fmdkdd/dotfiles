@@ -10,7 +10,11 @@
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/"))
 
-(require 'utils (locate-user-emacs-file "elisp/utils.el"))
+(use-package utils
+  :load-path "~/.emacs.d/elisp/")
+
+;; Required for byte-compiled init file to load
+(use-package bind-key)
 
 ;; Always load fresh .el files over byte-compiled ones
 (setq load-prefer-newer t)
