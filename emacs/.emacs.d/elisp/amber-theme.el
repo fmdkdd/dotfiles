@@ -129,6 +129,10 @@
 
  '(rust-string-interpolation-face ((t (:inherit font-lock-string-face))))
 
+ ;; Tuareg
+ '(tuareg-font-lock-governing-face ((t (:inherit font-lock-keyword-face))))
+ '(tuareg-font-lock-operator-face ((t (:inherit unspecified))))
+
  )
 
 (provide-theme 'amber)
