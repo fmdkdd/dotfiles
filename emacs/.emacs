@@ -13,8 +13,9 @@
 (use-package utils
   :load-path "~/.emacs.d/elisp/")
 
-;; Required for byte-compiled init file to load
-(use-package bind-key)
+(eval-when-compile
+  ;; Required for byte-compiled init file to load
+  (use-package bind-key))
 
 ;; Always load fresh .el files over byte-compiled ones
 (setq load-prefer-newer t)
