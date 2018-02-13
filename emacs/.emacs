@@ -297,6 +297,7 @@
   :config
   (setq flycheck-display-errors-delay 0.125
         flycheck-check-syntax-automatically '(save)
+        flycheck-emacs-lisp-load-path 'inherit
         flycheck-global-modes '(emacs-lisp-mode c-mode c++-mode rust-mode))
 
   (global-flycheck-mode))
