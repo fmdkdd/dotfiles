@@ -108,12 +108,14 @@
         helm-apropos-fuzzy-match       t
         helm-M-x-fuzzy-match           t)
 
-  ;; Ripgrep
-  (setq helm-ag-base-command "rg --color=never --no-heading --line-number --smart-case")
-
   ;; Remember what I use in helm, as the default sorting by length is useless
   ;; FIXME: this actually doesn't run in any commands I care about
   (helm-adaptive-mode 1))
+
+;; Ripgrep
+(use-package helm-ag
+  :config
+  (setq helm-ag-base-command "rg --color=never --no-heading --line-number --smart-case"))
 
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -219,9 +221,7 @@
 
 (use-package org
   :defer t
-  :bind (("C-c o a" . org-agenda)
-         ("C-c o c" . org-capture)
-         ("C-c o l" . org-store-link))
+  :bind (("C-c o l" . org-store-link))
   :config
   ;; Org mode fucks up all my bindings
   (define-key org-mode-map (kbd "C-,") nil)
@@ -239,13 +239,17 @@
         org-src-fontify-natively t      ; more useful
         org-log-done             t)     ; log all the things
 
-  (setq org-default-notes-file "tasks.org"
-        org-capture-templates
-        '(("t" "Task" entry (file+headline "" "Tasks")
-           "* TODO %?")
-          ("r" "Rendez-vous" entry (file+headline "" "Rendez-vous")
-           "* %?")))
+  (setq org-default-notes-file "tasks.org")
 
+  ;; Activate gnuplot in Babel
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((gnuplot . t))))
+
+(use-package org-agenda
+  :defer t
+  :bind (("C-c o a" . org-agenda))
+  :config
   ;; Custom agenda command
   (setq org-agenda-window-setup 'current-window
         org-agenda-custom-commands
@@ -258,12 +262,17 @@
                           (org-agenda-todo-ignore-deadlines 'all)))
             (todo "" ((org-agenda-overriding-header "Upcoming deadlines")
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'notdeadline))
-                      (org-agenda-todo-ignore-deadlines 'near)))))))
+                      (org-agenda-todo-ignore-deadlines 'near))))))))
 
-  ;; Activate gnuplot in Babel
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((gnuplot . t))))
+(use-package org-capture
+  :defer t
+  :bind (("C-c o c" . org-capture))
+  :config
+  (setq org-capture-templates
+        '(("t" "Task" entry (file+headline "" "Tasks")
+           "* TODO %?")
+          ("r" "Rendez-vous" entry (file+headline "" "Rendez-vous")
+           "* %?"))))
 
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -348,7 +357,9 @@
 
 ;; In C, man is the better lookup (woman doesn't handle boxes, and uselessly
 ;; prompts for tar.gz files)
-(with-eval-after-load 'cc-mode
+(use-package cc-mode
+  :defer t
+  :config
   (define-key c-mode-map (kbd "C-c l") #'man-at-point))
 
 ;; Auto byte-compile on save
@@ -357,9 +368,12 @@
             (add-hook 'after-save-hook #'emacs-lisp-byte-compile nil t)))
 
 ;; Faster to type, and overrides my binding.
-(with-eval-after-load 'nxml-mode
+(use-package nxml-mode
+  :defer t
+  :config
   (define-key nxml-mode-map (kbd "C-c /") #'helm-do-ag-project-root)
   (define-key nxml-mode-map (kbd "C-c C-/") #'nxml-finish-element))
+
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Bindings
