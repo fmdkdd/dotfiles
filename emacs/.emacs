@@ -231,6 +231,10 @@
   (define-key org-mode-map (kbd "M-p") #'outline-previous-heading)
   (define-key org-mode-map (kbd "M-n") #'outline-next-heading)
 
+  ;; Why has org-mode picked a hard to hit key for inline code is beyond me.
+  ;; Tip: C-q ` for typing a backtick after that rebinding.
+  (define-key org-mode-map (kbd "`") "~")
+
   ;; C-c & is too inefficient
   (define-key org-mode-map (kbd "C-c C-b") #'org-mark-ring-goto)
 
