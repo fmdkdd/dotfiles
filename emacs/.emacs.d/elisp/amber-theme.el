@@ -19,6 +19,7 @@
 
  '(link ((t (:underline t))))
  '(escape-glyph ((t (:weight bold))))
+ '(nobreak-space ((t (:foreground "#fad22f" :underline t))))
  '(show-paren-match ((t (:foreground "#baaa93" :background "#6f6f6f" :weight bold))))
  '(show-paren-mismatch ((t (:background "#cc241d"))))
 
