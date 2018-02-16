@@ -23,6 +23,9 @@
  '(show-paren-match ((t (:foreground "#baaa93" :background "#6f6f6f" :weight bold))))
  '(show-paren-mismatch ((t (:background "#cc241d"))))
 
+ '(success ((t (:foreground "#6dcf60" :weight bold))))
+ '(warning ((t (:foreground "#decf49" :weight bold))))
+ '(error ((t (:foreground "#de6a49":weight bold))))
  '(shadow ((t (:foreground "#8a7b67"))))
 
  ;; Search
