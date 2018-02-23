@@ -326,6 +326,8 @@
   ;; magit turns this on for files under git (which makes sense)
   (diminish 'auto-revert-mode)
 
+  (setq git-commit-fill-column 72)
+
   ;; I don't use these, but they shadow useful global bindings
   (define-key magit-status-mode-map (kbd "M-1") nil)
   (define-key magit-status-mode-map (kbd "M-2") nil)
