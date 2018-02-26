@@ -381,6 +381,11 @@
   (define-key nxml-mode-map (kbd "C-c /") #'helm-do-ag-project-root)
   (define-key nxml-mode-map (kbd "C-c C-/") #'nxml-finish-element))
 
+(use-package sgml-mode
+  :defer t
+  :config
+  (define-key sgml-mode-map (kbd "C-c /") #'helm-do-ag-project-root)
+  (define-key sgml-mode-map (kbd "C-c C-/") #'sgml-close-tag))
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Bindings
