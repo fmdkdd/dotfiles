@@ -468,6 +468,7 @@
 (global-set-key (kbd "C-a") #'move-beginning-of-line-dwim)
 (global-set-key (kbd "C-c f r") #'rename-file-and-buffer)
 (global-set-key (kbd "C-;") #'goto-last-change)
+(global-set-key (kbd "C-c o r") #'fmdkdd/save-and-reload-browser-windows)
 
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
