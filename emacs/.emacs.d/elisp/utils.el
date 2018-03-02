@@ -251,5 +251,15 @@ by xdotool."
         (string-trim (shell-command-to-string
                       (format "xdotool getwindowname %s" window))))))
 
+(defun insert-screenshot (file-name)
+  "Save screenshot to FILE-NAME and insert an Org link at point.
+
+This calls the `maim --select FILE-NAME' to take the screenshot."
+  (interactive "FSave to file: ")
+  (call-process "maim" nil nil nil "--select" file-name)
+  (insert (format "[[file:%s]]" file-name))
+  (when (eq major-mode 'org-mode)
+    (org-redisplay-inline-images)))
+
 (provide 'utils)
 ;;; utils.el ends here
