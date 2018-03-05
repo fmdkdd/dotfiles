@@ -254,9 +254,11 @@ by xdotool."
 (defun insert-screenshot (file-name)
   "Save screenshot to FILE-NAME and insert an Org link at point.
 
-This calls the `maim --select FILE-NAME' to take the screenshot."
+This calls the `import' from ImageMagick to take the screenshot,
+and `optipng' to reduce the file size if the program is present."
   (interactive "FSave to file: ")
-  (call-process "maim" nil nil nil "--select" file-name)
+  (call-process "import" nil nil nil file-name)
+  (start-process "optipng" nil "optipng" file-name)
   (insert (format "[[file:%s]]" file-name))
   (when (eq major-mode 'org-mode)
     (org-redisplay-inline-images)))
