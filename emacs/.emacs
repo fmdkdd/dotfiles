@@ -100,9 +100,10 @@
     :config
     (helm-mode 1))
 
-  (setq helm-split-window-in-side-p    t   ; open helm in current window
+  (setq helm-split-window-inside-p     t   ; open helm in current window
         helm-echo-input-in-header-line t   ; eyes don't have to travel that way
         helm-buffers-fuzzy-matching    t   ; fuzzy matching is btr
+        helm-use-frame-when-more-than-two-windows nil ; don't open a frame
         helm-recentf-fuzzy-match       t
         helm-imenu-fuzzy-match         t
         helm-apropos-fuzzy-match       t
