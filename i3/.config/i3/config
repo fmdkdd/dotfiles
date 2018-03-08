@@ -205,3 +205,7 @@ client.urgent           #d79921 #282828 #fabd2f #252323   #d79921
 client.placeholder      #000000 #0c0c0c #ffffff #0c0c0c   #0c0c0c
 
 # Palette mostly from https://github.com/morhetz/gruvbox
+
+# Float Helm
+for_window [title="Helm"] floating enable
+for_window [title="Helm"] move position center
