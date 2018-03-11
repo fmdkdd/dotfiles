@@ -291,7 +291,7 @@
 
 (c-add-style "user-java"
              '("java"
-               (c-basic-offset . 4)))
+               (c-basic-offset . 2)))
 (add-hook 'java-mode-hook (lambda () (c-set-style "user-java")))
 (add-hook 'java-mode-hook (lambda () (subword-mode)))
 
