@@ -236,8 +236,9 @@
   ;; Tip: C-q ` for typing a backtick after that rebinding.
   (define-key org-mode-map (kbd "`") "~")
 
-  ;; C-c & is too inefficient
-  (define-key org-mode-map (kbd "C-c C-b") #'org-mark-ring-goto)
+  ;; Reuse M-, and M-. for navigation
+  (define-key org-mode-map (kbd "M-.") #'org-open-at-point)
+  (define-key org-mode-map (kbd "M-,") #'org-mark-ring-goto)
 
   (setq org-adapt-indentation    nil    ; indentation is lost space
         org-edit-src-content-indentation 0
@@ -260,14 +261,13 @@
         org-agenda-custom-commands
         '(("n" "Agenda and all unscheduled TODO's"
            ((agenda "")
-            (todo "NEXT" ((org-agenda-overriding-header "Next")))
             (todo "WAIT" ((org-agenda-overriding-header "Waiting")))
-            (todo "TODO" ((org-agenda-overriding-header "Unscheduled tasks")
-                          (org-agenda-todo-ignore-scheduled 'all)
-                          (org-agenda-todo-ignore-deadlines 'all)))
             (todo "" ((org-agenda-overriding-header "Upcoming deadlines")
                       (org-agenda-skip-function '(org-agenda-skip-entry-if 'notdeadline))
-                      (org-agenda-todo-ignore-deadlines 'near))))))))
+                      (org-agenda-todo-ignore-deadlines 'near)))
+            (todo "TODO" ((org-agenda-overriding-header "Unscheduled tasks")
+                          (org-agenda-todo-ignore-scheduled 'all)
+                          (org-agenda-todo-ignore-deadlines 'all))))))))
 
 (use-package org-capture
   :defer t
