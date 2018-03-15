@@ -25,7 +25,7 @@
 
  '(success ((t (:foreground "#6dcf60" :weight bold))))
  '(warning ((t (:foreground "#decf49" :weight bold))))
- '(error ((t (:foreground "#de6a49":weight bold))))
+ '(error ((t (:foreground "#de6a49" :weight bold))))
  '(shadow ((t (:foreground "#8a7b67"))))
 
  ;; Search
