@@ -275,7 +275,7 @@
   :config
   (setq org-capture-templates
         '(("t" "Task" entry (file+headline "" "Tasks")
-           "* TODO %?")
+           "* TODO %?\nSee %a")
           ("r" "Rendez-vous" entry (file+headline "" "Rendez-vous")
            "* %?"))))
 
