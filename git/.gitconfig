@@ -1,0 +1,9 @@
+[include]
+	path = ~/.gitconfig.local
+[core]
+	excludesfile = ~/.gitignore_global
+        attributesfile = ~/.gitattributes
+[push]
+	default = simple
+[diff "elisp"]
+	xfuncname = "^(\\((defun|defmacro) .*)$"
