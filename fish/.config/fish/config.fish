@@ -9,6 +9,9 @@ set PATH $PATH ~/.node_modules/bin
 #set PATH ~/.cabal/bin $PATH
 set PATH ~/.local/bin $PATH
 
+# Allow bundler to run sudo-less
+set GEM_HOME (ruby -e 'print Gem.user_dir')
+
 # Remove greeting
 set fish_greeting
 
