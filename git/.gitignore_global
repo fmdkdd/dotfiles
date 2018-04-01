@@ -3,6 +3,7 @@
 *.pyc
 *~
 *#
+*.elc
 .tern-port
 GPATH
 GRTAGS
