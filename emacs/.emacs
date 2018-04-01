@@ -19,6 +19,9 @@
 ;; Always load fresh .el files over byte-compiled ones
 (setq load-prefer-newer t)
 
+(use-package diminish
+  :ensure t)
+
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Theming
