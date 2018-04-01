@@ -10,7 +10,9 @@ set PATH $PATH ~/.node_modules/bin
 set PATH ~/.local/bin $PATH
 
 # Allow bundler to run sudo-less
-set GEM_HOME (ruby -e 'print Gem.user_dir')
+if type -q ruby
+   set GEM_HOME (ruby -e 'print Gem.user_dir')
+end
 
 # Remove greeting
 set fish_greeting
