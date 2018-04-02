@@ -6,6 +6,9 @@
 ;; use-package) to keep this under 500ms.
 (defconst emacs-start-time (current-time))
 
+;; Always load fresh .el files over byte-compiled ones
+(setq load-prefer-newer t)
+
 (package-initialize)
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/"))
@@ -16,11 +19,8 @@
 ;; Required for byte-compiled init file to load
 (use-package bind-key)
 
-;; Always load fresh .el files over byte-compiled ones
-(setq load-prefer-newer t)
-
-(use-package diminish
-  :ensure t)
+;; Used for some `use-package` calls
+(use-package diminish :ensure t)
 
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -38,6 +38,7 @@
 ;; Allow to color parenthesis/braces/brackets differently from the
 ;; default face
 (use-package rainbow-delimiters
+  :ensure t
   :config
   (setq rainbow-delimiters-max-face-count 1)
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode-enable))
@@ -64,11 +65,6 @@
 
 ;; Shorter yes/no answers
 (fset 'yes-or-no-p 'y-or-n-p)
-
-;; Focus follow mouse
-;; XXX: magit-status and magit-commit move the mouse cursor, so they may end up
-;; losing focus randomly with this option.  Not worth it.
-;(setq mouse-autoselect-window nil)
 
 ;; Much more useful
 (setq mouse-yank-at-point t)
@@ -219,6 +215,7 @@
          ("C-, d" . delimiter-delete)))
 
 (use-package markdown-mode
+  :ensure t
   :mode ("\\.md" . markdown-mode))
 
 
@@ -227,7 +224,6 @@
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 (use-package org
-  :defer t
   :bind (("C-c o l" . org-store-link))
   :config
   ;; Org mode fucks up all my bindings
@@ -259,7 +255,6 @@
    '((gnuplot . t))))
 
 (use-package org-agenda
-  :defer t
   :bind (("C-c o a" . org-agenda))
   :config
   ;; Custom agenda command
@@ -276,7 +271,6 @@
                           (org-agenda-todo-ignore-deadlines 'all))))))))
 
 (use-package org-capture
-  :defer t
   :bind (("C-c o c" . org-capture))
   :config
   (setq org-capture-templates
@@ -328,6 +322,7 @@
 
 ;; Magit!
 (use-package magit
+  :ensure t
   :bind ("C-x g" . magit-status)
   :config
   ;; magit turns this on for files under git (which makes sense)
@@ -356,6 +351,7 @@
 
 ;; Racer is better for Rust
 (use-package racer
+  :ensure t
   :after rust-mode
   :config
   (add-hook 'rust-mode-hook #'racer-mode)
@@ -366,7 +362,6 @@
 ;; xref works fine for elisp
 (define-key emacs-lisp-mode-map (kbd "M-.") #'xref-find-definitions)
 (define-key emacs-lisp-mode-map (kbd "M-,") #'xref-pop-marker-stack)
-
 
 ;; Speaking of elisp, this is nice to have in Flycheck
 (defun fmdkdd/add-flycheck-checkers-in-imenu ()
@@ -407,59 +402,27 @@
 ;; Bindings
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-;; XXX: god-mode has the same downsides as evil: modal navigation is confusing.
-;; In particular, hitting keys can have unexpected effects (especially as I
-;; still have Spacemacs muscle memory).
-;; (use-package god-mode
-;;   :bind ("<escape>" . god-mode-all)
-;;   :preface
-;;   (defun fmdkdd/update-cursor ()
-;;     (set-face-background 'cursor (if god-local-mode
-;;                                      "#fff"
-;;                                    "#9ed08c")))
-;;   :config
-;;   (define-key god-local-mode-map (kbd ".") 'repeat)
-;;   (define-key god-local-mode-map (kbd "P") 'scroll-down-command)
-;;   (define-key god-local-mode-map (kbd "N") 'scroll-up-command)
-;;   (define-key god-local-mode-map (kbd "<") 'beginning-of-buffer)
-;;   (define-key god-local-mode-map (kbd ">") 'end-of-buffer)
-
-;;   (add-hook 'god-mode-enabled-hook #'fmdkdd/update-cursor)
-;;   (add-hook 'god-mode-disabled-hook #'fmdkdd/update-cursor))
-
 ;; Hydras help for common shortcuts
 (use-package hydra
+  :bind (("C-c e n" . fmdkdd/hydra-flycheck/flycheck-next-error)
+         ("C-c e p" . fmdkdd/hydra-flycheck/flycheck-previous-error))
   :config
-
   ;; Faster browsing of flycheck errors
   (defhydra fmdkdd/hydra-flycheck ()
     "flycheck-errors"
     ("n" flycheck-next-error "next")
-    ("p" flycheck-previous-error "previous"))
-
-  (global-set-key (kbd "C-c e n") 'fmdkdd/hydra-flycheck/flycheck-next-error)
-  (global-set-key (kbd "C-c e p") 'fmdkdd/hydra-flycheck/flycheck-previous-error)
-  ;; TODO: could remap the original flycheck bindings as well
-
-  ;; Navigation mode
-  ;; XXX: not sure about that, but at least it doesn't have keys with surprising
-  ;; effects.
-  ;; One downside of using hydra for navigation is that it seems to redraw the
-  ;; screen on each key, making the screen happily blink.
-  (defhydra fmdkdd/hydra-navigation ()
-    "navigation"
-    ("n" next-line "next-line")
-    ("p" previous-line "previous-line")
-    ("=" balance-windows "balance-windows"))
-
-  (global-set-key (kbd "<escape>") 'fmdkdd/hydra-navigation/body))
+    ("p" flycheck-previous-error "previous")))
 
 ;; Minimize is more confusing than helpful with i3
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "C-x C-z"))
 
 ;; This is more useful
-(global-set-key (kbd "C-z") 'other-window)
+(use-package ace-window
+  :ensure t
+  :bind ("C-z" . ace-window)
+  :config
+  (setq aw-keys '(?a ?r ?s ?t ?n ?e ?i ?o)))
 
 ;; Byebye dabbrev
 (global-set-key [remap dabbrev-expand] #'hippie-expand)
