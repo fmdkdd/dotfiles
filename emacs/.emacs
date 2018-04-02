@@ -11,7 +11,8 @@
 ;; Always load fresh .el files over byte-compiled ones
 (setq load-prefer-newer t)
 
-(package-initialize)
+(eval-and-compile
+  (package-initialize))
 (add-to-list 'package-archives
 	     '("melpa" . "https://melpa.org/packages/"))
 

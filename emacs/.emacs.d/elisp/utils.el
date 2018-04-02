@@ -41,9 +41,17 @@
   (setq-local comment-auto-fill-only-comments t)
   (turn-on-auto-fill))
 
+(defun fmdkdd/async-byte-compile ()
+  "Asynchronously byte compile this file."
+  (make-process
+   :name "async-byte-compile"
+   :command (list "emacs"
+                  "-Q" "--batch" "--eval" "(require 'bytecomp)"
+                  "-f" "batch-byte-compile" buffer-file-name)))
+
 (defun fmdkdd/byte-compile-on-save ()
-  "Byte compile this file on save."
-  (add-hook 'after-save-hook #'emacs-lisp-byte-compile nil t))
+  "Asynchronously byte compile this file on save."
+  (add-hook 'after-save-hook #'fmdkdd/async-byte-compile nil t))
 
 (defun man-at-point ()
   "Open the man page for the symbol at point."
