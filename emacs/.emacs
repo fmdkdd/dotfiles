@@ -83,43 +83,46 @@
   :config
   (which-key-mode 1))
 
-;; Helm for many things
-;; see https://tuhdo.github.io/helm-intro.html for an overview on configuration
-(use-package helm-config
-  :demand t
-  :bind (("C-h a"   . helm-apropos)
-         ("M-x"     . helm-M-x)
-         ("C-c y"   . helm-show-kill-ring)
-         ("C-x C-f" . helm-find-files)
-         ("C-x b"   . helm-mini)
-         ("C-c f l" . helm-locate)
-         ("C-c i"   . helm-imenu)
-         ("C-c I"   . helm-imenu-in-all-buffers)
-         ("C-c /"   . helm-do-ag-project-root))
+(use-package ivy
+  :ensure t
+  :diminish (ivy-mode . "")
+  :bind (("C-c C-r" . ivy-resume)
+         ("C-x b" . ivy-switch-buffer))
   :config
-  (use-package helm-mode
-    :diminish helm-mode
-    :defer 2  ; quite slow to start and non-essential
-    :config
-    (helm-mode 1))
+  ;; Add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’
+  (setq ivy-use-virtual-buffers t
+        ;; Use absolute name for recent files
+        ivy-virtual-abbreviate 'full)
 
-  (setq helm-split-window-inside-p     t   ; open helm in current window
-        helm-echo-input-in-header-line t   ; eyes don't have to travel that way
-        helm-buffers-fuzzy-matching    t   ; fuzzy matching is btr
-        helm-use-frame-when-more-than-two-windows nil ; don't open a frame
-        helm-recentf-fuzzy-match       t
-        helm-imenu-fuzzy-match         t
-        helm-apropos-fuzzy-match       t
-        helm-M-x-fuzzy-match           t)
+  ;; Allow selecting prompt in find-file if there are no matches
+  (setq ivy-use-selectable-prompt t)
+  (define-key ivy-minibuffer-map (kbd "C-l") #'ivy-backward-delete-char)
 
-  ;; Remember what I use in helm, as the default sorting by length is useless
-  ;; FIXME: this actually doesn't run in any commands I care about
-  (helm-adaptive-mode 1))
+  (setq ivy-on-del-error-function nil)  ;; Don't quit when erasing all input
 
-;; Ripgrep
-(use-package helm-ag
-  :config
-  (setq helm-ag-base-command "rg --color=never --no-heading --line-number --smart-case"))
+  ;; Number of result lines to display
+  (setq ivy-height 15)
+  ;; Do not count candidates
+  (setq ivy-count-format "")
+  ;; No default regexp in prompt
+  (setq ivy-initial-inputs-alist nil)
+  (setq ivy-re-builders-alist
+	;; Match prompt in any order
+        '((t . ivy--regex-ignore-order)))
+
+  ;; Turns on ivy for kill-buffer, org-refile, etc.
+  (ivy-mode +1))
+
+(use-package counsel
+  :ensure t
+  :bind (("M-x" . counsel-M-x)
+         ("C-x C-f" . counsel-find-file)
+         ("C-h f" . counsel-describe-function)
+         ("C-h v" . counsel-describe-variable)
+         ("C-h a" . counsel-apropos)
+         ("C-c i" . counsel-imenu)
+         ("C-c /" . counsel-rg)
+         ("C-c f l" . counsel-locate)))
 
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -341,12 +344,13 @@
 (add-hook 'prog-mode-hook #'add-watchwords)
 
 ;; GTAGS are very useful for C-mode, at least
-(use-package helm-gtags
-  :bind (("M-." . helm-gtags-dwim)
-         ("M-," . helm-gtags-pop-stack))
+(use-package counsel-gtags
+  :ensure t
+  :bind (("M-." . counsel-gtags-dwim)
+         ("M-," . counsel-gtags-go-backward))
   :init
   (defun fmdkdd/add-update-gtags-hook ()
-    (add-hook 'after-save-hook #'helm-gtags-update-tags nil t))
+    (add-hook 'after-save-hook #'counsel-gtags-update-tags nil t))
   (add-hook 'c-mode-hook #'fmdkdd/add-update-gtags-hook)
   (add-hook 'java-mode-hook #'fmdkdd/add-update-gtags-hook))
 
@@ -390,13 +394,13 @@
 (use-package nxml-mode
   :defer t
   :config
-  (define-key nxml-mode-map (kbd "C-c /") #'helm-do-ag-project-root)
+  (define-key nxml-mode-map (kbd "C-c /") #'counsel-rg)
   (define-key nxml-mode-map (kbd "C-c C-/") #'nxml-finish-element))
 
 (use-package sgml-mode
   :defer t
   :config
-  (define-key sgml-mode-map (kbd "C-c /") #'helm-do-ag-project-root)
+  (define-key sgml-mode-map (kbd "C-c /") #'counsel-rg)
   (define-key sgml-mode-map (kbd "C-c C-/") #'sgml-close-tag))
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

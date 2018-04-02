@@ -74,6 +74,13 @@
  '(helm-grep-finish ((t (:inherit unspecified))))
  '(helm-moccur-buffer ((t (:foreground "#adb08b"))))
 
+ ;; Ivy
+ '(ivy-current-match ((t (:background "#424160"))))
+ '(ivy-minibuffer-match-face-2 ((t (:foreground "gold1"))))
+ '(ivy-minibuffer-match-face-3 ((t (:foreground "gold1"))))
+ '(ivy-minibuffer-match-face-4 ((t (:foreground "gold1"))))
+ '(ivy-highlight-face ((t (:inherit unspecified))))
+
  ;; Flycheck
 
  '(flycheck-error ((t (:underline (:style wave :color "#de6a49")))))
