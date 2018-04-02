@@ -41,6 +41,10 @@
   (setq-local comment-auto-fill-only-comments t)
   (turn-on-auto-fill))
 
+(defun fmdkdd/byte-compile-on-save ()
+  "Byte compile this file on save."
+  (add-hook 'after-save-hook #'emacs-lisp-byte-compile nil t))
+
 (defun man-at-point ()
   "Open the man page for the symbol at point."
   (interactive)

@@ -385,10 +385,8 @@
   :config
   (define-key c-mode-map (kbd "C-c l") #'man-at-point))
 
-;; Auto byte-compile on save
-(add-hook 'emacs-lisp-mode-hook
-          (lambda ()
-            (add-hook 'after-save-hook #'emacs-lisp-byte-compile nil t)))
+;; This is safe to put as local variable
+(add-to-list 'safe-local-eval-forms '(fmdkdd/byte-compile-on-save))
 
 ;; Faster to type, and overrides my binding.
 (use-package nxml-mode
@@ -467,3 +465,7 @@
 (let ((elapsed (float-time (time-subtract (current-time)
 					  emacs-start-time))))
   (message "Loading %s...done (%.3fs)" load-file-name elapsed))
+
+;; Local Variables:
+;; eval: (fmdkdd/byte-compile-on-save)
+;; End:
