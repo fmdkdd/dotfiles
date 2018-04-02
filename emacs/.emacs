@@ -194,14 +194,14 @@
                                          try-complete-lisp-symbol-partially
                                          try-complete-lisp-symbol))
 
-;; Anzu makes isearch and query-replace more intuitive
+;; Anzu makes query-replace more intuitive
 (use-package anzu
-  :defer 3
+  :ensure t
+  :commands (anzu-query-replace anzu-query-replace-regexp)
   :diminish anzu-mode
-  :config
-  (global-anzu-mode +1)
-  (global-set-key [remap query-replace] 'anzu-query-replace)
-  (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp))
+  :init
+  (global-set-key [remap query-replace] #'anzu-query-replace)
+  (global-set-key [remap query-replace-regexp] #'anzu-query-replace-regexp))
 
 ;; Expand-region is awesome (most of the time)
 (use-package expand-region
