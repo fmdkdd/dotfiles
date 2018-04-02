@@ -298,14 +298,20 @@
 ;; Syntax checking
 (use-package flycheck
   :load-path "~/proj/flycheck"
-  :defer 2 ; we want global-flycheck-mode, but not essential on startup
+  :commands (global-flycheck-mode)
+  :init
+  ;; Load global-flycheck-mode only before saving a file,
+  ;; and clean up the hook once that happens
+  (defun fmdkdd/init-flycheck ()
+    (if (bound-and-true-p global-flycheck-mode)
+        (remove-hook 'before-save-hook #'fmdkdd/init-flycheck)
+      (global-flycheck-mode +1)))
+  (add-hook 'before-save-hook #'fmdkdd/init-flycheck)
   :config
   (setq flycheck-display-errors-delay 0.125
         flycheck-check-syntax-automatically '(save)
         flycheck-emacs-lisp-load-path 'inherit
-        flycheck-global-modes '(emacs-lisp-mode c-mode c++-mode rust-mode))
-
-  (global-flycheck-mode))
+        flycheck-global-modes '(emacs-lisp-mode c-mode c++-mode rust-mode)))
 
 ;; If we load a rust buffer though, we need this
 (use-package flycheck-rust
