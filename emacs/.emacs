@@ -83,7 +83,7 @@
 
 (use-package ivy
   :ensure t
-  :diminish (ivy-mode . "")
+  :diminish ivy-mode
   :bind (("C-c C-r" . ivy-resume)
          ("C-x b" . ivy-switch-buffer))
   :config
@@ -96,14 +96,11 @@
   (setq ivy-use-selectable-prompt t)
   (define-key ivy-minibuffer-map (kbd "C-l") #'ivy-backward-delete-char)
 
-  (setq ivy-on-del-error-function nil)  ;; Don't quit when erasing all input
+  (setq ivy-on-del-error-function nil ;; don't quit when erasing all input
+        ivy-height 15                 ;; number of result lines to display
+        ivy-count-format ""           ;; do not count candidates
+        ivy-initial-inputs-alist nil) ;; no default regexp in prompt
 
-  ;; Number of result lines to display
-  (setq ivy-height 15)
-  ;; Do not count candidates
-  (setq ivy-count-format "")
-  ;; No default regexp in prompt
-  (setq ivy-initial-inputs-alist nil)
   (setq ivy-re-builders-alist
 	;; Match prompt in any order
         '((t . ivy--regex-ignore-order)))
