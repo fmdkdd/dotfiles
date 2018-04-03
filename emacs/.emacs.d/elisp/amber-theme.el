@@ -80,6 +80,8 @@
  '(ivy-minibuffer-match-face-3 ((t (:foreground "gold1"))))
  '(ivy-minibuffer-match-face-4 ((t (:foreground "gold1"))))
  '(ivy-highlight-face ((t (:inherit unspecified))))
+ '(compilation-info ((t (:foreground "#adb08b"))))
+ '(compilation-line-number ((t (:inherit unspecified))))
 
  ;; Flycheck
 
