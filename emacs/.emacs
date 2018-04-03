@@ -25,7 +25,7 @@
 ;; Used for some `use-package` calls
 (use-package diminish :ensure t)
 
-
+
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Theming
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -46,7 +46,7 @@
   (setq rainbow-delimiters-max-face-count 1)
   (add-hook 'prog-mode-hook #'rainbow-delimiters-mode-enable))
 
-
+
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Interface
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -120,7 +120,7 @@
          ("C-c /" . counsel-rg)
          ("C-c f l" . counsel-locate)))
 
-
+
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Files
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -155,7 +155,7 @@
 
 (setq delete-by-moving-to-trash t)
 
-
+
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Editing
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -218,7 +218,7 @@
   :ensure t
   :mode ("\\.md" . markdown-mode))
 
-
+
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Org mode
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -279,7 +279,7 @@
           ("r" "Rendez-vous" entry (file+headline "" "Rendez-vous")
            "* %?"))))
 
-
+
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Programming
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -402,6 +402,7 @@
   (define-key sgml-mode-map (kbd "C-c /") #'counsel-rg)
   (define-key sgml-mode-map (kbd "C-c C-/") #'sgml-close-tag))
 
+
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Bindings
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -446,6 +447,9 @@
 (global-set-key (kbd "C-c R") #'query-replace-regexp)
 (global-set-key (kbd "C-c s") #'isearch-forward-symbol-at-point)
 
+;; I too often stumble upon the useless buffer list when I meant switch-buffer
+(global-set-key (kbd "C-x C-b") #'ivy-switch-buffer)
+
 ;; Additional goodies
 (global-set-key (kbd "C-w") #'kill-region-or-backward-word)
 (global-set-key (kbd "C-a") #'move-beginning-of-line-dwim)
@@ -453,7 +457,7 @@
 (global-set-key (kbd "C-;") #'goto-last-change)
 (global-set-key (kbd "C-c o r") #'fmdkdd/save-and-reload-browser-windows)
 
-
+
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Misc
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
