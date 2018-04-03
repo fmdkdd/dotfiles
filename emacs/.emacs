@@ -86,7 +86,8 @@
   :ensure t
   :diminish ivy-mode
   :bind (("C-c C-r" . ivy-resume)
-         ("C-x b" . ivy-switch-buffer))
+         ("C-x b" . ivy-switch-buffer)
+         ("C-x C-b" . ivy-switch-buffer))
   :config
   ;; Add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’
   (setq ivy-use-virtual-buffers t
@@ -117,6 +118,7 @@
          ("C-h v" . counsel-describe-variable)
          ("C-h a" . counsel-apropos)
          ("C-c i" . counsel-imenu)
+         ("C-c C-i" . counsel-imenu)
          ("C-c /" . counsel-rg)
          ("C-c f l" . counsel-locate)))
 
@@ -446,9 +448,6 @@
 (global-set-key (kbd "C-c r") #'query-replace)
 (global-set-key (kbd "C-c R") #'query-replace-regexp)
 (global-set-key (kbd "C-c s") #'isearch-forward-symbol-at-point)
-
-;; I too often stumble upon the useless buffer list when I meant switch-buffer
-(global-set-key (kbd "C-x C-b") #'ivy-switch-buffer)
 
 ;; Additional goodies
 (global-set-key (kbd "C-w") #'kill-region-or-backward-word)
