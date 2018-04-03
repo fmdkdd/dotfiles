@@ -373,9 +373,16 @@
 
 ;; Speaking of elisp, this is nice to have in Flycheck
 (defun fmdkdd/add-flycheck-checkers-in-imenu ()
-  (setq imenu-generic-expression
-        (cons '("Checkers" "^\\((flycheck-define-checker \\(.*\\)\\)" 2)
-              imenu-generic-expression)))
+  (let ((basename (file-name-nondirectory buffer-file-name)))
+    (cond
+     ((string= basename "flycheck.el")
+      (setq imenu-generic-expression
+            (cons '("Checkers" "^\\((flycheck-define-checker \\(.*\\)\\)" 2)
+                  imenu-generic-expression)))
+     ((string= basename "flycheck-test.el")
+      (setq imenu-generic-expression
+            (cons '("Tests" "^\\((flycheck-ert-def-checker-test \\(.*\\) \\(.*\\) \\(.*\\)\\)" 4)
+                  imenu-generic-expression))))))
 (add-hook 'find-file-hook #'fmdkdd/add-flycheck-checkers-in-imenu)
 
 ;; Why is this not built-in?
