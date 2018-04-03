@@ -426,7 +426,7 @@
   :ensure t
   :bind ("C-z" . ace-window)
   :config
-  (setq aw-keys '(?a ?r ?s ?t ?n ?e ?i ?o)))
+  (setq aw-keys '(?n ?e ?i ?o ?a ?r ?s ?t)))
 
 ;; Byebye dabbrev
 (global-set-key [remap dabbrev-expand] #'hippie-expand)
