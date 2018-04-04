@@ -271,7 +271,11 @@ and `optipng' to reduce the file size if the program is present."
   (interactive "FSave to file: ")
   (call-process "import" nil nil nil file-name)
   (start-process "optipng" nil "optipng" file-name)
-  (insert (format "[[file:%s]]" file-name))
+  (insert
+   ;; A link relative to the buffer where it is inserted is more portable
+   (format "[[file:%s]]"
+           (file-relative-name file-name
+                               (file-name-directory buffer-file-name))))
   (when (eq major-mode 'org-mode)
     (org-redisplay-inline-images)))
 
