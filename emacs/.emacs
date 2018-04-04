@@ -122,6 +122,10 @@
          ("C-c /" . counsel-rg)
          ("C-c f l" . counsel-locate)))
 
+(use-package swiper
+  :ensure t
+  :bind (("M-s M-s" . swiper)))
+
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Files
