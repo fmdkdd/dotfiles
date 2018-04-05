@@ -258,7 +258,11 @@
   ;; Activate gnuplot in Babel
   (org-babel-do-load-languages
    'org-babel-load-languages
-   '((gnuplot . t))))
+   '((gnuplot . t)))
+
+  ;; "reset" is mandatory for all gnuplot src blocks
+  (add-to-list 'org-babel-default-header-args:gnuplot
+               '((:prologue . "reset"))))
 
 (use-package org-agenda
   :bind (("C-c o a" . org-agenda))
