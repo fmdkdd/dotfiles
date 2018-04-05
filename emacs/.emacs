@@ -261,8 +261,9 @@
    '((gnuplot . t)))
 
   ;; "reset" is mandatory for all gnuplot src blocks
-  (add-to-list 'org-babel-default-header-args:gnuplot
-               '((:prologue . "reset"))))
+  (with-eval-after-load 'ob-gnuplot
+    (add-to-list 'org-babel-default-header-args:gnuplot
+                 '(:prologue . "reset"))))
 
 (use-package org-agenda
   :bind (("C-c o a" . org-agenda))
