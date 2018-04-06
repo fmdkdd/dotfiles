@@ -484,6 +484,21 @@
 (with-eval-after-load 'calendar
   (setq calendar-week-start-day 1))
 
+;; Add digital information units to calc
+(use-package calc-units
+  :defer t
+  :config
+  (setq math-additional-units
+        '((bit   nil          "Binary digit")
+          (o     "8 * bit"    "Octet")
+          (B     "o"          "Byte")
+          (KiB   "1024 * B"   "Kibibyte")
+          (MiB   "1024 * KiB" "Mebibyte")
+          (GiB   "1024 * MiB" "Gibibyte")
+          (TiB   "1024 * GiB" "Tebibyte"))
+        ;; Calc wants us to set this to nil for it to be recomputed
+        math-units-table nil))
+
 ;; Report time to load this file
 (let ((elapsed (float-time (time-subtract (current-time)
 					  emacs-start-time))))
