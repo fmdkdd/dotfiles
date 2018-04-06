@@ -66,6 +66,9 @@
 
 (setq history-length 1000)
 
+;; Save/restore window configurations
+(winner-mode)
+
 ;; Shorter yes/no answers
 (fset 'yes-or-no-p 'y-or-n-p)
 
