@@ -61,8 +61,8 @@
 (menu-bar-mode   0)
 
 ;; Modeline
-(column-number-mode t)
-(size-indication-mode t)
+(column-number-mode)
+(size-indication-mode)
 
 (setq history-length 1000)
 
@@ -80,7 +80,7 @@
   :defer 3
   :diminish which-key-mode
   :config
-  (which-key-mode 1))
+  (which-key-mode))
 
 (use-package ivy
   :ensure t
@@ -108,7 +108,7 @@
         '((t . ivy--regex-ignore-order)))
 
   ;; Turns on ivy for kill-buffer, org-refile, etc.
-  (ivy-mode +1))
+  (ivy-mode))
 
 (use-package counsel
   :ensure t
@@ -151,13 +151,13 @@
   :config
   (setq recentf-max-saved-items 500
         recentf-auto-cleanup   '300)
-  (recentf-mode t))
+  (recentf-mode))
 
 ;; Save cursor location in files
 (if (< emacs-major-version 25)
     (progn (require 'saveplace)
            (setq-default save-place t))
-  (save-place-mode 1))
+  (save-place-mode))
 
 (setq delete-by-moving-to-trash t)
 
@@ -167,12 +167,12 @@
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ;; Invaluable
-(show-paren-mode t)
+(show-paren-mode)
 
 ;; Spaces over tabs
 (setq-default indent-tabs-mode nil)
 (setq require-final-newline t)
-(delete-selection-mode 1)
+(delete-selection-mode)
 
 ;; Auto fill
 (setq-default fill-column 80)
@@ -318,7 +318,7 @@
   (defun fmdkdd/init-flycheck ()
     (if (bound-and-true-p global-flycheck-mode)
         (remove-hook 'before-save-hook #'fmdkdd/init-flycheck)
-      (global-flycheck-mode +1)))
+      (global-flycheck-mode)))
   (add-hook 'before-save-hook #'fmdkdd/init-flycheck)
   :config
   (setq flycheck-display-errors-delay 0.125
@@ -337,7 +337,7 @@
   :load-path "~/proj/flycheck-inline"
   :after flycheck
   :config
-  (flycheck-inline-mode +1))
+  (flycheck-inline-mode))
 
 ;; Magit!
 (use-package magit
