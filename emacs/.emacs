@@ -261,7 +261,9 @@
    '((gnuplot . t)))
 
   ;; "reset" is mandatory for all gnuplot src blocks
-  (with-eval-after-load 'ob-gnuplot
+  (use-package ob-gnuplot
+    :defer t
+    :config
     (add-to-list 'org-babel-default-header-args:gnuplot
                  '(:prologue . "reset"))))
 
@@ -382,6 +384,7 @@
 
 ;; Speaking of elisp, this is nice to have in Flycheck
 (defun fmdkdd/add-flycheck-checkers-in-imenu ()
+  "Enhance imenu with flycheck macros definitions."
   (let ((basename (file-name-nondirectory buffer-file-name)))
     (cond
      ((string= basename "flycheck.el")
