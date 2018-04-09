@@ -78,7 +78,7 @@
   (let ((point-at-first-text))
     (save-excursion
       (beginning-of-visual-line)
-      (skip-chars-forward "[ \t]")
+      (skip-chars-forward " \t")
       (setq point-at-first-text (point)))
     ;; If we are already at the first non-whitespace char, then move to the
     ;; beginning of line
