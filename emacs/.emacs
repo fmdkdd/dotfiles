@@ -113,6 +113,9 @@
   ;; Turns on ivy for kill-buffer, org-refile, etc.
   (ivy-mode))
 
+(use-package ivy-hydra
+  :ensure t)
+
 (use-package counsel
   :ensure t
   :bind (("M-x" . counsel-M-x)
