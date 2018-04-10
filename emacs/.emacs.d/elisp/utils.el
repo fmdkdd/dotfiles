@@ -270,7 +270,8 @@ This calls the `import' from ImageMagick to take the screenshot,
 and `optipng' to reduce the file size if the program is present."
   (interactive "FSave to file: ")
   (call-process "import" nil nil nil file-name)
-  (start-process "optipng" nil "optipng" file-name)
+  (if (executable-find "optipng")
+      (start-process "optipng" nil "optipng" file-name))
   (insert
    ;; A link relative to the buffer where it is inserted is more portable
    (format "[[file:%s]]"
