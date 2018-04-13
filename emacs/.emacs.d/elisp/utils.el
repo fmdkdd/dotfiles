@@ -68,8 +68,9 @@
      ((boundp thing) (describe-variable thing)))))
 
 (defun add-watchwords ()
+  "Add TODO: words to font-lock keywords."
   (font-lock-add-keywords
-   nil '(("\\<\\(TODO\\|FIXME\\|HACK\\|REFACTOR\\|DELETE\\|XXX\\):"
+   nil '(("\\(\\<TODO\\|\\<FIXME\\|\\<HACK\\|@.+\\):"
           1 font-lock-warning-face t))))
 
 (defun move-beginning-of-line-dwim ()
