@@ -3,4 +3,5 @@
 
 # Tell latexmk to use Zathura as a previewer, and run emacsclient as the Synctex
 # editor.
-$pdf_previewer = 'exec zathura --synctex -x \'emacsclient --no-wait +%{line} %{input}\' %O %S';
+$pdflatex='pdflatex -synctex=1 %O %B';
+$pdf_previewer = 'exec zathura -x \'emacsclient --no-wait +%{line} %{input}\' %O %S';
