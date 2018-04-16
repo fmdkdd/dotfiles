@@ -1,8 +1,8 @@
 [include]
 	path = ~/.gitconfig.local
 [core]
-	excludesfile = ~/.gitignore_global
-        attributesfile = ~/.gitattributes
+	excludesFile = ~/.gitignore_global
+        attributesFile = ~/.gitattributes
 [push]
 	default = simple
 [diff "elisp"]
