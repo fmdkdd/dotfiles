@@ -8,6 +8,6 @@ else
 
     if [ -f "${PAPER}" ]; then
         exec zathura "${PAPER}" 1>&- # Close stdout otherwise rofi hangs around
-        # and steals input
+                                     # and steals input
     fi
 fi
