@@ -270,16 +270,18 @@ by xdotool."
 This calls the `import' from ImageMagick to take the screenshot,
 and `optipng' to reduce the file size if the program is present."
   (interactive "FSave to file: ")
-  (call-process "import" nil nil nil file-name)
-  (if (executable-find "optipng")
-      (start-process "optipng" nil "optipng" file-name))
-  (insert
-   ;; A link relative to the buffer where it is inserted is more portable
-   (format "[[file:%s]]"
-           (file-relative-name file-name
-                               (file-name-directory buffer-file-name))))
-  (when (eq major-mode 'org-mode)
-    (org-redisplay-inline-images)))
+  ;; Get absolute path
+  (let ((file (expand-file-name file-name)))
+    (call-process "import" nil nil nil file)
+    (if (executable-find "optipng")
+        (start-process "optipng" nil "optipng" file))
+    (insert
+     ;; A link relative to the buffer where it is inserted is more portable
+     (format "[[file:%s]]"
+             (file-relative-name file
+                                 (file-name-directory buffer-file-name))))
+    (when (eq major-mode 'org-mode)
+      (org-redisplay-inline-images))))
 
 (provide 'utils)
 ;;; utils.el ends here
