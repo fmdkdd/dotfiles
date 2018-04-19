@@ -429,6 +429,12 @@
   (define-key sgml-mode-map (kbd "C-c /") #'counsel-rg)
   (define-key sgml-mode-map (kbd "C-c C-/") #'sgml-close-tag))
 
+(use-package tex-mode
+  :defer t
+  :config
+  (define-key tex-mode-map (kbd "C-c /") #'counsel-rg)
+  (define-key tex-mode-map (kbd "C-c C-/") #'latex-close-block))
+
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Bindings
