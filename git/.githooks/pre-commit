@@ -1,0 +1,15 @@
+#!/bin/sh
+# Pre-commit hook that optimizes PNG files to reduce their size.
+
+if ! command -v optipng >/dev/null 2>&1
+then
+	echo "Please install optipng to reduce png images size before commit"
+	exit 1;
+fi
+
+for file in `git diff --cached --name-only | grep ".png\$"`
+do
+	echo "Optimizing $file"
+	optipng --silent $file
+        git-add $file
+done

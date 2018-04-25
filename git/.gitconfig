@@ -3,7 +3,8 @@
 [core]
 	excludesFile = ~/.gitignore_global
         attributesFile = ~/.gitattributes
+        hooksPath = ~/.githooks
 [push]
 	default = simple
 [diff "elisp"]
-	xfuncname = "^(\\((defun|defmacro) .*)$"
+	xfuncname = "^\\(.+"
