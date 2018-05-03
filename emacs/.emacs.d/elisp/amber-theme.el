@@ -146,6 +146,9 @@
  '(tuareg-font-lock-governing-face ((t (:inherit font-lock-keyword-face))))
  '(tuareg-font-lock-operator-face ((t (:inherit unspecified))))
 
+ ;; TeX
+ '(tex-verbatim ((t (:inherit unspecified))))
+
  )
 
 (provide-theme 'amber)
