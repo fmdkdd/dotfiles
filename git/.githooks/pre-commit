@@ -7,7 +7,7 @@ then
 	exit 1;
 fi
 
-for file in `git diff --cached --name-only | grep ".png\$"`
+for file in `git diff --cached --name-only --diff-filter=ACM | grep ".png\$"`
 do
 	echo "Optimizing $file"
 	optipng --silent $file
