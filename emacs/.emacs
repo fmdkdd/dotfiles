@@ -460,7 +460,9 @@
   :ensure t
   :bind ("C-z" . ace-window)
   :config
-  (setq aw-keys '(?n ?e ?i ?o ?a ?r ?s ?t)))
+  (setq aw-keys '(?n ?e ?i ?o ?a ?r ?s ?t))
+  (custom-set-faces
+   '(aw-leading-char-face ((t (:foreground "red" :height 4.0))))))
 
 ;; Byebye dabbrev
 (global-set-key [remap dabbrev-expand] #'hippie-expand)
