@@ -460,7 +460,12 @@
   :ensure t
   :bind ("C-z" . ace-window)
   :config
-  (setq aw-keys '(?n ?e ?i ?o ?a ?r ?s ?t))
+  (setq aw-keys '(?n ?e ?i ?o ?a ?r ?s ?t)
+        aw-make-frame-char ?5
+        aw-leading-char-style 'path)
+  ;; Remap flip to z since n is already used
+  (assq-delete-all ?n aw-dispatch-alist)
+  (add-to-list 'aw-dispatch-alist '(?z aw-flip-window))
   (custom-set-faces
    '(aw-leading-char-face ((t (:foreground "red" :height 4.0))))))
 
