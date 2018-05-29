@@ -330,7 +330,15 @@
   (setq flycheck-display-errors-delay 0.125
         flycheck-check-syntax-automatically '(save)
         flycheck-emacs-lisp-load-path 'inherit
-        flycheck-global-modes '(emacs-lisp-mode c-mode c++-mode rust-mode)))
+        flycheck-global-modes '(emacs-lisp-mode c-mode c++-mode rust-mode))
+
+  ;; Display the error list in the bottom side window, with as much
+  ;; height as needed by its contents.
+  (add-to-list 'display-buffer-alist
+               `(,(rx bos "*Flycheck errors*" eos) display-buffer-in-side-window
+                 (side . bottom) (slot . 0)
+                 (window-height . fit-window-to-buffer)
+                 (preserve-size . (nil . t)))))
 
 ;; If we load a rust buffer though, we need this
 (use-package flycheck-rust
