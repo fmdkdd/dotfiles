@@ -343,7 +343,8 @@
   :load-path "~/proj/flycheck-inline"
   :after flycheck
   :config
-  (flycheck-inline-mode))
+  (flycheck-inline-mode)
+  (setq flycheck-inline-display-error-id nil))
 
 ;; Magit!
 (use-package magit
