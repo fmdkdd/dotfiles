@@ -132,6 +132,13 @@
   :ensure t
   :bind (("M-s M-s" . swiper)))
 
+;; Display manual in side window
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*info*" eos) display-buffer-in-side-window
+               (side . right) (slot . 0)
+               (window-width . fit-window-to-buffer)
+               (preserve-size . (t . nil))))
+
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Files
