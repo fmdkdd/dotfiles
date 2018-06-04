@@ -272,7 +272,9 @@ and `optipng' to reduce the file size if the program is present."
   (interactive "FSave to file: ")
   ;; Get absolute path
   (let ((file (expand-file-name file-name)))
-    (call-process "import" nil nil nil file)
+    ;; Create the directory if necessary
+    (make-directory (file-name-directory file) 'parents)
+    (call-process "import" nil 0 nil file)
     (if (executable-find "optipng")
         (start-process "optipng" nil "optipng" file))
     (insert
