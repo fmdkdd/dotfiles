@@ -201,6 +201,12 @@
 ;; This is useful just for thinking about updating copyright years.
 (add-hook 'before-save-hook #'copyright-update)
 
+;; Flyspell eats useful bindings
+(use-package flyspell
+  :defer t
+  :config
+  (define-key flyspell-mode-map (kbd "C-;") nil))
+
 ;; Hippie expand everything
 (setq hippie-expand-try-functions-list '(try-expand-dabbrev
                                          try-expand-dabbrev-all-buffers
