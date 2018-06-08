@@ -102,6 +102,11 @@
  '(flycheck-inline-warning ((t (:inherit flycheck-fringe-warning :weight normal))))
  '(flycheck-inline-info ((t (:inherit flycheck-fringe-info :weight normal))))
 
+ ;; Flyspell
+
+ '(flyspell-incorrect ((t (:inherit flycheck-error))))
+ '(flyspell-duplicate ((t (:inherit flycheck-warning))))
+
  ;; Org
 
  '(outline-1 ((t (:foreground "#a0ba93"))))
