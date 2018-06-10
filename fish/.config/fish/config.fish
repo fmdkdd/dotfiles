@@ -12,6 +12,7 @@ set PATH ~/.local/bin $PATH
 # Allow bundler to run sudo-less
 if type -q ruby
    set GEM_HOME (ruby -e 'print Gem.user_dir')
+   set PATH $GEM_HOME/bin $PATH
 end
 
 # Remove greeting
