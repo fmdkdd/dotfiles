@@ -272,7 +272,7 @@
         org-src-fontify-natively t      ; more useful
         org-log-done             t)     ; log all the things
 
-  (setq org-default-notes-file "tasks.org")
+  (setq org-default-notes-file (expand-file-name "tasks.org" org-directory))
 
   ;; Activate gnuplot in Babel
   (org-babel-do-load-languages
