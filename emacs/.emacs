@@ -269,6 +269,7 @@
 
   (setq org-adapt-indentation    nil    ; indentation is lost space
         org-edit-src-content-indentation 0
+        org-list-description-max-indent 5
         org-src-fontify-natively t      ; more useful
         org-log-done             t)     ; log all the things
 
