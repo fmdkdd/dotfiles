@@ -426,6 +426,15 @@
                   imenu-generic-expression))))))
 (add-hook 'find-file-hook #'fmdkdd/add-flycheck-checkers-in-imenu)
 
+;; This one is also... helpful
+(use-package helpful
+  :ensure t
+  :config
+  (defalias #'describe-key #'helpful-key)
+  (defalias #'describe-function #'helpful-callable)
+  (defalias #'describe-variable #'helpful-variable)
+  (defalias #'describe-symbol #'helpful-symbol))
+
 ;; Why is this not built-in?
 (define-key emacs-lisp-mode-map (kbd "C-c l") #'describe-thing-at-point)
 
