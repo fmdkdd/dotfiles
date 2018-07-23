@@ -89,7 +89,7 @@
   :ensure t
   :diminish ivy-mode
   :bind (("C-c C-r" . ivy-resume)
-         ("C-x b" . ivy-switch-buffer)
+         ("C-x b"   . ivy-switch-buffer)
          ("C-x C-b" . ivy-switch-buffer))
   :config
   ;; Add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’
