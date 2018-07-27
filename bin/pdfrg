@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# pdfgrep is quite slow, so we use rg instead to look for matches.  pdftotext is
+# still slow, but hey.
+
+# rg doesn't give us a filename for results on standard input, so we add that
+# back with sed, and finally we pass the thing to rg again to get the colors
+# back
+base=`basename "$2"`
+pdftotext -q "$2" - | rg $1 - | sed -e "s/^/$base: /" | rg $1 -

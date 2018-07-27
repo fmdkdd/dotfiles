@@ -1,0 +1,4 @@
+#!/bin/fish
+
+# Call pdfrg for all PDFs of given folder, in parallel
+ls -1rS "$argv[2]"/**.pdf | xargs -d\n -n1 -P4 pdfrg $argv[1]
