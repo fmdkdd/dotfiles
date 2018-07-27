@@ -292,13 +292,29 @@
   :config
   ;; Custom agenda command
   (setq org-agenda-window-setup 'current-window
+        org-agenda-start-on-weekday nil ; start on current day
+        org-agenda-span 10              ; show more days
+        org-deadline-warning-days 14    ; show deadline in advance
         org-agenda-custom-commands
         '(("n" "Agenda and all unscheduled TODO's"
            ((agenda "")
             (todo "WAIT" ((org-agenda-overriding-header "Waiting")))
             (todo "" ((org-agenda-overriding-header "Upcoming deadlines")
-                      (org-agenda-skip-function '(org-agenda-skip-entry-if 'notdeadline))
-                      (org-agenda-todo-ignore-deadlines 'near)))
+                      (org-agenda-skip-function
+                       ;; Show not done deadlines between
+                       ;; org-deadline-warning-days and 90 days
+                       '(lambda ()
+                          (org-back-to-heading t)
+                          (let ((beg (point))
+	                        (end (org-entry-end-position))
+	                        (planning-end (line-end-position 2)))
+                            (and (not (save-excursion
+		                        (when (re-search-forward org-deadline-time-regexp planning-end t)
+                                          (let ((deadline (org-time-stamp-to-now (match-string 1))))
+                                            (or (org-entry-is-done-p)
+                                                (and (>= deadline org-deadline-warning-days)
+                                                     (<= deadline 90)))))))
+                                 end))))))
             (todo "TODO" ((org-agenda-overriding-header "Unscheduled tasks")
                           (org-agenda-todo-ignore-scheduled 'all)
                           (org-agenda-todo-ignore-deadlines 'all))))))))
