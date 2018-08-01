@@ -133,6 +133,7 @@
   :bind (("M-s M-s" . swiper)))
 
 ;; Display manual in side window
+(setq fit-window-to-buffer-horizontally t)
 (add-to-list 'display-buffer-alist
              `(,(rx bos "*info*" eos) display-buffer-in-side-window
                (side . right) (slot . 0)
