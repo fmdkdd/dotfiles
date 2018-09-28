@@ -11,7 +11,7 @@
  '(vertical-border ((t (:foreground "#444"))))
  '(fringe ((t (:background "#eeebea"))))
 
- '(mode-line ((t (:foreground "#fec" :background "#444" :height 90))))
+ '(mode-line ((t (:foreground "#fed" :background "#929" :height 90))))
  '(mode-line-inactive ((t (:foreground "#eee" :background "#888" :height 90))))
  '(mode-line-buffer-id ((t (:foreground "#fed" :weight bold))))
 
@@ -55,6 +55,13 @@
  '(info-xref ((t (:inherit link))))
  '(info-xref-visited ((t (:foreground "#998972" :inherit link))))
  '(info-menu-star ((t (:inherit unspecified))))
+
+ ;; Ivy
+
+ '(ivy-current-match ((t :background "#d0d1ee")))
+ '(ivy-minibuffer-match-face-2 ((t :foreground "#902090")))
+ '(ivy-minibuffer-match-face-3 ((t :foreground "#902090")))
+ '(ivy-minibuffer-match-face-4 ((t :foreground "#902090")))
 
  ;; Helm
  '(helm-selection ((t (:background "#ddd"))))
