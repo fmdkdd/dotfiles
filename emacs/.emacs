@@ -403,7 +403,7 @@
   :load-path "~/proj/flycheck-inline"
   :after flycheck
   :config
-  (flycheck-inline-mode)
+  (global-flycheck-inline-mode)
   (setq flycheck-inline-display-error-id nil))
 
 ;; Magit!
