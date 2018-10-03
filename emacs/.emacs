@@ -345,6 +345,19 @@
 (add-hook 'java-mode-hook (lambda () (c-set-style "user-java")))
 (add-hook 'java-mode-hook (lambda () (subword-mode)))
 
+;; Project navigation
+(use-package projectile
+  :diminish projectile-mode
+  :init
+  (setq projectile-dynamic-mode-line nil)
+  :config
+  (projectile-mode))
+
+;; Only need these bindings for now
+(use-package counsel-projectile
+  :bind (("C-c p p" . counsel-projectile-switch-project)
+         ("C-c p <SPC>" . counsel-projectile)))
+
 ;; Outshine enhances outline for prog modes
 (use-package outshine
   :init
