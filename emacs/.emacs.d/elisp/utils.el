@@ -12,6 +12,10 @@
 
 ;;; Code:
 
+(require 'imenu)
+(require 'recentf)
+(require 'projectile)
+
 ;; Best of both worlds
 (defun kill-region-or-backward-word ()
   "Kill the region if active, otherwise kill the word before point."
@@ -317,5 +321,61 @@ and `optipng' to reduce the file size if the program is present."
   (elisp--docstring-first-line
    (or (and (fboundp sym) (documentation sym))
        (documentation-property sym 'variable-documentation))))
+
+(defun fmdkdd/goto-anything ()
+  "Prompt to go to buffer, file or symbol.
+
+Look for imenu symbols, buffers, project files, recent files and
+other projects."
+  (interactive)
+  (ivy-read "Goto: "
+            (append
+             ;; Imenu items
+             (condition-case e
+                 (mapcar (lambda (item)
+                       (list (format "Imenu: %s" (car item)) 'marker (cddr item)))
+                     (counsel-imenu-get-candidates-from
+                      (or imenu--index-alist
+                          (imenu--make-index-alist 'no-error))))
+               (imenu-unavailable nil))
+             ;; Active buffers
+             (seq-remove
+              ;; Remove ephemeral buffers
+              (lambda (buf)
+                (string-prefix-p " " (car buf)))
+              (mapcar (lambda (buf)
+                        (list (buffer-name buf) 'buffer buf))
+                      (buffer-list)))
+             ;; Recent files
+             (mapcar (lambda (file)
+                       (cons file 'file))
+                     recentf-list)
+             ;; Project files
+             (when (and buffer-file-name
+                        (locate-dominating-file buffer-file-name ".git"))
+               (mapcar (lambda (file)
+                         (cons file 'file))
+                       (split-string
+                        (shell-command-to-string "git ls-files -zco --exclude-standard") "\0")))
+             ;; Projectile is still a bit slow to my taste, so using the git
+             ;; command directly
+             ;; (when-let (root (projectile-project-root))
+             ;;   (mapcar (lambda (file)
+             ;;             (cons file 'file))
+             ;;           (projectile-project-files root)))
+
+             ;; Project roots
+             (mapcar (lambda (dir)
+                       (list (format "Project: %s" dir) 'project dir))
+                     projectile-known-projects))
+            :action (lambda (cand)
+                      (pcase cand
+                        (`(,_ marker ,m) (imenu-default-goto-function nil m))
+                        (`(,_ buffer ,b) (switch-to-buffer b))
+                        (`(,f . file) (find-file f))
+                        (`(,_ project ,p) (counsel-projectile-switch-project-action p))))
+            :caller 'fmdkdd/goto-anything))
+
+
 (provide 'utils)
 ;;; utils.el ends here

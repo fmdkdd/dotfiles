@@ -89,8 +89,8 @@
   :ensure t
   :diminish ivy-mode
   :bind (("C-c C-r" . ivy-resume)
-         ("C-x b"   . ivy-switch-buffer)
-         ("C-x C-b" . ivy-switch-buffer))
+         ("C-x b"   . fmdkdd/goto-anything)
+         ("C-x C-b" . fmdkdd/goto-anything))
   :config
   ;; Add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’
   (setq ivy-use-virtual-buffers t
