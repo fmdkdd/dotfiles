@@ -287,5 +287,35 @@ and `optipng' to reduce the file size if the program is present."
     (when (eq major-mode 'org-mode)
       (org-redisplay-inline-images))))
 
+(defun fmdkdd/apropos ()
+  "Show all matching symbols and their docstring."
+  (interactive)
+  (ivy-read "Describe symbol: "
+            (let (cands)
+              (mapatoms
+               (lambda (sym)
+                 (when (or (boundp sym) (fboundp sym))
+                   (push (symbol-name sym) cands))))
+              cands)
+            :action (lambda (cand)
+                      (let ((sym (intern cand)))
+                        (if (fboundp sym)
+                            (describe-function sym)
+                          (describe-variable sym))))
+            :caller 'fmdkdd/apropos))
+
+(defun fmdkdd/apropos-display-transformer (cand)
+  "Return CAND and its docstring, if any."
+  (let ((doc (docstring-first-line (intern cand))))
+    (if doc
+        (format "%s  %s" cand
+                (propertize doc 'face '(variable-pitch shadow)))
+      cand)))
+
+(defun docstring-first-line (sym)
+  "Return the first line of the docstring for SYM."
+  (elisp--docstring-first-line
+   (or (and (fboundp sym) (documentation sym))
+       (documentation-property sym 'variable-documentation))))
 (provide 'utils)
 ;;; utils.el ends here

@@ -111,7 +111,16 @@
         '((t . ivy--regex-ignore-order)))
 
   ;; Turns on ivy for kill-buffer, org-refile, etc.
-  (ivy-mode))
+  (ivy-mode)
+
+  ;; Enhanced apropos
+  (ivy-set-display-transformer
+   'fmdkdd/apropos
+   'fmdkdd/apropos-display-transformer)
+
+  (ivy-set-actions
+   'fmdkdd/apropos
+   '(("d" xref-find-definitions "jump to definition"))))
 
 (use-package ivy-hydra
   :ensure t)
@@ -122,7 +131,7 @@
          ("C-x C-f" . counsel-find-file)
          ("C-h f" . counsel-describe-function)
          ("C-h v" . counsel-describe-variable)
-         ("C-h a" . counsel-apropos)
+         ("C-h a" . fmdkdd/apropos)
          ("C-c i" . counsel-imenu)
          ("C-c C-i" . counsel-imenu)
          ("C-c /" . counsel-rg)
