@@ -15,6 +15,10 @@
 (require 'imenu)
 (require 'recentf)
 (require 'projectile)
+(require 'counsel-projectile)
+(require 'ivy)
+(require 'org)
+(require 'subword)
 
 ;; Best of both worlds
 (defun kill-region-or-backward-word ()
