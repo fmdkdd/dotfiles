@@ -334,14 +334,6 @@ other projects."
   (interactive)
   (ivy-read "Goto: "
             (append
-             ;; Imenu items
-             (condition-case e
-                 (mapcar (lambda (item)
-                       (list (format "Imenu: %s" (car item)) 'marker (cddr item)))
-                     (counsel-imenu-get-candidates-from
-                      (or imenu--index-alist
-                          (imenu--make-index-alist 'no-error))))
-               (imenu-unavailable nil))
              ;; Active buffers
              (seq-remove
               ;; Remove ephemeral buffers
@@ -350,6 +342,17 @@ other projects."
               (mapcar (lambda (buf)
                         (list (buffer-name buf) 'buffer buf))
                       (buffer-list)))
+             ;; Imenu items
+             (condition-case _
+                 (mapcar (lambda (item)
+                       (list (format "Imenu: %s" (car item)) 'marker (cddr item)))
+                     (counsel-imenu-get-candidates-from
+                      (or imenu--index-alist
+                          (imenu--make-index-alist 'no-error))))
+               ;; Even though we pass 'no-error, there is another function
+               ;; called by make-index-alist which can throw this if imenu is
+               ;; not available for the buffer.  We just return no items then.
+               (imenu-unavailable nil))
              ;; Recent files
              (mapcar (lambda (file)
                        (cons file 'file))
