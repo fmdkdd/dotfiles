@@ -135,7 +135,16 @@
          ("C-c i" . counsel-imenu)
          ("C-c C-i" . counsel-imenu)
          ("C-c /" . counsel-rg)
-         ("C-c f l" . counsel-locate)))
+         ("C-c f l" . counsel-locate))
+
+  :config
+  ;; Show docstring for M-x commands
+  (ivy-set-display-transformer
+   'counsel-M-x
+   'fmdkdd/apropos-display-transformer))
+
+(use-package smex
+  :ensure t)
 
 (use-package swiper
   :ensure t
@@ -361,11 +370,6 @@
   (setq projectile-dynamic-mode-line nil)
   :config
   (projectile-mode))
-
-;; Only need these bindings for now
-(use-package counsel-projectile
-  :bind (("C-c p p" . counsel-projectile-switch-project)
-         ("C-c p <SPC>" . counsel-projectile)))
 
 ;; Outshine enhances outline for prog modes
 (use-package outshine

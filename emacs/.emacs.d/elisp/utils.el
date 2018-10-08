@@ -380,6 +380,5 @@ other projects."
                         (`(,_ project ,p) (counsel-projectile-switch-project-action p))))
             :caller 'fmdkdd/goto-anything))
 
-
 (provide 'utils)
 ;;; utils.el ends here
