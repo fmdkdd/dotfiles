@@ -336,7 +336,12 @@
                                  end))))))
             (todo "TODO" ((org-agenda-overriding-header "Unscheduled tasks")
                           (org-agenda-todo-ignore-scheduled 'all)
-                          (org-agenda-todo-ignore-deadlines 'all))))))))
+                          (org-agenda-todo-ignore-deadlines 'all)))))
+          ("Rw" "Week in review"
+           agenda "" ((org-agenda-overriding-header "Week in review")
+                      (org-agenda-span 'week)
+                      (org-agenda-start-on-weekday 1)
+                      (org-agenda-start-with-log-mode t))))))
 
 (use-package org-capture
   :bind (("C-c o c" . org-capture))
