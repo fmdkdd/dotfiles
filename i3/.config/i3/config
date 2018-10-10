@@ -206,6 +206,5 @@ client.placeholder      #000000 #0c0c0c #ffffff #0c0c0c   #0c0c0c
 
 # Palette mostly from https://github.com/morhetz/gruvbox
 
-# Float Helm
-for_window [title="Helm"] floating enable
-for_window [title="Helm"] move position center
+# Float these by default
+for_window [class="Anki"] floating enable
