@@ -341,7 +341,8 @@ other projects."
                 (string-prefix-p " " (car buf)))
               (mapcar (lambda (buf)
                         (list (buffer-name buf) 'buffer buf))
-                      (buffer-list)))
+                      (delete (current-buffer)
+                              (buffer-list))))
              ;; Imenu items
              (condition-case _
                  (mapcar (lambda (item)
