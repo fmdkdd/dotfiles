@@ -320,6 +320,21 @@ and `optipng' to reduce the file size if the program is present."
                 (propertize doc 'face '(variable-pitch shadow)))
       cand)))
 
+(defun fmdkdd/M-x-display-transformer (cmd)
+  "Return CMD appended with its keybinding and its docstring."
+  (let* ((cmd-sym (intern cmd))
+         (doc (or (docstring-first-line cmd-sym) ""))
+         (binding (or (substitute-command-keys (format "\\[%s]" cmd-sym)) "")))
+    (if (string-match-p "^M-x" binding)
+        (format "%s %s"
+                cmd-sym
+                (propertize doc 'face '(variable-pitch shadow)))
+      (format "%s (%s) %s"
+          cmd-sym
+          (propertize binding 'face 'font-lock-keyword-face)
+          (propertize doc 'face '(variable-pitch shadow))))))
+
+
 (defun docstring-first-line (sym)
   "Return the first line of the docstring for SYM."
   (elisp--docstring-first-line

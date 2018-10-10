@@ -141,7 +141,7 @@
   ;; Show docstring for M-x commands
   (ivy-set-display-transformer
    'counsel-M-x
-   'fmdkdd/apropos-display-transformer))
+   'fmdkdd/M-x-display-transformer))
 
 (use-package smex
   :ensure t)
