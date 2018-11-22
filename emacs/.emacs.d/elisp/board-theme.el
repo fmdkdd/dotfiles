@@ -6,7 +6,7 @@
  ;; UI
 
  '(default ((t (:foreground "#000" :background "#eeebea"))))
- '(region ((t (:background "#e0e1ee"))))
+ '(region ((t (:background "#c6c8e3"))))
  '(cursor ((t (:background "#8d6"))))
  '(vertical-border ((t (:foreground "#444"))))
  '(fringe ((t (:background "#eeebea"))))
@@ -99,10 +99,10 @@
 
  ;; Org
 
- '(outline-1 ((t (:foreground "#a0ba93"))))
- '(outline-2 ((t (:foreground "#93baa7"))))
- '(outline-3 ((t (:foreground "#93adba"))))
- '(outline-4 ((t (:foreground "#9a93ba"))))
+ '(outline-1 ((t (:foreground "#4c9726"))))
+ '(outline-2 ((t (:foreground "#299963"))))
+ '(outline-3 ((t (:foreground "#2f7192"))))
+ '(outline-4 ((t (:foreground "#6d5fb2"))))
 
  '(org-link ((t (:inherit link))))
  '(org-meta-line ((t (:inherit shadow))))
