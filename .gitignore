@@ -5,4 +5,5 @@
 /xmonad/.xmonad/xmonad.errors
 /xmonad/.xmonad/xmonad.hi
 /xmonad/.xmonad/xmonad.o
-/x/.config/systemd/user/default.target.wants/
+/x/.config/systemd/user/*.wants/
+/bin/ics2org.env

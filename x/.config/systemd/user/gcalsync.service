@@ -1,0 +1,10 @@
+[Unit]
+Description=Fetch Google calendar ICS and transform into Org file
+
+[Service]
+Type=oneshot
+ExecStart=/home/fmdkdd/.local/bin/run-ics2org
+EnvironmentFile=/home/fmdkdd/.local/bin/ics2org.env
+
+[Install]
+WantedBy=default.target

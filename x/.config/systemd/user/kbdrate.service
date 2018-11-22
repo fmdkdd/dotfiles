@@ -1,5 +1,5 @@
 [Unit]
-Description=Keyboard repeat rate in tty.
+Description=Keyboard repeat rate in tty
 
 [Service]
 Type=oneshot

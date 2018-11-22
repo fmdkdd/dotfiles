@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Fetch an ICS file from the web and turn it into an Org file.  ICS_URL,
+# ICS_FILE and ORG_FILE should be set from the calling environment.
+
+WGET=/usr/sbin/wget
+ICS2ORG=~/.local/bin/ical2org.awk
+
+$WGET -O $ICS_FILE $ICS_URL
+$ICS2ORG < $ICS_FILE > $ORG_FILE

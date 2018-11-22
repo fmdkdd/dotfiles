@@ -1,0 +1,9 @@
+[Unit]
+Description=Run gcalsync every 2 hours
+
+[Timer]
+OnBootSec=15min
+OnUnitActiveSec=2h
+
+[Install]
+WantedBy=timers.target
