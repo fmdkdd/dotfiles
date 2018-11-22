@@ -449,8 +449,9 @@
          ("M-," . counsel-gtags-go-backward))
   :init
   (defun fmdkdd/add-update-gtags-hook ()
-    (add-hook 'after-save-hook #'counsel-gtags-update-tags nil t))
+    (add-hook 'after-save-hook #'counsel-gtags-update-tags nil 'local))
   (add-hook 'c-mode-hook #'fmdkdd/add-update-gtags-hook)
+  (add-hook 'c++-mode-hook #'fmdkdd/add-update-gtags-hook)
   (add-hook 'java-mode-hook #'fmdkdd/add-update-gtags-hook))
 
 ;; Racer is better for Rust
