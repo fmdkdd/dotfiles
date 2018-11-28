@@ -85,3 +85,7 @@ otherwise."
 
 (provide 'delimiter)
 ;;; delimiter.el ends here
+
+;; Local Variables:
+;; eval: (fmdkdd/byte-compile-on-save)
+;; End:

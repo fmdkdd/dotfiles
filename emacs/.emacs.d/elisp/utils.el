@@ -50,16 +50,24 @@
   (turn-on-auto-fill))
 
 (defun fmdkdd/async-byte-compile ()
-  "Asynchronously byte compile this file."
-  (make-process
-   :name "async-byte-compile"
-   :command (list "emacs"
-                  "-Q" "--batch" "--eval" "(require 'bytecomp)"
-                  "-f" "batch-byte-compile" buffer-file-name)))
+  "Asynchronously byte compile this file.
+
+Use the load path of the current buffer for the child Emacs
+process."
+  (let ((paths (mapcan (lambda (dir)
+                         (list "--directory" dir))
+                       load-path)))
+    (make-process
+     :name "async-byte-compile"
+     :command
+     `("emacs" "-Q" "--batch"
+       ,@paths
+       "--eval" "(require 'bytecomp)"
+       "-f" "batch-byte-compile" ,buffer-file-name))))
 
 (defun fmdkdd/byte-compile-on-save ()
   "Asynchronously byte compile this file on save."
-  (add-hook 'after-save-hook #'fmdkdd/async-byte-compile nil t))
+  (add-hook 'after-save-hook #'fmdkdd/async-byte-compile nil 'local))
 
 (defun man-at-point ()
   "Open the man page for the symbol at point."
@@ -404,3 +412,7 @@ other projects."
 
 (provide 'utils)
 ;;; utils.el ends here
+
+;; Local Variables:
+;; eval: (fmdkdd/byte-compile-on-save)
+;; End:
