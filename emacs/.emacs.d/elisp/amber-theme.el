@@ -43,7 +43,7 @@
  '(font-lock-doc-face ((t (:inherit font-lock-comment-face))))
 
  '(font-lock-keyword-face ((t (:inherit unspecified :weight bold))))
- '(font-lock-preprocessor-face ((t (:inherit unspecified))))
+ '(font-lock-preprocessor-face ((t (:foreground "#97afbd"))))
  '(font-lock-builtin-face ((t (:inherit unspecified))))
  '(font-lock-constant-face ((t (:inherit unspecified))))
  '(font-lock-type-face ((t (:inherit unspecified))))
