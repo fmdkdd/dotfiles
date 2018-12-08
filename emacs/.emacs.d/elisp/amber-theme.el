@@ -146,6 +146,7 @@
  ;; Rust
 
  '(rust-string-interpolation-face ((t (:inherit font-lock-string-face))))
+ '(rust-builtin-formatting-macro-face ((t (:inherit font-lock-preprocessor-face))))
 
  ;; Tuareg
  '(tuareg-font-lock-governing-face ((t (:inherit font-lock-keyword-face))))
