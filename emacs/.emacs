@@ -421,7 +421,7 @@
   :load-path "~/proj/flycheck-inline"
   :after flycheck
   :config
-  (add-hook 'flycheck-mode-hook #'turn-on-flycheck-inline)
+  (add-hook 'flycheck-mode-hook #'flycheck-inline-mode)
   (setq flycheck-inline-display-error-id nil))
 
 ;; Magit!
