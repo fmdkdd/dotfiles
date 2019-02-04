@@ -66,6 +66,9 @@
 
 (setq history-length 1000)
 
+;; Blinking cursor sometimes disappear
+(blink-cursor-mode 0)
+
 ;; Save/restore window configurations
 (winner-mode)
 
