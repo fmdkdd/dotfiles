@@ -211,8 +211,11 @@
 
 ;; Auto fill
 (setq-default fill-column 80)
-(add-hook 'text-mode-hook 'turn-on-auto-fill)
+(add-hook 'text-mode-hook #'turn-on-auto-fill)
 (diminish 'auto-fill-function)
+
+;; One sentence per line in LaTeX
+(add-hook 'latex-mode-hook #'turn-on-ospl)
 
 ;; Auto fill comments in prog modes
 (add-hook 'prog-mode-hook #'auto-fill-comments)

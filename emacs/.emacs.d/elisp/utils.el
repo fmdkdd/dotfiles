@@ -1,6 +1,6 @@
 ;;; utils.el --- Miscellaneous editing functions -*- lexical-binding: t; -*-
 
-;; Copyright (c) 2017, 2018 fmdkdd
+;; Copyright (c) 2017--2019 fmdkdd
 ;;
 ;; Author: fmdkdd
 
@@ -410,6 +410,48 @@ other projects."
                         (`(,_ rel-file ,f) (find-file f))
                         (`(,_ project ,p) (counsel-projectile-switch-project-action p))))
             :caller 'fmdkdd/goto-anything))
+
+(defun ospl-paragraph ()
+  "Fill paragraph at point so each sentence stands on one line."
+  (interactive)
+  ;; Join all lines, then split them on sentences.
+  (let ((start (save-excursion (backward-paragraph) (forward-char) (point)))
+        (end (make-marker)))
+    (save-excursion
+      ;; Unfill paragraph (join all lines)
+      (forward-paragraph)
+      (backward-char)
+      (set-marker end (point))          ; mark end of paragraph for later
+      (beginning-of-line)
+      (while (> (point) start)
+        (join-line)
+        ;; Preserve two dots after a sentence (only if the dot was at the end of
+        ;; a line)
+        ;; (when (looking-back "\\." (line-beginning-position))
+        ;;   (insert " "))
+        (beginning-of-line))
+      ;; Now split lines at sentence end.  Locally using one space after dot for
+      ;; sentences, since I'm working with people lacking manners.
+      (let ((sentence-end-double-space nil))
+        (forward-sentence)
+        (while (< (point) end)
+          (default-indent-new-line t)
+          (forward-sentence))))))
+
+(defun auto-ospl ()
+  "Automatically break the current paragraph at sentence end.
+
+This function is to be set as the value for the variable
+`auto-fill-function'.  If you want to fill a paragraph so that
+each sentence spans exactly one line, use `ospl-paragraph'
+instead."
+  (when (looking-back "\\.  " (line-beginning-position))
+    (default-indent-new-line t)))
+
+(defun turn-on-ospl ()
+  "Change auto fill locally to keep one sentence per line."
+  (setq auto-fill-function #'auto-ospl)
+  (define-key (current-local-map) (kbd "M-q") #'ospl-paragraph))
 
 (provide 'utils)
 ;;; utils.el ends here
