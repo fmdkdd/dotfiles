@@ -391,13 +391,6 @@ other projects."
                         (let ((default-directory project-root))
                           (shell-command-to-string "git ls-files -zco --exclude-standard"))
                         "\0")))
-             ;; Projectile is still a bit slow to my taste, so using the git
-             ;; command directly
-             ;; (when-let (root (projectile-project-root))
-             ;;   (mapcar (lambda (file)
-             ;;             (cons file 'file))
-             ;;           (projectile-project-files root)))
-
              ;; Project roots
              (mapcar (lambda (dir)
                        (list (format "Project: %s" dir) 'project dir))
@@ -408,7 +401,8 @@ other projects."
                         (`(,_ buffer ,b) (switch-to-buffer b))
                         (`(,f . file) (find-file f))
                         (`(,_ rel-file ,f) (find-file f))
-                        (`(,_ project ,p) (counsel-projectile-switch-project-action p))))
+                        (`(,_ project ,p) (counsel-projectile-switch-project-action p))
+                        (_ (switch-to-buffer cand))))
             :caller 'fmdkdd/goto-anything))
 
 (defun ospl-paragraph ()
