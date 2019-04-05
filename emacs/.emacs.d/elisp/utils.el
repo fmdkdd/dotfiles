@@ -429,7 +429,9 @@ other projects."
       (let ((sentence-end-double-space nil))
         (forward-sentence)
         (while (< (point) end)
-          (default-indent-new-line t)
+          ;; Avoid splitting for common acronyms
+          (when (not (looking-back (rx (or "e.g." "i.e.")) (line-beginning-position)))
+            (default-indent-new-line t))
           (forward-sentence))))))
 
 (defun auto-ospl ()
