@@ -449,6 +449,40 @@ instead."
   (setq auto-fill-function #'auto-ospl)
   (define-key (current-local-map) (kbd "M-q") #'ospl-paragraph))
 
+(add-hook 'asm-mode-hook
+          (lambda ()
+            (add-to-list 'xref-backend-functions #'xref-asm-xref-backend)))
+
+(defun xref-asm-xref-backend ()
+  "ASM backend for xref."
+  'xref-asm)
+
+(cl-defmethod xref-backend-identifier-at-point ((_backend (eql xref-asm)))
+  (symbol-name (symbol-at-point)))
+
+(cl-defmethod xref-backend-definitions ((_backend (eql xref-asm)) symbol)
+  (mapcar
+   (lambda (candidate)
+     (xref-make (nth 0 candidate)
+                (xref-make-file-location buffer-file-name
+                                         (nth 1 candidate)
+                                         (nth 2 candidate))))
+   (xref-asm-candidates symbol)))
+
+(defun xref-asm-candidates (symbol)
+  "Return list of labels matching SYMBOL."
+  (save-excursion
+    (goto-char (point-min))
+    (let ((labels))
+      ;; Match labels and constants
+      (while (re-search-forward (format "^\\s *@?%s\\s *[:=]" symbol) nil t)
+        (let ((match (match-string-no-properties 0)))
+          (push (list match
+                      (line-number-at-pos (point))
+                      (- (current-column) (length match)))
+                labels)))
+      labels)))
+
 (provide 'utils)
 ;;; utils.el ends here
 

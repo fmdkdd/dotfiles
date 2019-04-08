@@ -367,6 +367,7 @@
 (setq-default rust-indent-offset 2)
 (setq-default js-indent-level 2)
 (setq-default css-indent-offset 2)
+(setq-default coffee-tab-width 2)
 
 (c-add-style "user-java"
              '("java"
@@ -470,9 +471,20 @@
 
   (define-key rust-mode-map (kbd "C-c l") #'racer-describe))
 
-;; xref works fine for elisp
-(define-key emacs-lisp-mode-map (kbd "M-.") #'xref-find-definitions)
-(define-key emacs-lisp-mode-map (kbd "M-,") #'xref-pop-marker-stack)
+;; xref works fine for elisp, asm
+(defun fmdkdd/restore-xref (keymap)
+  (define-key keymap (kbd "M-.") #'xref-find-definitions)
+  (define-key keymap (kbd "M-,") #'xref-pop-marker-stack))
+
+(use-package emacs-lisp-mode
+  :defer t
+  :config
+  (fmdkdd/restore-xref emacs-lisp-mode-map))
+
+(use-package asm-mode
+  :defer t
+  :config
+  (fmdkdd/restore-xref asm-mode-map))
 
 ;; Speaking of elisp, this is nice to have in Flycheck
 (defun fmdkdd/add-flycheck-checkers-in-imenu ()
@@ -529,6 +541,7 @@
   :config
   (define-key tex-mode-map (kbd "C-c /") #'counsel-rg)
   (define-key tex-mode-map (kbd "C-c C-/") #'latex-close-block))
+
 
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
