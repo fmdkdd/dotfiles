@@ -407,6 +407,10 @@ other projects."
                         (_ (switch-to-buffer cand))))
             :caller 'fmdkdd/goto-anything))
 
+
+
+;; One sentence per line
+
 (defun ospl-paragraph ()
   "Fill paragraph at point so each sentence stands on one line."
   (interactive)
@@ -451,9 +455,9 @@ instead."
   (setq auto-fill-function #'auto-ospl)
   (define-key (current-local-map) (kbd "M-q") #'ospl-paragraph))
 
-(add-hook 'asm-mode-hook
-          (lambda ()
-            (add-to-list 'xref-backend-functions #'xref-asm-xref-backend)))
+
+
+;; Xref for asm-mode
 
 (defun xref-asm-xref-backend ()
   "ASM backend for xref."
@@ -481,6 +485,10 @@ instead."
               labels))
       labels)))
 
+
+
+;; Xref posframe
+
 (defvar xref-posframe-preview-lines 3
   "Number of lines to show in xref-posframe.")
 
@@ -495,12 +503,16 @@ instead."
        (progn (forward-line xref-posframe-preview-lines)
               (line-end-position))))))
 
+(defvar xref-posframe--visible nil
+  "Whether the posframe is visible.")
+
 (defun xref-posframe--preview (item)
   "Show xref ITEM in a posframe."
   (posframe-show "*xref-posframe*"
                  :string (xref--item-string item)
                  :background-color "#334455"
                  :foreground-color "#baaa93")
+  (setq xref-posframe--visible t)
   (add-hook 'post-command-hook #'xref-posframe--auto-clear))
 
 (defun xref-posframe-dwim ()
@@ -529,13 +541,20 @@ behavior to display the candidates in a separate window."
 
 (defun xref-posframe--clear ()
   "Clear the xref posframe."
-  (posframe-delete-frame "*xref-posframe*")
+  (posframe-hide "*xref-posframe*")
+  (setq xref-posframe--visible nil)
   (remove-hook 'post-command-hook #'xref-posframe--auto-clear))
 
 (defun xref-posframe--auto-clear ()
   "Clear the xref posframe when this command is not `xref-posframe-dwim'."
   (when (not (eq this-command #'xref-posframe-dwim))
     (xref-posframe--clear)))
+
+(defun xref-posframe-pop ()
+  "Dismiss the xref posframe, or pop the marker stack."
+  (interactive)
+  (unless xref-posframe--visible
+    (xref-pop-marker-stack)))
 
 (provide 'utils)
 ;;; utils.el ends here

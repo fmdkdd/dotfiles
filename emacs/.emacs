@@ -474,16 +474,16 @@
 ;; xref works fine for elisp, asm
 (defun fmdkdd/restore-xref (keymap)
   (define-key keymap (kbd "M-.") #'xref-posframe-dwim)
-  (define-key keymap (kbd "M-,") #'xref-pop-marker-stack))
+  (define-key keymap (kbd "M-,") #'xref-posframe-pop))
 
 (use-package emacs-lisp-mode
   :defer t
   :config
   (fmdkdd/restore-xref emacs-lisp-mode-map))
 
-(use-package asm-mode
-  :defer t
-  :config
+(with-eval-after-load 'asm-mode
+  (add-hook 'asm-mode-hook
+            (lambda () (add-to-list 'xref-backend-functions #'xref-asm-xref-backend)))
   (fmdkdd/restore-xref asm-mode-map))
 
 (use-package posframe
