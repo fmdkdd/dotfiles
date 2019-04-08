@@ -476,10 +476,7 @@
   (define-key keymap (kbd "M-.") #'xref-posframe-dwim)
   (define-key keymap (kbd "M-,") #'xref-posframe-pop))
 
-(use-package emacs-lisp-mode
-  :defer t
-  :config
-  (fmdkdd/restore-xref emacs-lisp-mode-map))
+(fmdkdd/restore-xref emacs-lisp-mode-map)
 
 (with-eval-after-load 'asm-mode
   (add-hook 'asm-mode-hook
