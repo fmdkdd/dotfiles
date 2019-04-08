@@ -473,7 +473,7 @@
 
 ;; xref works fine for elisp, asm
 (defun fmdkdd/restore-xref (keymap)
-  (define-key keymap (kbd "M-.") #'xref-find-definitions)
+  (define-key keymap (kbd "M-.") #'xref-posframe-dwim)
   (define-key keymap (kbd "M-,") #'xref-pop-marker-stack))
 
 (use-package emacs-lisp-mode
@@ -485,6 +485,11 @@
   :defer t
   :config
   (fmdkdd/restore-xref asm-mode-map))
+
+(use-package posframe
+  :ensure t
+  :config
+  (setq posframe-mouse-banish nil))
 
 ;; Speaking of elisp, this is nice to have in Flycheck
 (defun fmdkdd/add-flycheck-checkers-in-imenu ()
