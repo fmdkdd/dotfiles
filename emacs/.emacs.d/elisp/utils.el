@@ -498,10 +498,11 @@ instead."
     (let ((marker (xref-location-marker (xref-item-location item))))
       (set-buffer (marker-buffer marker))
       (xref--goto-char marker)
-      (buffer-substring
-       (line-beginning-position)
-       (progn (forward-line xref-posframe-preview-lines)
-              (line-end-position))))))
+      (let ((beg (line-beginning-position))
+            (end (progn (forward-line xref-posframe-preview-lines)
+                        (line-end-position))))
+        (font-lock-ensure beg end)
+        (buffer-substring beg end)))))
 
 (defvar xref-posframe--visible nil
   "Whether the posframe is visible.")
