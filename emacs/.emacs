@@ -377,6 +377,13 @@
 (add-hook 'java-mode-hook (lambda () (c-set-style "user-java")))
 (add-hook 'java-mode-hook (lambda () (subword-mode)))
 
+;; Font lock is slowing done editing in c mode, turn it down a notch.
+;; Minium font-locking everywhere else unless I notice.
+(setq font-lock-maximum-decoration
+      '((c-mode . 2)
+        (emacs-lisp-mode . 2)
+        (t . nil)))
+
 ;; Project navigation
 (use-package projectile
   :diminish projectile-mode

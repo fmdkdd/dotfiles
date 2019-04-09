@@ -12,6 +12,7 @@
 
 ;;; Code:
 
+(require 'subr-x)
 (require 'imenu)
 (require 'recentf)
 (require 'counsel-projectile)
