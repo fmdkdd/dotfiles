@@ -215,7 +215,9 @@
 (diminish 'auto-fill-function)
 
 ;; One sentence per line in LaTeX
-(add-hook 'latex-mode-hook #'turn-on-ospl)
+(use-package ospl
+  :load-path "~/.emacs.d/lisp"
+  :hook (latex-mode . turn-on-ospl))
 
 ;; Auto fill comments in prog modes
 (add-hook 'prog-mode-hook #'auto-fill-comments)
@@ -472,21 +474,33 @@
   (define-key rust-mode-map (kbd "C-c l") #'racer-describe))
 
 ;; xref works fine for elisp, asm
-(defun fmdkdd/restore-xref (keymap)
-  (define-key keymap (kbd "M-.") #'xref-posframe-dwim)
-  (define-key keymap (kbd "M-,") #'xref-posframe-pop))
-
-(fmdkdd/restore-xref emacs-lisp-mode-map)
-
-(with-eval-after-load 'asm-mode
-  (add-hook 'asm-mode-hook
-            (lambda () (add-to-list 'xref-backend-functions #'xref-asm-xref-backend)))
-  (fmdkdd/restore-xref asm-mode-map))
+(use-package xref-asm
+  :load-path "~/emacs.d/elisp"
+  :after asm-mode
+  :hook (asm-mode . xref-asm-activate))
 
 (use-package posframe
   :ensure t
   :config
   (setq posframe-mouse-banish nil))
+
+(eval-when-compile
+  (require 'asm-mode))
+
+(use-package xref-posframe
+  :load-path "~/emacs.d/elisp"
+  :bind (:map emacs-lisp-mode-map
+         ("M-." . xref-posframe-dwim)
+         ("M-," . xref-posframe-pop)))
+
+(use-package asm-mode
+  :bind (:map asm-mode-map
+         ("M-." . xref-posframe-dwim)
+         ("M-," . xref-posframe-pop)))
+
+  ;; (with-eval-after-load 'asm-mode
+  ;;   (define-key asm-mode-map (kbd "M-.") #'xref-posframe-dwim)
+  ;;   (define-key asm-mode-map (kbd "M-,") #'xref-posframe-pop)))
 
 ;; Speaking of elisp, this is nice to have in Flycheck
 (defun fmdkdd/add-flycheck-checkers-in-imenu ()
@@ -601,8 +615,14 @@
 (global-set-key (kbd "C-w") #'kill-region-or-backward-word)
 (global-set-key (kbd "C-a") #'move-beginning-of-line-dwim)
 (global-set-key (kbd "C-c f r") #'rename-file-and-buffer)
-(global-set-key (kbd "C-;") #'goto-last-change)
-(global-set-key (kbd "C-c o r") #'fmdkdd/save-and-reload-browser-windows)
+
+(use-package reload-browser
+  :load-path "~/.emacs.d/elisp/"
+  :bind ("C-c o r" . fmdkdd/save-and-reload-browser-windows))
+
+(use-package goto-last-change
+  :load-path "~/.emacs.d/elisp/"
+  :bind ("C-;" . goto-last-change))
 
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
