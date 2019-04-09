@@ -477,15 +477,14 @@
 (use-package xref-asm
   :load-path "~/emacs.d/elisp"
   :after asm-mode
-  :hook (asm-mode . xref-asm-activate))
+  :config
+  (xref-asm-activate))
 
+;; Preview xref definitions using posframe
 (use-package posframe
   :ensure t
   :config
   (setq posframe-mouse-banish nil))
-
-(eval-when-compile
-  (require 'asm-mode))
 
 (use-package xref-posframe
   :load-path "~/emacs.d/elisp"
@@ -497,10 +496,6 @@
   :bind (:map asm-mode-map
          ("M-." . xref-posframe-dwim)
          ("M-," . xref-posframe-pop)))
-
-  ;; (with-eval-after-load 'asm-mode
-  ;;   (define-key asm-mode-map (kbd "M-.") #'xref-posframe-dwim)
-  ;;   (define-key asm-mode-map (kbd "M-,") #'xref-posframe-pop)))
 
 ;; Speaking of elisp, this is nice to have in Flycheck
 (defun fmdkdd/add-flycheck-checkers-in-imenu ()
