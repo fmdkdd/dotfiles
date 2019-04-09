@@ -381,6 +381,7 @@
 ;; Minium font-locking everywhere else unless I notice.
 (setq font-lock-maximum-decoration
       '((c-mode . 2)
+        (c++-mode . 2)
         (emacs-lisp-mode . 2)
         (t . nil)))
 
