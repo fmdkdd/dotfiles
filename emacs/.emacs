@@ -502,6 +502,7 @@
 
 (use-package asm-mode
   :bind (:map asm-mode-map
+         ("C-c C-c" . #'recompile)
          ("M-." . xref-posframe-dwim)
          ("M-," . xref-posframe-pop)))
 
