@@ -211,8 +211,8 @@ other projects."
                          (list file 'rel-file (expand-file-name file project-root)))
                        (split-string
                         (let ((default-directory project-root))
-                          (shell-command-to-string "git ls-files -zco --exclude-standard"))
-                        "\0")))
+                          (shell-command-to-string "rg --files"))
+                        "\n")))
              ;; Project roots
              (mapcar (lambda (dir)
                        (list (format "Project: %s" dir) 'project dir))
