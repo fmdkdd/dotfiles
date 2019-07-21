@@ -196,6 +196,9 @@
 
 (setq delete-by-moving-to-trash t)
 
+(use-package inotify-revert
+  :load-path "~/.emacs.d/lisp")
+
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Editing
@@ -537,8 +540,11 @@
 ;; prompts for tar.gz files)
 (use-package cc-mode
   :defer t
+  :bind (:map c-mode-map
+              ("C-c l" . #'man-at-point)
+              ("C-c C-c" . #'recompile))
   :config
-  (define-key c-mode-map (kbd "C-c l") #'man-at-point))
+  (setq compilation-ask-about-save nil))
 
 ;; This is safe to put as local variable
 (add-to-list 'safe-local-eval-forms '(fmdkdd/byte-compile-on-save))
