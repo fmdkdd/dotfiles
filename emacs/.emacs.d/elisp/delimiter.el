@@ -40,7 +40,7 @@ mode-specific closing delimiter.")
   (let ((match (alist-get char delimiter-pair-alist)))
     (cond
      ;; If a list, try to match the mode
-     ((listp match)
+     ((and match (listp match))
       (cdr (seq-find
             (pcase-lambda (`(,mode . _))
               (or (eq mode t) (derived-mode-p mode)))
