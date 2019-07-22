@@ -263,10 +263,8 @@
 
 ;; This is my evil-surround fix
 (use-package delimiter
-  :load-path "elisp/"
-  :bind (("C-, s" . delimiter-surround)
-         ("C-, c" . delimiter-change)
-         ("C-, d" . delimiter-delete)))
+  :load-path "~/.emacs.d/elisp/"
+  :bind (("C-," . delimiter-dwim)))
 
 (use-package markdown-mode
   :ensure t
