@@ -246,7 +246,6 @@
                                          try-expand-all-abbrevs
                                          try-expand-list
                                          try-expand-line
-                                         try-complete-lisp-symbol-partially
                                          try-complete-lisp-symbol))
 
 ;; Anzu makes query-replace more intuitive
