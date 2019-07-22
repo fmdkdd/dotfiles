@@ -1,6 +1,6 @@
 ;;; delimiter.el --- Add, change and delete delimiters around point -*- lexical-binding: t; -*-
 
-;; Copyright (c) 2017 fmdkdd
+;; Copyright (c) 2017, 2019 fmdkdd
 ;;
 ;; Author: fmdkdd
 
@@ -21,33 +21,46 @@
 ;;; Code:
 
 ;;;###autoload
+(defun delimiter-dwim (char)
+  "Surround or delete region or word with CHAR.
+
+When CHAR is 'd', call `delimiter-delete' instead."
+  (interactive "cChar: ")
+  (if (eq char ?d)
+      (call-interactively #'delimiter-delete)
+    (delimiter-surround char)))
+
+;;;###autoload
 (defun delimiter-surround (char)
-  "Surround region with CHAR.
+  "Surround active region or word with CHAR.
+
+If region is active, surround that.  Otherwise, surround the sexp
+under point.
 
 If CHAR is an opening delimiter in `insert-pair-alist', use the
 closing delimiter of the pair to surround the region; use CHAR
 otherwise."
   (interactive "cChar: ")
-  ;; Save region since goto-char may move it
+  ;; goto-char may move the region when it is active, so save it
   (let ((begin (region-beginning))
         (end   (region-end))
         ;; Get corresponding char from alist; Use CHAR for closing if it's not
         ;; in the alist (assume it's a symmetric delimiter)
         (closing (or (car (alist-get char insert-pair-alist))
                      char)))
-  (save-excursion
-    (goto-char end)
-    (insert-char closing)
-    (goto-char begin)
-    (insert-char char))
-  ;; Leave point after the newly inserted opening char
-  (goto-char begin)
-  (forward-char)))
+    (save-excursion
+      (unless (region-active-p)
+        (setq begin (progn (backward-sexp) (point))
+              end (progn (forward-sexp) (point))))
+      (goto-char end)
+      (insert-char closing)
+      (goto-char begin)
+      (insert-char char))))
 
 ;;;###autoload
 (defun delimiter-delete (char)
   "Delete the nearest surrounding delimiters opening with CHAR."
-  (interactive "cChar: ")
+  (interactive "cChar to zap: ")
   (let* ((opening-regex (concat "^" (char-to-string char)))
          (closing       (car (alist-get char insert-pair-alist)))
          (closing-regex (or (and closing (concat "^" (char-to-string closing)))
