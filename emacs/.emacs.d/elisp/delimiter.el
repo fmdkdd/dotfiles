@@ -76,8 +76,12 @@ otherwise."
         (end   (region-end))
         (closing (delimiter--get-closing char)))
     (save-excursion
+      ;; Get the boundaries of the sexp under point
       (unless (region-active-p)
-        (setq begin (progn (backward-sexp) (point))
+        (setq begin (progn
+                      (unless (eq ? (preceding-char))
+                        (backward-sexp))
+                      (point))
               end (progn (forward-sexp) (point))))
       (goto-char end)
       (insert-char closing)
