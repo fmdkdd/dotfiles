@@ -20,6 +20,36 @@
 
 ;;; Code:
 
+(defvar delimiter-pair-alist
+  '((?\( . ?\))
+    (?\[ . ?\])
+    (?\{ . ?\})
+    (?\< . ?\>)
+    (?\" . ?\")
+    (?\' . ?\')
+    (?\` . ((emacs-lisp-mode . ?\')
+            (t . ?\`))))
+  "Alist of known delimiter pairs.
+
+The value is either a single char corresponding to the closing
+delimiter, or a list of pairs ((MODE . CHAR) ...) to specify a
+mode-specific closing delimiter.")
+
+(defun delimiter--get-closing (char)
+  "The closing delimiter for CHAR."
+  (let ((match (alist-get char delimiter-pair-alist)))
+    (cond
+     ;; If a list, try to match the mode
+     ((listp match)
+      (cdr (seq-find
+            (pcase-lambda (`(,mode . _))
+              (or (eq mode t) (derived-mode-p mode)))
+            match)))
+     ;; A single char, so return that
+     (match)
+     ;; Unknown delimiter: assume it's symmetric
+     (t char))))
+
 ;;;###autoload
 (defun delimiter-dwim (char)
   "Surround or delete region or word with CHAR.
@@ -44,10 +74,7 @@ otherwise."
   ;; goto-char may move the region when it is active, so save it
   (let ((begin (region-beginning))
         (end   (region-end))
-        ;; Get corresponding char from alist; Use CHAR for closing if it's not
-        ;; in the alist (assume it's a symmetric delimiter)
-        (closing (or (car (alist-get char insert-pair-alist))
-                     char)))
+        (closing (delimiter--get-closing char)))
     (save-excursion
       (unless (region-active-p)
         (setq begin (progn (backward-sexp) (point))
@@ -62,9 +89,8 @@ otherwise."
   "Delete the nearest surrounding delimiters opening with CHAR."
   (interactive "cChar to zap: ")
   (let* ((opening-regex (concat "^" (char-to-string char)))
-         (closing       (car (alist-get char insert-pair-alist)))
-         (closing-regex (or (and closing (concat "^" (char-to-string closing)))
-                            opening-regex)))
+         (closing       (delimiter--get-closing char))
+         (closing-regex (concat "^" (char-to-string closing))))
     (save-excursion
       ;; skip-chars-* over search-backward because the former has a bytecode op
       (skip-chars-backward opening-regex)
@@ -77,14 +103,9 @@ otherwise."
   "Replace the surrounding CHAR delimiters with NEWCHAR."
   (interactive "cChar:\ncReplace with: ")
   (let* ((opening-regex (concat "^" (char-to-string char)))
-         (closing       (car (alist-get char insert-pair-alist)))
-         (closing-regex (or (and closing (concat "^" (char-to-string closing)))
-                            opening-regex))
-         ;; Find replacement closing character in alist; use newchar if not found
-         (new-closing   (or (car (alist-get newchar insert-pair-alist))
-                            newchar))
-         ;; Save point to restore it at the end
-         (p             (point)))
+         (closing       (delimiter--get-closing char))
+         (closing-regex (concat "^" (char-to-string closing)))
+         (new-closing   (delimiter--get-closing newchar)))
     (save-excursion
       ;; skip-chars-* over search-backward because the former has a bytecode op
       (skip-chars-backward opening-regex)
@@ -92,9 +113,7 @@ otherwise."
       (insert-char newchar)
       (skip-chars-forward closing-regex)
       (delete-char 1)
-      (insert-char new-closing))
-    ;; Restore point to original position
-    (goto-char p)))
+      (insert-char new-closing))))
 
 (provide 'delimiter)
 ;;; delimiter.el ends here
