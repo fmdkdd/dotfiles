@@ -270,7 +270,10 @@
 
 (use-package markdown-mode
   :ensure t
-  :mode ("\\.md" . markdown-mode))
+  :mode ("\\.md" . markdown-mode)
+  :config
+  (define-key markdown-mode-map (kbd "M-p") #'markdown-outline-previous)
+  (define-key markdown-mode-map (kbd "M-n") #'markdown-outline-next))
 
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
