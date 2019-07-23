@@ -73,12 +73,14 @@ closing delimiter of the pair to surround the region; use CHAR
 otherwise."
   (interactive "cChar: ")
   ;; goto-char may move the region when it is active, so save it
-  (let ((begin (region-beginning))
-        (end   (region-end))
+  (let ((begin)
+        (end)
         (closing (delimiter--get-closing char)))
     (save-excursion
       ;; Get the boundaries of the sexp under point
-      (unless (region-active-p)
+      (if (region-active-p)
+          (setq begin (region-beginning)
+                end  (region-end))
         (setq begin (progn
                       (unless (eq ? (preceding-char))
                         (backward-sexp))
