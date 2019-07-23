@@ -56,9 +56,10 @@ mode-specific closing delimiter.")
 
 When CHAR is 'd', call `delimiter-delete' instead."
   (interactive "cChar: ")
-  (if (eq char ?d)
-      (call-interactively #'delimiter-delete)
-    (delimiter-surround char)))
+  (cond
+   ((eq char ?d) (call-interactively #'delimiter-delete))
+   ((eq char ?c) (call-interactively #'delimiter-change))
+   (t (delimiter-surround char))))
 
 ;;;###autoload
 (defun delimiter-surround (char)
@@ -105,7 +106,7 @@ otherwise."
 ;;;###autoload
 (defun delimiter-change (char newchar)
   "Replace the surrounding CHAR delimiters with NEWCHAR."
-  (interactive "cChar:\ncReplace with: ")
+  (interactive "cChar to replace:\ncReplace with: ")
   (let* ((opening-regex (concat "^" (char-to-string char)))
          (closing       (delimiter--get-closing char))
          (closing-regex (concat "^" (char-to-string closing)))
