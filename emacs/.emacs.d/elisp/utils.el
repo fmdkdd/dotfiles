@@ -116,7 +116,7 @@ and `optipng' to reduce the file size if the program is present."
     (make-directory (file-name-directory file) 'parents)
     ;; Still, make sure to signal if the screenshot was in fact not created
     (unless (= 0 (call-process "import" nil nil nil file))
-      (user-error "`import' failed to create screenshot %s" "bla"))
+      (user-error "`import' failed to create screenshot %s" file))
     (if (executable-find "optipng")
         (start-process "optipng" nil "optipng" file))
     (insert
