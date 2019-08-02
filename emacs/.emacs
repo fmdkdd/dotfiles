@@ -169,6 +169,16 @@
 ;; Backups in .emacs.d
 (setq backup-directory-alist `(("." . ,(locate-user-emacs-file "backups"))))
 
+;; Auto saves as well
+(setq auto-save-file-name-transforms
+      `(("\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'"
+         ,(concat temporary-file-directory "\\2") t)
+        (".*" ,(concat (locate-user-emacs-file "auto-saves") "/")  t)))
+
+;; And disable file locks (they create noise in the current directory, which
+;; confuses file watches)
+(setq create-lockfiles nil)
+
 ;; I use customize file for machine-local settings. This file goes to
 ;; 'emacs.d', and is not version controlled.
 (setq custom-file (locate-user-emacs-file "local-preferences.el"))
