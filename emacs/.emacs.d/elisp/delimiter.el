@@ -82,7 +82,7 @@ otherwise."
           (setq begin (region-beginning)
                 end  (region-end))
         (setq begin (progn
-                      (unless (eq ? (preceding-char))
+                      (unless (or (line-beginning-position) (eq ? (preceding-char)))
                         (backward-sexp))
                       (point))
               end (progn (forward-sexp) (point))))
