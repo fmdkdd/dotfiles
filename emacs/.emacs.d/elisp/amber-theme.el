@@ -28,6 +28,8 @@
  '(error ((t (:foreground "#de6a49" :weight bold))))
  '(shadow ((t (:foreground "#8a7b67"))))
 
+ '(winum-face ((t (:foreground "#eb3" :weight bold))))
+
  ;; Search
 
  '(isearch ((t (:foreground "#000" :background "#cc66ab"))))

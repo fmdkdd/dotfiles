@@ -598,20 +598,26 @@
 ;; Minimize is more confusing than helpful with i3
 (global-unset-key (kbd "C-z"))
 (global-unset-key (kbd "C-x C-z"))
+(global-set-key (kbd "C-z") #'other-window)
 
-;; This is more useful
-(use-package ace-window
+;; This is faster for switching with multiple windows
+(use-package winum
   :ensure t
-  :bind ("C-z" . ace-window)
+  :init
+  (setq winum-keymap
+        (let ((map (make-sparse-keymap)))
+          (define-key map (kbd "C-0") #'winum-select-window-0-or-10)
+          (define-key map (kbd "C-1") #'winum-select-window-1)
+          (define-key map (kbd "C-2") #'winum-select-window-2)
+          (define-key map (kbd "C-3") #'winum-select-window-3)
+          (define-key map (kbd "C-4") #'winum-select-window-4)
+          (define-key map (kbd "C-5") #'winum-select-window-5)
+          (define-key map (kbd "C-6") #'winum-select-window-6)
+          (define-key map (kbd "C-7") #'winum-select-window-7)
+          (define-key map (kbd "C-8") #'winum-select-window-8)
+          map))
   :config
-  (setq aw-keys '(?n ?e ?i ?o ?a ?r ?s ?t)
-        aw-make-frame-char ?5
-        aw-leading-char-style 'path)
-  ;; Remap flip to z since n is already used
-  (assq-delete-all ?n aw-dispatch-alist)
-  (add-to-list 'aw-dispatch-alist '(?z aw-flip-window))
-  (custom-set-faces
-   '(aw-leading-char-face ((t (:foreground "red" :height 4.0))))))
+  (winum-mode))
 
 ;; Byebye dabbrev
 (global-set-key [remap dabbrev-expand] #'hippie-expand)
