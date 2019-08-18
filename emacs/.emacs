@@ -173,7 +173,7 @@
 (setq auto-save-file-name-transforms
       `(("\\`/[^/]*:\\([^/]*/\\)*\\([^/]*\\)\\'"
          ,(concat temporary-file-directory "\\2") t)
-        (".*" ,(concat (locate-user-emacs-file "auto-saves") "/")  t)))
+        (".*" ,(concat (locate-user-emacs-file "auto-saves/") "/")  t)))
 
 ;; And disable file locks (they create noise in the current directory, which
 ;; confuses file watches)
