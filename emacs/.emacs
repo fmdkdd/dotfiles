@@ -481,8 +481,13 @@
   (defun fmdkdd/add-update-gtags-hook ()
     (add-hook 'after-save-hook #'counsel-gtags-update-tags nil 'local))
   (add-hook 'c-mode-hook #'fmdkdd/add-update-gtags-hook)
-  (add-hook 'c++-mode-hook #'fmdkdd/add-update-gtags-hook)
   (add-hook 'java-mode-hook #'fmdkdd/add-update-gtags-hook))
+
+;; rtags is better for C++
+(use-package rtags
+  :bind (:map c++-mode-map
+              ("M-." . #'rtags-find-symbol-at-point)
+              ("M-," . #'rtags-location-stack-back)))
 
 ;; Racer is better for Rust
 (use-package racer
