@@ -554,11 +554,17 @@
 
 ;; In C, man is the better lookup (woman doesn't handle boxes, and uselessly
 ;; prompts for tar.gz files)
+(defun fmdkdd/c-setup ()
+  (c-set-offset 'arglist-intro '++)
+  (c-set-offset 'brace-list-intro 'c-basic-offset))
+
 (use-package cc-mode
   :defer t
   :bind (:map c-mode-map
               ("C-c l" . #'man-at-point)
               ("C-c C-c" . #'recompile))
+  :mode ("\\.h\\'" . c++-mode)
+  :hook (c++-mode . #'fmdkdd/c-setup)
   :config
   (setq compilation-ask-about-save nil))
 
