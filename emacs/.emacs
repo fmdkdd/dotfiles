@@ -485,6 +485,7 @@
 
 ;; rtags is better for C++
 (use-package rtags
+  :ensure t
   :bind (:map c++-mode-map
               ("M-." . #'rtags-find-symbol-at-point)
               ("M-," . #'rtags-location-stack-back)))

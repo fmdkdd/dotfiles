@@ -5,8 +5,8 @@ map k scroll down
 map j scroll left
 map l scroll right
 
-set recolor-lightcolor "#002b36"
-set recolor-darkcolor "#93a1a1"
+set recolor-lightcolor "#fbf1c7"
+set recolor-darkcolor "#282828"
 set recolor false
 set highlight-active-color "#859900"
 set highlight-color "#b58900"
