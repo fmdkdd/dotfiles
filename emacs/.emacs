@@ -564,8 +564,9 @@
               ("C-c l" . #'man-at-point)
               ("C-c C-c" . #'recompile))
   :mode ("\\.h\\'" . c++-mode)
-  :hook (c++-mode . #'fmdkdd/c-setup)
   :config
+  (define-key c-mode-base-map (kbd "M-j") nil)
+  (add-hook 'c++-mode-hook #'fmdkdd/c-setup)
   (setq compilation-ask-about-save nil))
 
 ;; This is safe to put as local variable
