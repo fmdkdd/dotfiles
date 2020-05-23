@@ -655,6 +655,8 @@
 (global-set-key (kbd "C-c r") #'query-replace)
 (global-set-key (kbd "C-c R") #'query-replace-regexp)
 (global-set-key (kbd "C-c s") #'isearch-forward-symbol-at-point)
+(global-set-key (kbd "M-p") #'backward-paragraph)
+(global-set-key (kbd "M-n") #'forward-paragraph)
 
 ;; Additional goodies
 (global-set-key (kbd "C-w") #'kill-region-or-backward-word)
