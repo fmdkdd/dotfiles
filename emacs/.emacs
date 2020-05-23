@@ -238,6 +238,11 @@
 ;; Delete trailing whitespace on file save
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 
+;; It breaks hexl-mode though
+(use-package hexl
+  :init
+  (remove-hook 'before-save-hook #'delete-trailing-whitespace 'local))
+
 ;; This is useful just for thinking about updating copyright years.
 (add-hook 'before-save-hook #'copyright-update)
 
