@@ -30,9 +30,7 @@
 ;; Theming
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-(set-face-attribute 'default nil :family "Dina" :height 80 :weight 'normal)
-;; To eval when others can't read my screen:
-;; (set-face-attribute 'default nil :family "Fira Mono" :height 120 :weight 'normal)
+(set-face-attribute 'default nil :family "Deja Vu Sans Mono" :height 110 :weight 'normal)
 
 (add-to-list 'custom-theme-load-path
              (locate-user-emacs-file "elisp"))
