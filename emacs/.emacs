@@ -409,14 +409,6 @@
   :config
   (projectile-mode))
 
-;; Outshine enhances outline for prog modes
-(use-package outshine
-  :init
-  (add-hook 'outline-minor-mode-hook #'outshine-hook-function)
-  :config
-  (define-key outline-minor-mode-map (kbd "M-p") #'outline-previous-visible-heading)
-  (define-key outline-minor-mode-map (kbd "M-n") #'outline-next-visible-heading))
-
 ;; Syntax checking
 (use-package flycheck
   :load-path "~/proj/flycheck"
