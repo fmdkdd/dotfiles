@@ -557,6 +557,9 @@
   :defer t
   :bind (:map c-mode-map
               ("C-c l" . #'man-at-point)
+              ("C-c C-c" . #'recompile)
+              :map c-mode-base-map
+              ("C-c l" . #'man-at-point)
               ("C-c C-c" . #'recompile))
   :mode ("\\.h\\'" . c++-mode)
   :config

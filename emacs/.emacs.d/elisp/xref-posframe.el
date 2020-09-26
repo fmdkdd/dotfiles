@@ -61,7 +61,7 @@ behavior to display the candidates in a separate window."
       (xref--show-xrefs defs nil))
      ((eq last-command #'xref-posframe-dwim)
       (xref-push-marker-stack)
-      (xref--pop-to-location (car defs) nil)
+      (xref-pop-to-location (car defs) nil)
       (xref-posframe--clear))
      (t
       (xref-posframe--preview (car defs))))))
