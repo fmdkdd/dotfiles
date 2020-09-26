@@ -11,8 +11,8 @@
  '(vertical-border ((t (:foreground "#444"))))
  '(fringe ((t (:background "#242424"))))
 
- '(mode-line ((t (:foreground "#d4c1a7" :background "#5c4a3d" :height 80))))
- '(mode-line-inactive ((t (:foreground "#baaa93" :background "#32302f" :height 80))))
+ '(mode-line ((t (:foreground "#d4c1a7" :background "#5c4a3d"))))
+ '(mode-line-inactive ((t (:foreground "#baaa93" :background "#32302f"))))
  '(mode-line-buffer-id ((t (:foreground "#ebdbb2" :weight bold))))
 
  '(minibuffer-prompt ((t (:foreground "#ebdbb2"))))
