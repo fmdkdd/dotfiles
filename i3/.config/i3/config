@@ -20,7 +20,7 @@ set $mod Mod4
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:sans 8
+font pango:sans 10
 
 # Before i3 v4.8, we used to recommend this one as the default:
 # font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -184,9 +184,9 @@ bar {
 exec_always --no-startup-id exec i3-workspace-names-daemon --uniq
 
 # Media keys to control volume
-bindsym XF86AudioLowerVolume exec "amixer set Master 5%-"
-bindsym XF86AudioRaiseVolume exec "amixer set Master 5%+"
-bindsym XF86AudioMute exec "amixer set Master toggle"
+bindsym XF86AudioLowerVolume exec "amixer -c 2 set PCM 5%-"
+bindsym XF86AudioRaiseVolume exec "amixer -c 2 set PCM 5%+"
+bindsym XF86AudioMute exec "amixer -c2 set PCM toggle"
 
 # For keyboard without the media keys
 bindsym $mod+Print exec "amixer set Master 5%-"

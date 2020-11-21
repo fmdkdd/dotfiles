@@ -13,7 +13,7 @@ general {
         color_good = "#689d6a"
         color_degraded = "#d79921"
         color_bad = "#cc241d"
-        interval = 5
+        interval = 1
 }
 
 order+= "disk /"
@@ -57,8 +57,8 @@ ethernet _first_ {
 volume master {
         format = " %volume"
         format_muted = "♪ [%volume]"
-        device = "default"
-        mixer = "Master"
+        device = "hw:2"
+        mixer = "PCM"
         mixer_idx = 0
 }
 

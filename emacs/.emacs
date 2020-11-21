@@ -286,6 +286,12 @@
   (define-key markdown-mode-map (kbd "M-p") #'markdown-outline-previous)
   (define-key markdown-mode-map (kbd "M-n") #'markdown-outline-next))
 
+;; JP variant of Noto CJK
+(let ((noto-cjk-jp-fontspec (font-spec :family "Noto Serif CJK JP")))
+  (dolist (charset '(kana han symbol cjk-misc bopomofo))
+    (set-fontset-font (frame-parameter nil 'font) charset my-jp-fontspec)))
+
+
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Org mode
@@ -425,7 +431,7 @@
   (setq flycheck-display-errors-delay 0.125
         flycheck-check-syntax-automatically '(save)
         flycheck-emacs-lisp-load-path 'inherit
-        flycheck-global-modes '(emacs-lisp-mode c-mode c++-mode rust-mode))
+        flycheck-global-modes '(emacs-lisp-mode c-mode c++-mode rust-mode js-mode))
 
   ;; Display the error list in the bottom side window, with as much
   ;; height as needed by its contents.
@@ -484,6 +490,11 @@
   :bind (:map c++-mode-map
               ("M-." . #'rtags-find-symbol-at-point)
               ("M-," . #'rtags-location-stack-back)))
+
+(use-package clang-format
+  :defer t
+  :bind (:map c++-mode-map
+              ("C-c C-f" . #'clang-format-buffer)))
 
 ;; Racer is better for Rust
 (use-package racer

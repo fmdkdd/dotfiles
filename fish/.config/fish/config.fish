@@ -23,6 +23,7 @@ abbr -a pacup sudo pacman -Syu
 abbr -a pacs sudo pacman -S
 abbr -a pacss sudo pacman -Ss
 abbr -a startx ssh-agent startx -- -ardelay 200 -arinterval 30
+abbr -a n ninja
 
 #set NO_AT_BRIDGE 1 # Fix for accessibility bus warning when launching evince, sunvox ...
 

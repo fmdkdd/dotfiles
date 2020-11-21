@@ -1,4 +1,4 @@
-Xft.dpi:        93
+Xft.dpi:        96
 Xft.antialias:  true
 Xft.autohint:   false
 Xft.hinting:    true
@@ -16,7 +16,8 @@ Emacs.toolBar: false
 
 URxvt.cursorBlink: true
 URxvt.scrollBar:   false
-URxvt.font: xft:dina:size=7
+URxvt.font: xft:DejaVu Sans Mono:size=11
+URxvt.letterSpace: -1
 
 ! Clickable urls
 URxvt.perl-ext-common: default,matcher
@@ -86,7 +87,7 @@ URxvt.color15:                 S_base3
 ! Rofi
 
 rofi.modi:    drun,run,papers:~/.config/rofi/papers.sh,pass:~/.config/rofi/pass.sh
-rofi.font:    sans 10
+rofi.font:    sans 11
 rofi.width:   30
 rofi.lines:   7
 

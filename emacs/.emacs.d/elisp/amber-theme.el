@@ -105,6 +105,10 @@
  '(flycheck-inline-warning ((t (:inherit flycheck-fringe-warning :weight normal))))
  '(flycheck-inline-info ((t (:inherit flycheck-fringe-info :weight normal))))
 
+ ;; rtags
+ '(rtags-errline ((t (:inherit flycheck-error))))
+ '(rtags-warline ((t (:inherit flycheck-warning))))
+
  ;; Flyspell
 
  '(flyspell-incorrect ((t (:inherit flycheck-error))))
