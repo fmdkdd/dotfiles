@@ -39,11 +39,11 @@ URxvt.matcher.button: 1
 
 ! Dark
 
-#define S_base03        #002b36
+#define S_base03        #001f26
 #define S_base02        #073642
 #define S_base01        #586e75
 #define S_base00        #657b83
-#define S_base0         #839496
+#define S_base0         #b3c4c6
 #define S_base1         #93a1a1
 #define S_base2         #eee8d5
 #define S_base3         #fdf6e3
@@ -83,20 +83,3 @@ URxvt.color12:                 S_base0
 URxvt.color13:                 S_violet
 URxvt.color14:                 S_base1
 URxvt.color15:                 S_base3
-
-! Rofi
-
-rofi.modi:    drun,run,papers:~/.config/rofi/papers.sh,pass:~/.config/rofi/pass.sh
-rofi.font:    sans 11
-rofi.width:   30
-rofi.lines:   7
-
-! ---------------------------------------------------------------------
-! ROFI Color theme
-! ---------------------------------------------------------------------
-rofi.color-enabled: true
-rofi.color-window: #282828, #1d2021, #916958
-rofi.color-normal: #282828, #bdae93, #282828, #504945, #d5c4a1
-rofi.color-active: #fdf6e3, #268bd2, #ff0000, #268bd2, #fdf6e3
-rofi.color-urgent: #fdf6e3, #dc322f, #eee8d5, #dc322f, #fdf6e3
-rofi.separator-style: solid

@@ -6,6 +6,7 @@
 env -i HOME=$HOME dash -l -c printenv | sed -e '/^PWD=/d;/PATH/s/:/ /g;s/=/ /;s/^/set -x /' | source
 
 set PATH $PATH ~/.node_modules/bin
+set PATH ~/.yarn/bin $PATH
 #set PATH ~/.cabal/bin $PATH
 set PATH ~/.local/bin $PATH
 

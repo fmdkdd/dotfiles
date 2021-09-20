@@ -1,0 +1,4 @@
+configuration {
+  modi: "drun,run,papers:~/.config/rofi/papers.sh,pass:~/.config/rofi/pass.sh";
+ font: "sans 11";
+}
