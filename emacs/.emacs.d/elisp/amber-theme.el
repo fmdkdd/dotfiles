@@ -107,7 +107,7 @@
 
  ;; rtags
  '(rtags-errline ((t (:inherit flycheck-error))))
- '(rtags-warline ((t (:inherit flycheck-warning))))
+ '(rtags-warnline ((t (:inherit flycheck-warning))))
 
  ;; Flyspell
 

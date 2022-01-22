@@ -465,12 +465,15 @@
 ;; rtags is better for C++
 (use-package rtags
   :ensure t
-  :init (setq-default rtags-completions-enabled t)
+  :init (setq-default rtags-completions-enabled t
+                      rtags-autostart-diagnostics t)
   :bind (:map c++-mode-map
               ("M-." . #'rtags-find-symbol-at-point)
               ("M-," . #'rtags-location-stack-back)
               ("C-M-." . #'rtags-find-references-at-point)
-              ("C-c C-i" . #'rtags-imenu)))
+              ("C-c C-i" . #'rtags-imenu)
+              ("C-c C-p" . #'rtags-previous-diag)
+              ("C-c C-n" . #'rtags-next-diag)))
 
 (use-package clang-format
   :defer t
