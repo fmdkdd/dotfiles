@@ -79,13 +79,6 @@
 ;; Show empty lines in the fringe
 (setq-default indicate-empty-lines t)
 
-;; Prompt keybindings
-(use-package which-key
-  :defer 3
-  :diminish which-key-mode
-  :config
-  (which-key-mode))
-
 (use-package ivy
   :ensure t
   :diminish ivy-mode
@@ -272,12 +265,8 @@
 
 ;; Expand-region is awesome (most of the time)
 (use-package expand-region
+  :ensure t
   :bind ("C-=" . er/expand-region))
-
-;; This is my evil-surround fix
-(use-package delimiter
-  :load-path "~/.emacs.d/elisp/"
-  :bind (("C-," . delimiter-dwim)))
 
 (use-package markdown-mode
   :ensure t
@@ -473,23 +462,15 @@
 ;; Highlight TODO, FIXME keywords
 (add-hook 'prog-mode-hook #'add-watchwords)
 
-;; GTAGS are very useful for C-mode, at least
-(use-package counsel-gtags
-  :ensure t
-  :bind (("M-." . counsel-gtags-dwim)
-         ("M-," . counsel-gtags-go-backward))
-  :init
-  (defun fmdkdd/add-update-gtags-hook ()
-    (add-hook 'after-save-hook #'counsel-gtags-update-tags nil 'local))
-  (add-hook 'c-mode-hook #'fmdkdd/add-update-gtags-hook)
-  (add-hook 'java-mode-hook #'fmdkdd/add-update-gtags-hook))
-
 ;; rtags is better for C++
 (use-package rtags
   :ensure t
+  :init (setq-default rtags-completions-enabled t)
   :bind (:map c++-mode-map
               ("M-." . #'rtags-find-symbol-at-point)
-              ("M-," . #'rtags-location-stack-back)))
+              ("M-," . #'rtags-location-stack-back)
+              ("C-M-." . #'rtags-find-references-at-point)
+              ("C-c C-i" . #'rtags-imenu)))
 
 (use-package clang-format
   :defer t
@@ -605,17 +586,6 @@
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Bindings
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-;; Hydras help for common shortcuts
-(use-package hydra
-  :bind (("C-c e n" . fmdkdd/hydra-flycheck/flycheck-next-error)
-         ("C-c e p" . fmdkdd/hydra-flycheck/flycheck-previous-error))
-  :config
-  ;; Faster browsing of flycheck errors
-  (defhydra fmdkdd/hydra-flycheck ()
-    "flycheck-errors"
-    ("n" flycheck-next-error "next")
-    ("p" flycheck-previous-error "previous")))
 
 ;; Minimize is more confusing than helpful with i3
 (global-unset-key (kbd "C-z"))
