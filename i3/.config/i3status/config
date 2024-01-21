@@ -57,8 +57,8 @@ ethernet _first_ {
 volume master {
         format = " %volume"
         format_muted = "♪ [%volume]"
-        device = "hw:2"
-        mixer = "PCM"
+        device = "default"
+        mixer = "Master"
         mixer_idx = 0
 }
 

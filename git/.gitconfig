@@ -8,3 +8,5 @@
 	default = simple
 [diff "elisp"]
 	xfuncname = "^\\(.+"
+[init]
+	defaultBranch = master

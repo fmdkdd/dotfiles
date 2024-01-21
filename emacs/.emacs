@@ -152,6 +152,12 @@
                (window-width . fit-window-to-buffer)
                (preserve-size . (t . nil))))
 
+;; Display compilation buffer below
+(add-to-list 'display-buffer-alist
+             `(,(rx bos "*compilation*" eos) display-buffer-in-side-window
+               (side . bottom) (slot . 0)))
+
+
 
 ;; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ;; Files
@@ -546,7 +552,8 @@
 ;; prompts for tar.gz files)
 (defun fmdkdd/c-setup ()
   (c-set-offset 'arglist-intro '++)
-  (c-set-offset 'brace-list-intro 'c-basic-offset))
+  (c-set-offset 'brace-list-intro 'c-basic-offset)
+  (subword-mode +1))
 
 (use-package cc-mode
   :defer t
@@ -583,6 +590,21 @@
   :config
   (define-key tex-mode-map (kbd "C-c /") #'counsel-rg)
   (define-key tex-mode-map (kbd "C-c C-/") #'latex-close-block))
+
+(defun fmdkdd/rg-at-point ()
+  (interactive)
+  (counsel-rg (word-at-point)))
+
+(defun fmdkdd/run-prettier-on-buffer ()
+  (interactive)
+  (call-process "prettier" nil 0 nil (buffer-file-name) "-w"))
+
+(use-package typescript-mode
+  :defer t
+  :config
+  (setq typescript-indent-level 2)
+  (define-key typescript-mode-map (kbd "M-.") #'fmdkdd/rg-at-point)
+  (define-key typescript-mode-map (kbd "C-c C-f") #'fmdkdd/run-prettier-on-buffer))
 
 
 

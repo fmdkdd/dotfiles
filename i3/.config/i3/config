@@ -184,9 +184,9 @@ bar {
 exec_always --no-startup-id exec i3-workspace-names-daemon --uniq
 
 # Media keys to control volume
-bindsym XF86AudioLowerVolume exec "amixer -c 2 set PCM 5%-"
-bindsym XF86AudioRaiseVolume exec "amixer -c 2 set PCM 5%+"
-bindsym XF86AudioMute exec "amixer -c2 set PCM toggle"
+bindsym XF86AudioLowerVolume exec "amixer set Master 2%-"
+bindsym XF86AudioRaiseVolume exec "amixer set Master 2%+"
+bindsym XF86AudioMute exec "amixer set Master toggle"
 
 # For keyboard without the media keys
 bindsym $mod+Print exec "amixer set Master 5%-"
@@ -209,5 +209,7 @@ client.placeholder      #000000 #0c0c0c #ffffff #0c0c0c   #0c0c0c
 
 # Palette mostly from https://github.com/morhetz/gruvbox
 
-# Float these by default
+# Float these by default (use xprop)
 for_window [class="Anki"] floating enable
+for_window [class="simcity.exe"] floating enable
+for_window [class="fceux"] floating enable
